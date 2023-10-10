@@ -94,23 +94,27 @@ size_t abb_tamanio(abb_t *arbol)
 	return arbol->tamanio;
 }
 
+void nodo_destruir(nodo_abb_t *nodo) {
+    if (!nodo) return;
+
+    nodo_destruir(nodo->izquierda);
+    nodo_destruir(nodo->derecha);
+    free(nodo);
+}
+
 void abb_destruir(abb_t *arbol)
 {
-	if(!arbol)
-		return;
+	if(!arbol) return;
 
-	abb_destruir(arbol->nodo_raiz->izquierda);
-	abb_destruir(arbol->nodo_raiz->derecha);
+	nodo_destruir(arbol->nodo_raiz);
 	free(arbol);
 }
 
 void abb_destruir_todo(abb_t *arbol, void (*destructor)(void *))
 {
-	if(!arbol)
-		return;
+	if(!arbol) return;
 
-	abb_destruir(arbol->nodo_raiz->izquierda);
-	abb_destruir(arbol->nodo_raiz->derecha);
+	nodo_destruir(arbol->nodo_raiz);
 	if(destructor){
 		destructor(arbol->nodo_raiz->elemento);
 	}
