@@ -88,15 +88,33 @@ bool abb_vacio(abb_t *arbol)
 
 size_t abb_tamanio(abb_t *arbol)
 {
-	return 0;
+	if(!arbol)
+		return 0;
+
+	return arbol->tamanio;
 }
 
 void abb_destruir(abb_t *arbol)
 {
+	if(!arbol)
+		return;
+
+	abb_destruir(arbol->nodo_raiz->izquierda);
+	abb_destruir(arbol->nodo_raiz->derecha);
+	free(arbol);
 }
 
 void abb_destruir_todo(abb_t *arbol, void (*destructor)(void *))
 {
+	if(!arbol)
+		return;
+
+	abb_destruir(arbol->nodo_raiz->izquierda);
+	abb_destruir(arbol->nodo_raiz->derecha);
+	if(destructor){
+		destructor(arbol->nodo_raiz->elemento);
+	}
+	free(arbol);
 }
 
 size_t abb_con_cada_elemento(abb_t *arbol, abb_recorrido recorrido,
