@@ -5,11 +5,66 @@
 
 abb_t *abb_crear(abb_comparador comparador)
 {
-	return NULL;
+	abb_t *arbol = malloc(sizeof(abb_t));
+
+	if (arbol == NULL)
+		return NULL;
+	
+	if(comparador == NULL)
+		return NULL;
+	
+	arbol->nodo_raiz = NULL;
+	arbol->comparador = comparador;
+	arbol->tamanio = 0;
+	
+	return arbol;
 }
 
 abb_t *abb_insertar(abb_t *arbol, void *elemento)
 {
+	if(arbol == NULL)
+		return NULL;
+	
+	nodo_abb_t *nodo = malloc(sizeof(nodo_abb_t));
+
+	if (nodo == NULL)
+		return NULL;
+	
+	if(arbol->nodo_raiz == NULL){
+		nodo->elemento = elemento;
+		nodo->izquierda = NULL;
+		nodo->derecha = NULL;
+		arbol->nodo_raiz = nodo;
+		arbol->tamanio++;
+		return arbol;
+	}
+
+	nodo_abb_t *nodo_actual = arbol->nodo_raiz;
+
+	while(arbol->comparador(elemento, nodo_actual->elemento) <= 0){
+		if(nodo_actual->izquierda == NULL){
+			nodo->elemento = elemento;
+			nodo->izquierda = NULL;
+			nodo->derecha = NULL;
+			nodo_actual->izquierda = nodo;
+			arbol->tamanio++;
+			return arbol;
+		}
+		nodo_actual = nodo_actual->izquierda;
+	}
+
+	while(arbol->comparador(elemento, nodo_actual->elemento) > 0){
+		if(nodo_actual->derecha == NULL){
+			nodo->elemento = elemento;
+			nodo->izquierda = NULL;
+			nodo->derecha = NULL;
+			nodo_actual->derecha = nodo;
+			arbol->tamanio++;
+			return arbol;
+		}
+		nodo_actual = nodo_actual->derecha;
+	}
+
 	return arbol;
 }
 
