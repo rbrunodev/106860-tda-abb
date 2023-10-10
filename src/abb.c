@@ -75,7 +75,30 @@ void *abb_quitar(abb_t *arbol, void *elemento)
 
 void *abb_buscar(abb_t *arbol, void *elemento)
 {
-	return elemento;
+	if(!arbol)
+		return NULL;
+
+	nodo_abb_t *nodo_actual = arbol->nodo_raiz;
+
+	while(arbol->comparador(elemento, nodo_actual->elemento) < 0){
+		if(nodo_actual->izquierda == NULL && nodo_actual->derecha == NULL){
+			return NULL;
+		}
+		nodo_actual = nodo_actual->izquierda;
+	}
+
+	while(arbol->comparador(elemento, nodo_actual->elemento) > 0){
+		if(nodo_actual->izquierda == NULL && nodo_actual->derecha == NULL){
+			return NULL;
+		}
+		nodo_actual = nodo_actual->derecha;
+	}
+
+	if(arbol->comparador(elemento, nodo_actual->elemento) == 0){
+		return nodo_actual->elemento;
+	}
+	
+	return NULL;
 }
 
 bool abb_vacio(abb_t *arbol)
