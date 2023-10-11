@@ -94,11 +94,7 @@ void *abb_buscar(abb_t *arbol, void *elemento)
 		nodo_actual = nodo_actual->derecha;
 	}
 
-	if(arbol->comparador(elemento, nodo_actual->elemento) == 0){
-		return nodo_actual->elemento;
-	}
-	
-	return NULL;
+	return nodo_actual->elemento == elemento ? elemento : NULL;
 }
 
 bool abb_vacio(abb_t *arbol)
