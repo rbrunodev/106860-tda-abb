@@ -41,31 +41,27 @@ abb_t *abb_insertar(abb_t *arbol, void *elemento)
 	}
 
 	nodo_abb_t *nodo_actual = arbol->nodo_raiz;
+	nodo_abb_t *nodo_padre = NULL;
 
-	while(arbol->comparador(elemento, nodo_actual->elemento) <= 0){
-		if(nodo_actual->izquierda == NULL){
-			nodo->elemento = elemento;
-			nodo->izquierda = NULL;
-			nodo->derecha = NULL;
-			nodo_actual->izquierda = nodo;
-			arbol->tamanio++;
-			return arbol;
-		}
-		nodo_actual = nodo_actual->izquierda;
-	}
+	while (nodo_actual) {
+        nodo_padre = nodo_actual;
+        if (arbol->comparador(elemento, nodo_actual->elemento) == 0) {
+            free(nodo);
+            return NULL;
+        }
+		if (arbol->comparador(elemento, nodo_actual->elemento) < 0)
+            nodo_actual = nodo_actual->izquierda;
+        else 
+            nodo_actual = nodo_actual->derecha;
+    }
 
-	while(arbol->comparador(elemento, nodo_actual->elemento) > 0){
-		if(nodo_actual->derecha == NULL){
-			nodo->elemento = elemento;
-			nodo->izquierda = NULL;
-			nodo->derecha = NULL;
-			nodo_actual->derecha = nodo;
-			arbol->tamanio++;
-			return arbol;
-		}
-		nodo_actual = nodo_actual->derecha;
-	}
+    if (arbol->comparador(elemento, nodo_padre->elemento) < 0) {
+        nodo_padre->izquierda = nodo;
+    } else {
+        nodo_padre->derecha = nodo;
+    }
 
+    arbol->tamanio++;
 	return arbol;
 }
 
@@ -80,27 +76,16 @@ void *abb_buscar(abb_t *arbol, void *elemento)
 		return NULL;
 
 	nodo_abb_t *nodo_actual = arbol->nodo_raiz;
-	printf("elemento: %p\n", elemento);
 
 	while(nodo_actual){
-		printf("nodo_actual: %p\n", nodo_actual->elemento);
-		int comparador = arbol->comparador(elemento, nodo_actual->elemento);
-		if(comparador == 0){
-			printf("encontrado\n");
+		if(arbol->comparador(elemento, nodo_actual->elemento) == 0)
 			return nodo_actual->elemento;
-		}
-		if(comparador < 0){
-			printf("izquierda\n");
-			printf("nodo_actual_izq: %p\n", nodo_actual->izquierda->elemento);
+		if(arbol->comparador(elemento, nodo_actual->elemento) < 0)
 			nodo_actual = nodo_actual->izquierda;
-		} else{
-			printf("derecha\n");
-			printf("nodo_actual_der: %p\n", nodo_actual->derecha->elemento);
+		else
 			nodo_actual = nodo_actual->derecha;
-		}
 	}
 
-	printf("no encontrado\n");
 	return NULL;
 }
 
