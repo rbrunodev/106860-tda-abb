@@ -60,15 +60,15 @@ abb_t *abb_insertar(abb_t *arbol, void *elemento)
             nodo_actual = nodo_actual->izquierda;
 		}
         else {
-			if(nodo_actual->izquierda == NULL){
+			if(nodo_actual->derecha == NULL){
 				nodo->elemento = elemento;
 				nodo->izquierda = NULL;
 				nodo->derecha = NULL;
-				nodo_actual->izquierda = nodo;
+				nodo_actual->derecha = nodo;
 				arbol->tamanio++;
 				return arbol;
 			}
-			nodo_actual = nodo_actual->izquierda;
+			nodo_actual = nodo_actual->derecha;
 		}
     }
 
