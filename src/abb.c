@@ -83,7 +83,7 @@ void *abb_buscar(abb_t *arbol, void *elemento)
 	while(nodo_actual){
 		int comparador = arbol->comparador(elemento, nodo_actual->elemento);
 		if(comparador == 0)
-			return nodo_actual->elemento;
+			return nodo_actual;
 		if(comparador < 0)
 			nodo_actual = nodo_actual->izquierda;
 		else
