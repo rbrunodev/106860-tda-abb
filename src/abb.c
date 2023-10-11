@@ -91,11 +91,11 @@ void *abb_buscar(abb_t *arbol, void *elemento)
 		}
 		if(comparador < 0){
 			printf("izquierda\n");
-			printf("nodo_actual_izq: %p\n", nodo_actual->izquierda);
+			printf("nodo_actual_izq: %p\n", nodo_actual->izquierda->elemento);
 			nodo_actual = nodo_actual->izquierda;
 		} else{
 			printf("derecha\n");
-			printf("nodo_actual_der: %p\n", nodo_actual->derecha);
+			printf("nodo_actual_der: %p\n", nodo_actual->derecha->elemento);
 			nodo_actual = nodo_actual->derecha;
 		}
 	}
