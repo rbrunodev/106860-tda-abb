@@ -106,7 +106,7 @@ void *buscar_predecesor(abb_t *arbol, nodo_abb_t *nodo_actual)
 		nodo_predecesor = nodo_predecesor->derecha;
 	}
 
-	return nodo_predecesor->elemento;
+	return nodo_predecesor;
 }
 
 void *abb_quitar(abb_t *arbol, void *elemento)
@@ -114,42 +114,59 @@ void *abb_quitar(abb_t *arbol, void *elemento)
 	if(!arbol)
 		return NULL;
 
-	nodo_abb_t *nodo_quitar = arbol->nodo_raiz;
+	nodo_abb_t *nodo_actual = arbol->nodo_raiz;
+	nodo_abb_t *nodo_padre = NULL;
 
-	while(nodo_quitar){
-		int comparador = arbol->comparador(elemento, nodo_quitar->elemento);
+	while(nodo_actual){
+		int comparador = arbol->comparador(elemento, nodo_actual->elemento);
 		if(comparador == 0){
-			if(nodo_quitar->izquierda != NULL && nodo_quitar->derecha != NULL){
-				void *elemento_predecesor = buscar_predecesor(arbol, nodo_quitar);
-				nodo_quitar->elemento = elemento_predecesor;
-				abb_quitar(arbol, elemento_predecesor);
+			if(nodo_actual->izquierda != NULL && nodo_actual->derecha != NULL){
+				nodo_abb_t *predecesor = buscar_predecesor(arbol, nodo_actual);
+				nodo_actual->elemento = predecesor->elemento;
+				if (nodo_actual->izquierda == predecesor) {
+                    nodo_actual->izquierda = predecesor->izquierda;
+                } else {
+                    nodo_actual->derecha = predecesor->izquierda;
+                }
+                nodo_actual = predecesor;
+				free(nodo_actual);
+            	return elemento;
+			}
+			if(nodo_actual->izquierda != NULL){
+				if(!nodo_padre){
+					arbol->nodo_raiz = nodo_actual->izquierda;
+					free(nodo_actual);
+					return elemento;
+				}
+				nodo_padre->izquierda = nodo_actual->izquierda;
+				free(nodo_actual);
 				return elemento;
 			}
-			else if(nodo_quitar->izquierda != NULL){
-				nodo_abb_t *nodo_auxiliar = nodo_quitar->izquierda;
-				nodo_quitar->elemento = nodo_auxiliar->elemento;
-				nodo_quitar->izquierda = nodo_auxiliar->izquierda;
-				nodo_quitar->derecha = nodo_auxiliar->derecha;
-				free(nodo_auxiliar);
+			if(nodo_actual->derecha != NULL){
+				if(!nodo_padre){
+					arbol->nodo_raiz = nodo_actual->izquierda;
+					free(nodo_actual);
+					return elemento;
+				}
+				nodo_padre->derecha = nodo_actual->derecha;
+				free(nodo_actual);
 				return elemento;
 			}
-			else if(nodo_quitar->derecha != NULL){
-				nodo_abb_t *nodo_auxiliar = nodo_quitar->derecha;
-				nodo_quitar->elemento = nodo_auxiliar->elemento;
-				nodo_quitar->izquierda = nodo_auxiliar->izquierda;
-				nodo_quitar->derecha = nodo_auxiliar->derecha;
-				free(nodo_auxiliar);
-				return elemento;
+			if(!nodo_padre){
+				arbol->nodo_raiz = NULL;
+			} else if (nodo_padre->izquierda == nodo_actual) {
+				nodo_padre->izquierda = NULL;
+			} else {
+				nodo_padre->derecha = NULL;
 			}
-			else{
-				free(nodo_quitar);
-				return elemento;
-			}
+			free(nodo_actual);
+			return elemento;
 		}
+		nodo_padre = nodo_actual;
 		if(comparador < 0)
-			nodo_quitar = nodo_quitar->izquierda;
+			nodo_actual = nodo_actual->izquierda;
 		else
-			nodo_quitar = nodo_quitar->derecha;
+			nodo_actual = nodo_actual->derecha;
 	}
 	return NULL;
 }
