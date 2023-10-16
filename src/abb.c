@@ -116,53 +116,80 @@ void nodo_destruir(nodo_abb_t *nodo) {
     free(nodo);
 }
 
-void *abb_quitar(abb_t *arbol, void *elemento)
-{
-	if(!arbol)
-		return NULL;
-	
-	nodo_abb_t *nodo_actual = arbol->nodo_raiz;
-	nodo_abb_t *nodo_padre = NULL;
+void *abb_quitar(abb_t *arbol, void *elemento) {
+    if (arbol == NULL || arbol->nodo_raiz == NULL) {
+        return NULL; 
+    }
 
-	while(nodo_actual){
-		int comparador = arbol->comparador(elemento, nodo_actual->elemento);
-		if(comparador == 0){
-			if(nodo_actual->derecha != NULL && nodo_actual->izquierda != NULL){
-				printf("DOS HIJOS\n");
-				nodo_abb_t *predecesor = buscar_predecesor(arbol, nodo_actual);
-				nodo_actual->elemento = predecesor;
-				if (nodo_actual->izquierda == predecesor) {
-					nodo_actual->izquierda = predecesor->izquierda;
-				} else {
-					nodo_actual->derecha = predecesor->izquierda;
-				}
+    nodo_abb_t *nodo_actual = arbol->nodo_raiz;
+    nodo_abb_t *nodo_padre = NULL;
 
-				nodo_destruir(predecesor);
-				arbol->tamanio--;
-				return elemento;
-			}
+    while (nodo_actual != NULL) {
+        int comparacion = arbol->comparador(nodo_actual->elemento, elemento);
+    
+        if (comparacion == 0) {
+            //sin 
+            if (nodo_actual->izquierda == NULL && nodo_actual->derecha == NULL) {
+                if (nodo_padre == NULL) {
+                    arbol->nodo_raiz = NULL; 
+                } else if (nodo_padre->izquierda == nodo_actual) {
+                    nodo_padre->izquierda = NULL;
+                } else {
+                    nodo_padre->derecha = NULL;
+                }
+                void *elemento_eliminado = nodo_actual->elemento;
+                free(nodo_actual);
+                arbol->tamanio--;
+                return elemento_eliminado;
+            }
 
-			nodo_abb_t *nodo_hijo = nodo_actual->izquierda ? nodo_actual->izquierda : nodo_actual->derecha;
-			if (!nodo_padre) {
-				arbol->nodo_raiz = nodo_hijo;
-			} else if (nodo_padre->izquierda == nodo_actual) {
-				nodo_padre->izquierda = nodo_hijo;
-			} else {
-				nodo_padre->derecha = nodo_hijo;
-			}
-			free(nodo_actual);
-			arbol->tamanio--;
-			return elemento;
-		}
-		nodo_padre = nodo_actual;
-		if(comparador < 0)
-			nodo_actual = nodo_actual->izquierda;
-		else
-			nodo_actual = nodo_actual->derecha;
-	}
+            // un hijo
+            if (nodo_actual->izquierda == NULL) {
+                if (nodo_padre == NULL) {
+                    arbol->nodo_raiz = nodo_actual->derecha; 
+                } else if (nodo_padre->izquierda == nodo_actual) {
+                    nodo_padre->izquierda = nodo_actual->derecha;
+                } else {
+                    nodo_padre->derecha = nodo_actual->derecha;
+                }
+                void *elemento_eliminado = nodo_actual->elemento;
+                free(nodo_actual);
+                arbol->tamanio--;
+                return elemento_eliminado;
+            }
 
-	return NULL;
+            if (nodo_actual->derecha == NULL) {
+                if (nodo_padre == NULL) {
+                    arbol->nodo_raiz = nodo_actual->izquierda;
+                } else if (nodo_padre->izquierda == nodo_actual) {
+                    nodo_padre->izquierda = nodo_actual->izquierda;
+                } else {
+                    nodo_padre->derecha = nodo_actual->izquierda;
+                }
+                void *elemento_eliminado = nodo_actual->elemento;
+                free(nodo_actual);
+                arbol->tamanio--;
+                return elemento_eliminado;
+            }
+
+            //  dos hijos
+            nodo_abb_t *predecesor_inorden = encontrar_predecesor_inorden(nodo_actual);
+            nodo_actual->elemento = predecesor_inorden->elemento;
+            elemento = predecesor_inorden->elemento; 
+            nodo_actual = predecesor_inorden; 
+        }
+
+        nodo_padre = nodo_actual;
+        
+        if (comparacion > 0) {
+            nodo_actual = nodo_actual->izquierda;
+        } else {
+            nodo_actual = nodo_actual->derecha;
+        }
+    }
+    return NULL;
 }
+
 
 // void *abb_quitar(abb_t *arbol, void *elemento)
 // {
