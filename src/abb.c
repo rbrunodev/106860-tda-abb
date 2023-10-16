@@ -116,89 +116,46 @@ void nodo_destruir(nodo_abb_t *nodo) {
     free(nodo);
 }
 
+nodo_abb_t *eliminar_recursivo(nodo_abb_t *nodo_actual, void *elemento, abb_t *arbol){
+	if (nodo_actual == NULL) {
+        return NULL;
+    }
+
+	int comparador = arbol->comparador(elemento, nodo_actual->elemento);
+
+	if(comparador == 0){
+		if(nodo_actual->izquierda != NULL && nodo_actual->derecha != NULL){
+			void *predecesor = buscar_predecesor(arbol, nodo_actual);
+			nodo_actual->elemento = predecesor;
+			nodo_actual->izquierda = eliminar_recursivo(nodo_actual->izquierda, predecesor, arbol);
+			return elemento;
+		}
+
+		abb_t *siguiente;
+		if(nodo_actual->izquierda)
+			siguiente = nodo_actual->izquierda;
+		else
+			siguiente = nodo_actual->derecha;
+		
+		free(nodo_actual);
+		arbol->tamanio--;
+		return elemento;
+	}
+	if(comparador < 0)
+		nodo_actual->izquierda = eliminar_recursivo(nodo_actual->izquierda, elemento, arbol);
+	else
+		nodo_actual->derecha = eliminar_recursivo(nodo_actual->derecha, elemento, arbol);
+
+	return nodo_actual;
+}
+
 void *abb_quitar(abb_t *arbol, void *elemento) {
     if (arbol == NULL || arbol->nodo_raiz == NULL) {
         return NULL; 
     }
 
-    nodo_abb_t *nodo_actual = arbol->nodo_raiz;
-    nodo_abb_t *nodo_padre = NULL;
-
-    while (nodo_actual != NULL) {
-        int comparacion = arbol->comparador(nodo_actual->elemento, elemento);
-    
-        if (comparacion == 0) {
-            //sin 
-            if (nodo_actual->izquierda == NULL && nodo_actual->derecha == NULL) {
-                if (nodo_padre == NULL) {
-                    arbol->nodo_raiz = NULL; 
-                } else if (nodo_padre->izquierda == nodo_actual) {
-                    nodo_padre->izquierda = NULL;
-                } else {
-                    nodo_padre->derecha = NULL;
-                }
-                void *elemento_eliminado = nodo_actual->elemento;
-                free(nodo_actual);
-                arbol->tamanio--;
-                return elemento_eliminado;
-            }
-
-            // un hijo
-            if (nodo_actual->izquierda == NULL) {
-                if (nodo_padre == NULL) {
-                    arbol->nodo_raiz = nodo_actual->derecha; 
-                } else if (nodo_padre->izquierda == nodo_actual) {
-                    nodo_padre->izquierda = nodo_actual->derecha;
-                } else {
-                    nodo_padre->derecha = nodo_actual->derecha;
-                }
-                void *elemento_eliminado = nodo_actual->elemento;
-                free(nodo_actual);
-                arbol->tamanio--;
-                return elemento_eliminado;
-            }
-
-            if (nodo_actual->derecha == NULL) {
-                if (nodo_padre == NULL) {
-                    arbol->nodo_raiz = nodo_actual->izquierda;
-                } else if (nodo_padre->izquierda == nodo_actual) {
-                    nodo_padre->izquierda = nodo_actual->izquierda;
-                } else {
-                    nodo_padre->derecha = nodo_actual->izquierda;
-                }
-                void *elemento_eliminado = nodo_actual->elemento;
-                free(nodo_actual);
-                arbol->tamanio--;
-                return elemento_eliminado;
-            }
-
-            //  dos hijos
-            nodo_abb_t *predecesor_inorden = nodo_actual->izquierda;
-            nodo_abb_t *nodo_padre_predecesor = nodo_actual;
-            while (predecesor_inorden->derecha != NULL) {
-                nodo_padre_predecesor = predecesor_inorden;
-                predecesor_inorden = predecesor_inorden->derecha;
-            }
-            nodo_actual->elemento = predecesor_inorden->elemento;
-            if (nodo_padre_predecesor == nodo_actual) {
-                nodo_padre_predecesor->izquierda = predecesor_inorden->izquierda;
-            } else {
-                nodo_padre_predecesor->derecha = predecesor_inorden->izquierda;
-            }
-            free(predecesor_inorden);
-            arbol->tamanio--;
-			return elemento;
-        }
-
-        nodo_padre = nodo_actual;
-        
-        if (comparacion > 0) {
-            nodo_actual = nodo_actual->izquierda;
-        } else {
-            nodo_actual = nodo_actual->derecha;
-        }
-    }
-    return NULL;
+	arbol->nodo_raiz = eliminar_recursivo(arbol->nodo_raiz, elemento, arbol);
+    return elemento;
 }
 
 
