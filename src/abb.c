@@ -263,7 +263,7 @@ size_t recorrer_inorden(nodo_abb_t *actual, void **array, size_t tamanio_array, 
 		return indice;
 	
 	if(actual->izquierda)
-		recorrer_inorden(actual->izquierda, array, tamanio_array, indice);
+		indice = recorrer_inorden(actual->izquierda, array, tamanio_array, indice);
 
 	if(indice < tamanio_array){
 		array[indice] = actual->elemento;
@@ -271,36 +271,45 @@ size_t recorrer_inorden(nodo_abb_t *actual, void **array, size_t tamanio_array, 
 	}
 
 	if(actual->derecha)
-		recorrer_inorden(actual->derecha, array, tamanio_array, indice);
+		indice = recorrer_inorden(actual->derecha, array, tamanio_array, indice);
 	
+	return indice;
+}
+
+size_t recorrer_postorden(nodo_abb_t *actual, void **array, size_t tamanio_array, size_t indice)
+{
+	if(!actual || indice >= tamanio_array)
+		return indice;
+	
+	if(actual->izquierda)
+		indice = recorrer_postorden(actual->izquierda, array, tamanio_array, indice);
+
+	if(actual->derecha)
+		indice = recorrer_postorden(actual->derecha, array, tamanio_array, indice);
+	
+	if(indice < tamanio_array){
+		array[indice] = actual->elemento;
+		indice++;
+	}
 	return indice;
 }
 
 size_t abb_recorrer(abb_t *arbol, abb_recorrido recorrido, void **array,
 		    size_t tamanio_array)
 {
-	if(!arbol)
-		return 0;
-	
-	if(!arbol->nodo_raiz)
-		return 0;
-	
+	if (!arbol || !arbol->nodo_raiz) {
+        return 0;
+    }
 
-	//recorrer inorden es izquierdp, actual, derecha
-	if(recorrido == INORDEN){
-		return recorrer_inorden(arbol->nodo_raiz, array, tamanio_array, 0);
-	}
-	 
-	//recorrer preorden es actual, izquierda, derecha
-	if(recorrido == PREORDEN){
-		return recorrer_preorden(arbol->nodo_raiz, array, tamanio_array, 0);
-	}
+    size_t indice = 0;
 
-	//recorrer postorden es izquierda, derecha, actual
-	if(recorrido == POSTORDEN){
-		//llamar a la funcion con el elemento actual
-		return 0;
-	}
+    if (recorrido == INORDEN) {
+        indice = recorrer_inorden(arbol->nodo_raiz, array, tamanio_array, indice);
+    } else if (recorrido == PREORDEN) {
+        indice = recorrer_preorden(arbol->nodo_raiz, array, tamanio_array, indice);
+    } else if (recorrido == POSTORDEN) {
+        indice = recorrer_postorden(arbol->nodo_raiz, array, tamanio_array, indice);
+    }
 
-	return 0;
+    return indice;
 }
