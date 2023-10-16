@@ -132,7 +132,7 @@ void *abb_quitar(abb_t *arbol, void *elemento)
 				return NULL;
 			}
 
-			if(arbol->tamanio == 1){
+			if(arbol->tamanio == 1 && nodo_actual == arbol->nodo_raiz){
 				arbol->nodo_raiz = NULL;
 				nodo_destruir(nodo_actual);
 				arbol->tamanio--;
@@ -145,12 +145,10 @@ void *abb_quitar(abb_t *arbol, void *elemento)
 			else
 				siguiente = nodo_actual->derecha;
 
-			if(nodo_padre != NULL){
-				if(nodo_padre->izquierda == nodo_actual){
-					nodo_padre->izquierda = siguiente;
-				} else {
-					nodo_padre->derecha = siguiente;
-				}
+			if(nodo_padre->izquierda == nodo_actual){
+				nodo_padre->izquierda = siguiente;
+			} else {
+				nodo_padre->derecha = siguiente;
 			}
 			nodo_destruir(nodo_actual);
 			arbol->tamanio--;
