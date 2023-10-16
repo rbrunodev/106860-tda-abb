@@ -249,10 +249,10 @@ size_t recorrer_preorden(nodo_abb_t *actual, void **array, size_t tamanio_array,
     }
 
 	if(actual->izquierda)
-		recorrer_preorden(actual->izquierda, array, tamanio_array, indice);
+		indice = recorrer_preorden(actual->izquierda, array, tamanio_array, indice);
 
 	if(actual->derecha)
-		recorrer_preorden(actual->derecha, array, tamanio_array, indice);
+		indice = recorrer_preorden(actual->derecha, array, tamanio_array, indice);
 
 	return indice;
 }
