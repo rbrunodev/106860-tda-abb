@@ -125,12 +125,14 @@ void *abb_quitar(abb_t *arbol, void *elemento)
 		return NULL;
 
 	nodo_abb_t *nodo_actual = arbol->nodo_raiz;
+	nodo_abb_t *nodo_padre = NULL;
+
 	while(nodo_actual){
 		int comparador = arbol->comparador(elemento, nodo_actual->elemento);
 		if(comparador == 0){
 			// sin hijos
 			if(nodo_actual->izquierda == NULL && nodo_actual->derecha == NULL){
-				free(nodo_actual);
+				nodo_destruir(nodo_actual);
 				arbol->tamanio--;
 				return elemento;
 			}
@@ -143,9 +145,21 @@ void *abb_quitar(abb_t *arbol, void *elemento)
 				arbol->tamanio--;
 				return elemento;
 			}
-			//
-			return NULL;
+
+			//1 hijo
+			nodo_abb_t *nodo_hijo = nodo_actual->izquierda ? nodo_actual->izquierda : nodo_actual->derecha;
+			if(!nodo_padre){
+				arbol->nodo_raiz = nodo_hijo;
+			} else if(nodo_padre->izquierda == nodo_actual){
+				nodo_padre->izquierda = nodo_hijo;
+			} else {
+				nodo_padre->derecha = nodo_hijo;
+			}	
+			free(nodo_hijo);
+			arbol->tamanio--;
+			return elemento;
 		}
+		nodo_padre = nodo_actual;
 		if(comparador < 0)
 			nodo_actual = nodo_actual->izquierda;
 		else
