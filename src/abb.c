@@ -128,12 +128,18 @@ void *abb_quitar(abb_t *arbol, void *elemento)
 	while(nodo_actual){
 		int comparador = arbol->comparador(elemento, nodo_actual->elemento);
 		if(comparador == 0){
+			// sin hijos
+			if(nodo_actual->izquierda == NULL && nodo_actual->derecha == NULL){
+				free(nodo_actual);
+				arbol->tamanio--;
+				return elemento;
+			}
 
-			//dos hijos - funciona
+			// 2 hijos - funciona
 			if(nodo_actual->izquierda != NULL && nodo_actual->derecha != NULL){
 				void *predecesor = buscar_predecesor(arbol, nodo_actual);
 				nodo_actual->elemento = predecesor;
-				nodo_destruir(predecesor);
+				free(predecesor);
 				arbol->tamanio--;
 				return elemento;
 			}
