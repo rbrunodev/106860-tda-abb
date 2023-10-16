@@ -173,10 +173,9 @@ void *abb_quitar(abb_t *arbol, void *elemento) {
             }
 
             //  dos hijos
-            nodo_abb_t *predecesor_inorden = encontrar_predecesor_inorden(nodo_actual);
-            nodo_actual->elemento = predecesor_inorden->elemento;
-            elemento = predecesor_inorden->elemento; 
-            nodo_actual = predecesor_inorden; 
+            nodo_abb_t *predecesor_inorden = buscar_predecesor(arbol, nodo_actual);
+            nodo_actual->elemento = predecesor_inorden;
+            elemento = predecesor_inorden; 
         }
 
         nodo_padre = nodo_actual;
