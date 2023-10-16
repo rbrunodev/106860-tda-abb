@@ -237,7 +237,7 @@ size_t abb_con_cada_elemento(abb_t *arbol, abb_recorrido recorrido,
 }
 
 
-size_t *recorrer_preorden(nodo_abb_t *actual, void **array, size_t tamanio_array, size_t indice)
+size_t recorrer_preorden(nodo_abb_t *actual, void **array, size_t tamanio_array, size_t indice)
 {
 	if (actual == NULL || indice >= tamanio_array) {
         return indice;
