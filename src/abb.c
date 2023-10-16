@@ -43,10 +43,6 @@ abb_t *abb_insertar(abb_t *arbol, void *elemento)
 	nodo_abb_t *nodo_actual = arbol->nodo_raiz;
 
 	while (nodo_actual) {
-        // if (arbol->comparador(elemento, nodo_actual->elemento) == 0) {
-        //     free(nodo);
-        //     return NULL;
-        // }
 		if (arbol->comparador(elemento, nodo_actual->elemento) <= 0){
 			if(nodo_actual->izquierda == NULL){
 				nodo->elemento = elemento;
@@ -71,6 +67,7 @@ abb_t *abb_insertar(abb_t *arbol, void *elemento)
 		}
     }
 
+	free(nodo);
 	return arbol;
 }
 
