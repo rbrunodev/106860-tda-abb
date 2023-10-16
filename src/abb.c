@@ -173,9 +173,21 @@ void *abb_quitar(abb_t *arbol, void *elemento) {
             }
 
             //  dos hijos
-            nodo_abb_t *predecesor_inorden = buscar_predecesor(arbol, nodo_actual);
-            nodo_actual->elemento = predecesor_inorden;
-            elemento = predecesor_inorden; 
+            nodo_abb_t *predecesor_inorden = nodo_actual->izquierda;
+            nodo_abb_t *nodo_padre_predecesor = nodo_actual;
+            while (predecesor_inorden->derecha != NULL) {
+                nodo_padre_predecesor = predecesor_inorden;
+                predecesor_inorden = predecesor_inorden->derecha;
+            }
+            nodo_actual->elemento = predecesor_inorden->elemento;
+            if (nodo_padre_predecesor == nodo_actual) {
+                nodo_padre_predecesor->izquierda = predecesor_inorden->izquierda;
+            } else {
+                nodo_padre_predecesor->derecha = predecesor_inorden->izquierda;
+            }
+            free(predecesor_inorden);
+            arbol->tamanio--;
+			return elemento;
         }
 
         nodo_padre = nodo_actual;
