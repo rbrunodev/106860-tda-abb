@@ -189,10 +189,13 @@ void *abb_quitar(abb_t *arbol, void *elemento)
 
 bool abb_vacio(abb_t *arbol)
 {
-	if(!arbol)
+	if(arbol == NULL)
 		return true;
 
-	return arbol->nodo_raiz == NULL;
+	if(arbol->nodo_raiz == NULL)
+		return true;
+
+	return false;
 }
 
 size_t abb_tamanio(abb_t *arbol)
