@@ -96,16 +96,16 @@ void *abb_buscar(abb_t *arbol, void *elemento)
 
 void *buscar_predecesor(abb_t *arbol, nodo_abb_t *nodo_actual)
 {
-	if(!arbol)
-		return NULL;
+	if (!arbol || !nodo_actual || !nodo_actual->izquierda)
+        return NULL;
 
-	nodo_abb_t *nodo_predecesor = nodo_actual->izquierda;
+    nodo_abb_t *nodo_predecesor = nodo_actual->izquierda;
 
-	while(nodo_predecesor->derecha){
-		nodo_predecesor = nodo_predecesor->derecha;
-	}
+    while (nodo_predecesor->derecha) {
+        nodo_predecesor = nodo_predecesor->derecha;
+    }
 
-	return nodo_predecesor->elemento;
+    return nodo_predecesor->elemento;
 }
 
 void nodo_destruir(nodo_abb_t *nodo) {
