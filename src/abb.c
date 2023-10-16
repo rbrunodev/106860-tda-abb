@@ -150,14 +150,20 @@ void *abb_quitar(abb_t *arbol, void *elemento)
 			nodo_abb_t *nodo_hijo = nodo_actual->izquierda ? nodo_actual->izquierda : nodo_actual->derecha;
 			if(!nodo_padre){
 				arbol->nodo_raiz = nodo_hijo;
+				free(nodo_hijo);
+				arbol->tamanio--;
+				return elemento;
 			} else if(nodo_padre->izquierda == nodo_actual){
 				nodo_padre->izquierda = nodo_hijo;
+				free(nodo_hijo);
+				arbol->tamanio--;
+				return elemento;
 			} else {
 				nodo_padre->derecha = nodo_hijo;
+				free(nodo_hijo);
+				arbol->tamanio--;
+				return elemento;
 			}	
-			free(nodo_hijo);
-			arbol->tamanio--;
-			return elemento;
 		}
 		nodo_padre = nodo_actual;
 		if(comparador < 0)
