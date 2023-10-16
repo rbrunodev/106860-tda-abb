@@ -207,6 +207,11 @@ void abb_destruir(abb_t *arbol)
 {
 	if(!arbol) return;
 
+	if(abb_tamanio(arbol) == 0){
+		free(arbol);
+		return;
+	}
+
 	nodo_destruir(arbol->nodo_raiz);
 	free(arbol);
 }
@@ -214,6 +219,11 @@ void abb_destruir(abb_t *arbol)
 void abb_destruir_todo(abb_t *arbol, void (*destructor)(void *))
 {
 	if(!arbol) return;
+
+	if(abb_tamanio(arbol) == 0){
+		free(arbol);
+		return;
+	}
 
 	if(destructor){
 		destructor(arbol->nodo_raiz->elemento);
