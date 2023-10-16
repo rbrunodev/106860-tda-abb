@@ -143,20 +143,7 @@ void *abb_quitar(abb_t *arbol, void *elemento)
 			nodo_actual = nodo_actual->derecha;
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	return NULL;
 // 	nodo_abb_t *nodo_padre = NULL;
 
 // 	while(nodo_actual){
