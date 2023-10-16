@@ -132,27 +132,29 @@ void *abb_quitar(abb_t *arbol, void *elemento)
 				return NULL;
 			}
 
-			if(arbol->tamanio == 1 && nodo_actual == arbol->nodo_raiz){
-				arbol->nodo_raiz = NULL;
-				nodo_destruir(nodo_actual);
-				arbol->tamanio--;
-				return elemento;
-			}
+			// if(nodo_padre == NULL){
+			// 	arbol->nodo_raiz = NULL;
+			// } else if (nodo_padre->izquierda == nodo_actual) {
+			// 	nodo_padre->izquierda = NULL;
+			// } else {
+			// 	nodo_padre->derecha = NULL;
+			// }
+			// free(nodo_actual);
+			// arbol->tamanio--;
 
-			nodo_abb_t *siguiente;
-			if(nodo_actual->izquierda)
-				siguiente = nodo_actual->izquierda;
-			else
-				siguiente = nodo_actual->derecha;
-
-			if(nodo_padre->izquierda == nodo_actual){
-				nodo_padre->izquierda = siguiente;
+			nodo_abb_t *nodo_hijo = nodo_actual->izquierda ? nodo_actual->izquierda : nodo_actual->derecha;
+			if (!nodo_padre) {
+				arbol->nodo_raiz = nodo_hijo;
+			} else if (nodo_padre->izquierda == nodo_actual) {
+				nodo_padre->izquierda = nodo_hijo;
 			} else {
-				nodo_padre->derecha = siguiente;
+				nodo_padre->derecha = nodo_hijo;
 			}
-			nodo_destruir(nodo_actual);
+			free(nodo_actual);
 			arbol->tamanio--;
 			return elemento;
+
+
 		}
 		nodo_padre = nodo_actual;
 		if(comparador < 0)
