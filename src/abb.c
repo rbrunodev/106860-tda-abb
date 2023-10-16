@@ -152,34 +152,48 @@ void *abb_quitar(abb_t *arbol, void *elemento)
 			}
 			//1 hijo
 			if(nodo_actual->derecha != NULL){
-				if(nodo_padre == NULL){
-					arbol->nodo_raiz = nodo_actual->derecha;
-					free(nodo_actual);
-					arbol->tamanio--;
-					return elemento;
-				}
-				if(nodo_padre->derecha == nodo_actual)
-					nodo_padre->derecha = nodo_actual->derecha;
-				else
-					nodo_padre->izquierda = nodo_actual->derecha;
-				free(nodo_actual);
+				nodo_abb_t *nodo_aux = nodo_actual;
+				nodo_actual = nodo_actual->derecha;
+				nodo_actual->derecha = NULL;
+				free(nodo_aux);
 				arbol->tamanio--;
 				return elemento;
+
+
+				// if(nodo_padre == NULL){
+				// 	arbol->nodo_raiz = nodo_actual->derecha;
+				// 	free(nodo_actual);
+				// 	arbol->tamanio--;
+				// 	return elemento;
+				// }
+				// if(nodo_padre->derecha == nodo_actual)
+				// 	nodo_padre->derecha = nodo_actual->derecha;
+				// else
+				// 	nodo_padre->izquierda = nodo_actual->derecha;
+				// free(nodo_actual);
+				// arbol->tamanio--;
+				// return elemento;
 			}
 			if(nodo_actual->izquierda != NULL){
-				if(nodo_padre == NULL){
-					arbol->nodo_raiz = nodo_actual->izquierda;
-					free(nodo_actual);
-					arbol->tamanio--;
-					return elemento;
-				}
-				if(nodo_padre->derecha == nodo_actual)
-					nodo_padre->derecha = nodo_actual->izquierda;
-				else
-					nodo_padre->izquierda = nodo_actual->izquierda;
-				free(nodo_actual);
+				nodo_abb_t *nodo_aux = nodo_actual;
+				nodo_actual = nodo_actual->izquierda;
+				nodo_actual->izquierda = NULL;
+				free(nodo_aux);
 				arbol->tamanio--;
 				return elemento;
+				// if(nodo_padre == NULL){
+				// 	arbol->nodo_raiz = nodo_actual->izquierda;
+				// 	free(nodo_actual);
+				// 	arbol->tamanio--;
+				// 	return elemento;
+				// }
+				// if(nodo_padre->derecha == nodo_actual)
+				// 	nodo_padre->derecha = nodo_actual->izquierda;
+				// else
+				// 	nodo_padre->izquierda = nodo_actual->izquierda;
+				// free(nodo_actual);
+				// arbol->tamanio--;
+				// return elemento;
 			}
 		}
 		nodo_padre = nodo_actual;
