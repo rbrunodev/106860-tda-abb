@@ -136,7 +136,7 @@ void *abb_quitar(abb_t *arbol, void *elemento)
 
 			//sin hijos
 			if(!nodo_actual->derecha && !nodo_actual->izquierda){
-				if(!nodo_padre){
+				if(nodo_padre == NULL){
 					arbol->nodo_raiz = NULL;
 					printf("Nodo padre: NULL\n");
 					printf("Nodo raiz: %p\n", (void *)arbol->nodo_raiz);
