@@ -131,27 +131,26 @@ void *abb_quitar(abb_t *arbol, void *elemento)
 				printf("DOS HIJOS\n");
 				nodo_abb_t *predecesor = buscar_predecesor(arbol, nodo_actual);
 				nodo_actual->elemento = predecesor;
-				if (nodo_actual->izquierda == predecesor) {
-					nodo_actual->izquierda = predecesor->izquierda;
-				} else {
-					nodo_actual->derecha = predecesor->derecha;
-				}
-				nodo_actual = predecesor;
 
-				nodo_destruir(nodo_actual);
+				nodo_abb_t *padre_predecesor = nodo_actual;
+				while (padre_predecesor->izquierda != predecesor && padre_predecesor->derecha != predecesor) {
+					if (arbol->comparador(predecesor->elemento, padre_predecesor->elemento) < 0) {
+						padre_predecesor = padre_predecesor->izquierda;
+					} else {
+						padre_predecesor = padre_predecesor->derecha;
+					}
+				}
+
+				if (padre_predecesor->izquierda == predecesor) {
+					padre_predecesor->izquierda = predecesor->izquierda;
+				} else {
+					padre_predecesor->derecha = predecesor->izquierda;
+				}
+
+				nodo_destruir(predecesor);
 				arbol->tamanio--;
 				return elemento;
 			}
-
-			// if(nodo_padre == NULL){
-			// 	arbol->nodo_raiz = NULL;
-			// } else if (nodo_padre->izquierda == nodo_actual) {
-			// 	nodo_padre->izquierda = NULL;
-			// } else {
-			// 	nodo_padre->derecha = NULL;
-			// }
-			// free(nodo_actual);
-			// arbol->tamanio--;
 
 			nodo_abb_t *nodo_hijo = nodo_actual->izquierda ? nodo_actual->izquierda : nodo_actual->derecha;
 			if (!nodo_padre) {
