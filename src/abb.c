@@ -139,7 +139,7 @@ void *abb_quitar(abb_t *arbol, void *elemento)
 				if(!nodo_padre){
 					arbol->nodo_raiz = NULL;
 					printf("Nodo padre: NULL\n");
-					printf("Nodo raiz: %p\n", arbol->nodo_raiz);
+					printf("Nodo raiz: %p\n", (void *)arbol->nodo_raiz);
 				} else if (nodo_padre->izquierda == nodo_actual) {
 					nodo_padre->izquierda = NULL;
 				} else {
@@ -147,7 +147,7 @@ void *abb_quitar(abb_t *arbol, void *elemento)
 				}
 				free(nodo_actual);
 				arbol->tamanio--;
-				printf(arbol->nodo_raiz == NULL ? "Nodo raiz: NULL\n" : "Nodo raiz: %p\n", arbol->nodo_raiz);
+				printf(arbol->nodo_raiz == NULL ? "Nodo raiz: NULL\n" : "Nodo raiz: %p\n", (void *)arbol->nodo_raiz);
 				return elemento;
 			}
 
