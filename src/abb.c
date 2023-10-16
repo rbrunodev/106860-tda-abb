@@ -75,11 +75,6 @@ abb_t *abb_insertar(abb_t *arbol, void *elemento)
 	return arbol;
 }
 
-void *abb_quitar(abb_t *arbol, void *elemento)
-{
-	return elemento;
-}
-
 void *abb_buscar(abb_t *arbol, void *elemento)
 {
 	if(!arbol)
@@ -97,6 +92,65 @@ void *abb_buscar(abb_t *arbol, void *elemento)
 			nodo_actual = nodo_actual->derecha;
 	}
 
+	return NULL;
+}
+
+void *buscar_predecesor(abb_t *arbol, nodo_abb_t *nodo_actual)
+{
+	if(!arbol)
+		return NULL;
+
+	nodo_abb_t *nodo_predecesor = nodo_actual->izquierda;
+
+	while(nodo_predecesor->derecha){
+		nodo_predecesor = nodo_predecesor->derecha;
+	}
+
+	return nodo_predecesor->elemento;
+}
+
+void *abb_quitar(abb_t *arbol, void *elemento)
+{
+	if(!arbol)
+		return NULL;
+
+	nodo_abb_t *nodo_quitar = arbol->nodo_raiz;
+
+	while(nodo_quitar){
+		int comparador = arbol->comparador(elemento, nodo_quitar->elemento);
+		if(comparador == 0){
+			if(nodo_quitar->izquierda != NULL && nodo_quitar->derecha != NULL){
+				void *elemento_predecesor = buscar_predecesor(arbol, nodo_quitar);
+				nodo_quitar->elemento = elemento_predecesor;
+				abb_quitar(arbol, elemento_predecesor);
+				return elemento;
+			}
+			else if(nodo_quitar->izquierda != NULL){
+				nodo_abb_t *nodo_auxiliar = nodo_quitar->izquierda;
+				nodo_quitar->elemento = nodo_auxiliar->elemento;
+				nodo_quitar->izquierda = nodo_auxiliar->izquierda;
+				nodo_quitar->derecha = nodo_auxiliar->derecha;
+				free(nodo_auxiliar);
+				return elemento;
+			}
+			else if(nodo_quitar->derecha != NULL){
+				nodo_abb_t *nodo_auxiliar = nodo_quitar->derecha;
+				nodo_quitar->elemento = nodo_auxiliar->elemento;
+				nodo_quitar->izquierda = nodo_auxiliar->izquierda;
+				nodo_quitar->derecha = nodo_auxiliar->derecha;
+				free(nodo_auxiliar);
+				return elemento;
+			}
+			else{
+				free(nodo_quitar);
+				return elemento;
+			}
+		}
+		if(comparador < 0)
+			nodo_quitar = nodo_quitar->izquierda;
+		else
+			nodo_quitar = nodo_quitar->derecha;
+	}
 	return NULL;
 }
 
