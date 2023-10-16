@@ -146,7 +146,7 @@ void *abb_quitar(abb_t *arbol, void *elemento)
 			}
 			if(nodo_actual->derecha != NULL){
 				if(!nodo_padre){
-					arbol->nodo_raiz = nodo_actual->izquierda;
+					arbol->nodo_raiz = nodo_actual->derecha;
 					free(nodo_actual);
 					return elemento;
 				}
