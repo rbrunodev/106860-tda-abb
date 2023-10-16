@@ -138,6 +138,10 @@ void *abb_quitar(abb_t *arbol, void *elemento)
 					arbol->tamanio--;
 					return elemento;
 				}
+				if(nodo_padre->derecha == nodo_actual)
+					nodo_padre->derecha = NULL;
+				else
+					nodo_padre->izquierda = NULL;
 				free(nodo_actual);
 				arbol->tamanio--;
 				return elemento;
