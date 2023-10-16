@@ -132,6 +132,8 @@ void *abb_quitar(abb_t *arbol, void *elemento)
 			// 	free(nodo_actual);
             // 	return elemento;
 			// }
+
+			//con un hijo
 			if(nodo_actual->izquierda != NULL){
 				if(!nodo_padre){
 					arbol->nodo_raiz = nodo_actual->izquierda;
@@ -152,15 +154,19 @@ void *abb_quitar(abb_t *arbol, void *elemento)
 				free(nodo_actual);
 				return elemento;
 			}
-			if(!nodo_padre){
-				arbol->nodo_raiz = NULL;
-			} else if (nodo_padre->izquierda == nodo_actual) {
-				nodo_padre->izquierda = NULL;
-			} else {
-				nodo_padre->derecha = NULL;
+
+			//sin hijos
+			if(!nodo_actual->derecha && !nodo_actual->izquierda){
+				if(!nodo_padre){
+					arbol->nodo_raiz = NULL;
+				} else if (nodo_padre->izquierda == nodo_actual) {
+					nodo_padre->izquierda = NULL;
+				} else {
+					nodo_padre->derecha = NULL;
+				}
+				free(nodo_actual);
+				return elemento;
 			}
-			free(nodo_actual);
-			return elemento;
 		}
 		nodo_padre = nodo_actual;
 		if(comparador < 0)
