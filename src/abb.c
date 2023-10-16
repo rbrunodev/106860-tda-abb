@@ -116,59 +116,47 @@ void nodo_destruir(nodo_abb_t *nodo) {
     free(nodo);
 }
 
-nodo_abb_t *eliminar_recursivo(nodo_abb_t *nodo_actual, void *elemento, abb_t *arbol){
-	if (nodo_actual == NULL) {
-        return NULL;
-    }
+void *abb_quitar(abb_t *arbol, void *elemento)
+{
+	if(!arbol)
+		return NULL;
+	
+	if(arbol->nodo_raiz == NULL)
+		return NULL;
 
-	int comparador = arbol->comparador(elemento, nodo_actual->elemento);
-
-	if(comparador == 0){
-		if(nodo_actual->izquierda != NULL && nodo_actual->derecha != NULL){
-			void *predecesor = buscar_predecesor(arbol, nodo_actual);
-			nodo_actual->elemento = predecesor;
-			nodo_actual->izquierda = eliminar_recursivo(nodo_actual->izquierda, predecesor, arbol);
-			return elemento;
+	nodo_abb_t *nodo_actual = arbol->nodo_raiz;
+	while(nodo_actual){
+		int comparador = arbol->comparador(elemento, nodo_actual->elemento);
+		if(comparador == 0){
+			if(nodo_actual->izquierda != NULL && nodo_actual->derecha != NULL){
+				void *predecesor = buscar_predecesor(arbol, nodo_actual);
+				nodo_actual->elemento = predecesor;
+				free(predecesor);
+				arbol->tamanio--;
+				return elemento;
+			}
+			return NULL;
 		}
-
-		if (nodo_actual->izquierda == NULL) {
-            free(nodo_actual);
-            arbol->tamanio--;
-            return elemento;
-        } else if (nodo_actual->derecha == NULL) {
-            free(nodo_actual);
-            arbol->tamanio--;
-            return elemento;
-        }
-
-		// free(nodo_actual);
-		// arbol->tamanio--;
-		// return elemento;
+		if(comparador < 0)
+			nodo_actual = nodo_actual->izquierda;
+		else
+			nodo_actual = nodo_actual->derecha;
 	}
-	if(comparador < 0)
-		nodo_actual->izquierda = eliminar_recursivo(nodo_actual->izquierda, elemento, arbol);
-	else
-		nodo_actual->derecha = eliminar_recursivo(nodo_actual->derecha, elemento, arbol);
-
-	return nodo_actual;
-}
-
-void *abb_quitar(abb_t *arbol, void *elemento) {
-    if (arbol == NULL || arbol->nodo_raiz == NULL) {
-        return NULL; 
-    }
-
-	arbol->nodo_raiz = eliminar_recursivo(arbol->nodo_raiz, elemento, arbol);
-    return elemento;
-}
 
 
-// void *abb_quitar(abb_t *arbol, void *elemento)
-// {
-// 	if(!arbol)
-// 		return NULL;
 
-// 	nodo_abb_t *nodo_actual = arbol->nodo_raiz;
+
+
+
+
+
+
+
+
+
+
+
+
 // 	nodo_abb_t *nodo_padre = NULL;
 
 // 	while(nodo_actual){
@@ -232,7 +220,7 @@ void *abb_quitar(abb_t *arbol, void *elemento) {
 // 			nodo_actual = nodo_actual->derecha;
 // 	}
 // 	return NULL;
-// }
+}
 
 bool abb_vacio(abb_t *arbol)
 {
