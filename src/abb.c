@@ -150,7 +150,7 @@ void *abb_quitar(abb_t *arbol, void *elemento)
 			if(nodo_actual->izquierda != NULL && nodo_actual->derecha != NULL){
 				void *predecesor = buscar_predecesor(arbol, nodo_actual);
 				nodo_actual->elemento = predecesor;
-				free(predecesor);
+				abb_quitar(arbol, predecesor);
 				arbol->tamanio--;
 				return elemento;
 			}
