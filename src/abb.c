@@ -131,7 +131,7 @@ nodo_abb_t *eliminar_recursivo(nodo_abb_t *nodo_actual, void *elemento, abb_t *a
 			return elemento;
 		}
 
-		abb_t *siguiente;
+		nodo_abb_t *siguiente;
 		if(nodo_actual->izquierda)
 			siguiente = nodo_actual->izquierda;
 		else
