@@ -142,7 +142,6 @@ void *abb_quitar(abb_t *arbol, void *elemento)
 				arbol->tamanio--;
 				return elemento;
 			}
-
 			// 2 hijos - funciona
 			if(nodo_actual->izquierda != NULL && nodo_actual->derecha != NULL){
 				void *predecesor = buscar_predecesor(arbol, nodo_actual);
@@ -151,7 +150,6 @@ void *abb_quitar(abb_t *arbol, void *elemento)
 				arbol->tamanio--;
 				return elemento;
 			}
-
 			//1 hijo
 			if(nodo_actual->derecha != NULL){
 				if(nodo_padre == NULL){
@@ -160,7 +158,10 @@ void *abb_quitar(abb_t *arbol, void *elemento)
 					arbol->tamanio--;
 					return elemento;
 				}
-				nodo_padre->derecha = nodo_actual->derecha;
+				if(nodo_padre->derecha == nodo_actual)
+					nodo_padre->derecha = nodo_actual->derecha;
+				else
+					nodo_padre->izquierda = nodo_actual->derecha;
 				free(nodo_actual);
 				arbol->tamanio--;
 				return elemento;
@@ -172,7 +173,10 @@ void *abb_quitar(abb_t *arbol, void *elemento)
 					arbol->tamanio--;
 					return elemento;
 				}
-				nodo_padre->izquierda = nodo_actual->izquierda;
+				if(nodo_padre->derecha == nodo_actual)
+					nodo_padre->derecha = nodo_actual->izquierda;
+				else
+					nodo_padre->izquierda = nodo_actual->izquierda;
 				free(nodo_actual);
 				arbol->tamanio--;
 				return elemento;
@@ -184,7 +188,6 @@ void *abb_quitar(abb_t *arbol, void *elemento)
 		else
 			nodo_actual = nodo_actual->derecha;
 	}
-
 	return NULL;
 }
 
