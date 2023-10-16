@@ -215,10 +215,10 @@ void abb_destruir_todo(abb_t *arbol, void (*destructor)(void *))
 {
 	if(!arbol) return;
 
-	nodo_destruir(arbol->nodo_raiz);
 	if(destructor){
 		destructor(arbol->nodo_raiz->elemento);
 	}
+	nodo_destruir(arbol->nodo_raiz);
 	free(arbol);
 }
 
