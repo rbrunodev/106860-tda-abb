@@ -118,7 +118,7 @@ void *abb_quitar(abb_t *arbol, void *elemento)
 	nodo_abb_t *nodo_padre = NULL;
 
 	while(nodo_actual){
-		int comparador = arbol->comparador(elemento, nodo_actujjmjjmjmmal->elemento);
+		int comparador = arbol->comparador(elemento, nodo_actual->elemento);
 		if(comparador == 0){
 			if(nodo_actual->izquierda != NULL && nodo_actual->derecha != NULL){
 			// 	nodo_abb_t *predecesor = buscar_predecesor(arbol, nodo_actual);
