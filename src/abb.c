@@ -71,28 +71,6 @@ abb_t *abb_insertar(abb_t *arbol, void *elemento)
 	return arbol;
 }
 
-void *abb_buscar(abb_t *arbol, void *elemento)
-{
-	if(!arbol)
-		return NULL;
-
-	if(!arbol->nodo_raiz)
-		return NULL;
-
-	nodo_abb_t *nodo_actual = arbol->nodo_raiz;
-
-	while(nodo_actual){
-		if(arbol->comparador(elemento, nodo_actual->elemento) == 0)
-			return nodo_actual->elemento;
-		if(arbol->comparador(elemento, nodo_actual->elemento) < 0)
-			nodo_actual = nodo_actual->izquierda;
-		else
-			nodo_actual = nodo_actual->derecha;
-	}
-
-	return NULL;
-}
-
 void *buscar_predecesor(abb_t *arbol, nodo_abb_t *nodo_actual)
 {
 	if (!arbol || !nodo_actual || !nodo_actual->izquierda)
@@ -170,6 +148,28 @@ void *abb_quitar(abb_t *arbol, void *elemento)
 	return NULL;
 }
 
+void *abb_buscar(abb_t *arbol, void *elemento)
+{
+	if(!arbol)
+		return NULL;
+
+	if(!arbol->nodo_raiz)
+		return NULL;
+
+	nodo_abb_t *nodo_actual = arbol->nodo_raiz;
+
+	while(nodo_actual){
+		if(arbol->comparador(elemento, nodo_actual->elemento) == 0)
+			return nodo_actual->elemento;
+		if(arbol->comparador(elemento, nodo_actual->elemento) < 0)
+			nodo_actual = nodo_actual->izquierda;
+		else
+			nodo_actual = nodo_actual->derecha;
+	}
+
+	return NULL;
+}
+
 bool abb_vacio(abb_t *arbol)
 {
 	if(arbol == NULL)
@@ -236,8 +236,54 @@ size_t abb_con_cada_elemento(abb_t *arbol, abb_recorrido recorrido,
 	return 0;
 }
 
+
+void *recorrer_preorden(nodo_abb_t *actual, void **array, size_t tamanio_array, size_t indice)
+{
+	if (actual == NULL || indice >= tamanio_array) {
+        return indice;
+    }
+
+	if (indice < tamanio_array) {
+        array[indice] = actual->elemento;
+        indice++;
+    }
+
+	if(actual->izquierda)
+		recorrer_preorden(actual->izquierda, array, tamanio_array, indice);
+
+	if(actual->derecha)
+		recorrer_preorden(actual->derecha, array, tamanio_array, indice);
+
+	return indice;
+}
+
+
 size_t abb_recorrer(abb_t *arbol, abb_recorrido recorrido, void **array,
 		    size_t tamanio_array)
 {
+	if(!arbol)
+		return 0;
+	
+	if(!arbol->nodo_raiz)
+		return 0;
+	
+
+	//recorrer inorden es izquierdp, actual, derecha
+	if(recorrido == INORDEN){
+		//llamar a la funcion con el elemento actual
+		return 0;
+	}
+	 
+	//recorrer preorden es actual, izquierda, derecha
+	if(recorrido == PREORDEN){
+		return recorrer_preorden(arbol->nodo_raiz, array, tamanio_array, 0);
+	}
+
+	//recorrer postorden es izquierda, derecha, actual
+	if(recorrido == POSTORDEN){
+		//llamar a la funcion con el elemento actual
+		return 0;
+	}
+
 	return 0;
 }
