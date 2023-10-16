@@ -105,7 +105,7 @@ void *buscar_predecesor(abb_t *arbol, nodo_abb_t *nodo_actual)
         nodo_predecesor = nodo_predecesor->derecha;
     }
 
-    return nodo_predecesor;
+    return nodo_predecesor->elemento;
 }
 
 void nodo_destruir(nodo_abb_t *nodo) {
@@ -148,9 +148,9 @@ void *abb_quitar(abb_t *arbol, void *elemento)
 			}
 			// 2 hijos - funciona
 			if(nodo_actual->izquierda != NULL && nodo_actual->derecha != NULL){
-				nodo_abb_t *nodo_predecesor = buscar_predecesor(arbol, nodo_actual);
-				nodo_actual->elemento = nodo_predecesor->elemento;
-				free(nodo_predecesor);
+				void *predecesor = buscar_predecesor(arbol, nodo_actual);
+				nodo_actual->elemento = predecesor;
+				// free(predecesor);
 				arbol->tamanio--;
 				return elemento;
 			}
