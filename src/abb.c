@@ -6,12 +6,12 @@
 
 abb_t *abb_crear(abb_comparador comparador)
 {
+	if(comparador == NULL)
+		return NULL;
+
 	abb_t *arbol = malloc(sizeof(abb_t));
 
 	if (arbol == NULL)
-		return NULL;
-	
-	if(comparador == NULL)
 		return NULL;
 	
 	arbol->nodo_raiz = NULL;
