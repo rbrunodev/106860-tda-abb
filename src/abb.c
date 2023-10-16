@@ -131,20 +131,10 @@ void *abb_quitar(abb_t *arbol, void *elemento)
 				printf("DOS HIJOS\n");
 				nodo_abb_t *predecesor = buscar_predecesor(arbol, nodo_actual);
 				nodo_actual->elemento = predecesor;
-
-				nodo_abb_t *padre_predecesor = nodo_actual;
-				while (padre_predecesor->izquierda != predecesor && padre_predecesor->derecha != predecesor) {
-					if (arbol->comparador(predecesor->elemento, padre_predecesor->elemento) < 0) {
-						padre_predecesor = padre_predecesor->izquierda;
-					} else {
-						padre_predecesor = padre_predecesor->derecha;
-					}
-				}
-
-				if (padre_predecesor->izquierda == predecesor) {
-					padre_predecesor->izquierda = predecesor->izquierda;
+				if (nodo_actual->izquierda == predecesor) {
+					nodo_actual->izquierda = predecesor->izquierda;
 				} else {
-					padre_predecesor->derecha = predecesor->izquierda;
+					nodo_actual->derecha = predecesor->izquierda;
 				}
 
 				nodo_destruir(predecesor);
