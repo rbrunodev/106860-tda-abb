@@ -131,15 +131,19 @@ nodo_abb_t *eliminar_recursivo(nodo_abb_t *nodo_actual, void *elemento, abb_t *a
 			return elemento;
 		}
 
-		nodo_abb_t *siguiente;
-		if(nodo_actual->izquierda)
-			siguiente = nodo_actual->izquierda;
-		else
-			siguiente = nodo_actual->derecha;
-		
-		free(nodo_actual);
-		arbol->tamanio--;
-		return elemento;
+		if (nodo_actual->izquierda == NULL) {
+            free(nodo_actual);
+            arbol->tamanio--;
+            return elemento;
+        } else if (nodo_actual->derecha == NULL) {
+            free(nodo_actual);
+            arbol->tamanio--;
+            return elemento;
+        }
+
+		// free(nodo_actual);
+		// arbol->tamanio--;
+		// return elemento;
 	}
 	if(comparador < 0)
 		nodo_actual->izquierda = eliminar_recursivo(nodo_actual->izquierda, elemento, arbol);
