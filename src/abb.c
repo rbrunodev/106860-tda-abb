@@ -257,6 +257,24 @@ size_t recorrer_preorden(nodo_abb_t *actual, void **array, size_t tamanio_array,
 	return indice;
 }
 
+size_t recorrer_inorden(nodo_abb_t *actual, void **array, size_t tamanio_array, size_t indice)
+{
+	if(!actual || indice >= tamanio_array)
+		return indice;
+	
+	if(actual->izquierda)
+		recorrer_inorden(actual->izquierda, array, tamanio_array, indice);
+
+	if(indice < tamanio_array){
+		array[indice] = actual->elemento;
+		indice++;
+	}
+
+	if(actual->derecha)
+		recorrer_inorden(actual->derecha, array, tamanio_array, indice);
+	
+	return indice;
+}
 
 size_t abb_recorrer(abb_t *arbol, abb_recorrido recorrido, void **array,
 		    size_t tamanio_array)
@@ -270,8 +288,7 @@ size_t abb_recorrer(abb_t *arbol, abb_recorrido recorrido, void **array,
 
 	//recorrer inorden es izquierdp, actual, derecha
 	if(recorrido == INORDEN){
-		//llamar a la funcion con el elemento actual
-		return 0;
+		return recorrer_inorden(arbol->nodo_raiz, array, tamanio_array, 0);
 	}
 	 
 	//recorrer preorden es actual, izquierda, derecha
