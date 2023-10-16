@@ -132,7 +132,13 @@ void *abb_quitar(abb_t *arbol, void *elemento)
 		if(comparador == 0){
 			// sin hijos
 			if(nodo_actual->izquierda == NULL && nodo_actual->derecha == NULL){
-				nodo_destruir(nodo_actual);
+				if(nodo_padre == NULL){
+					arbol->nodo_raiz = NULL;
+					free(nodo_actual);
+					arbol->tamanio--;
+					return elemento;
+				}
+				free(nodo_actual);
 				arbol->tamanio--;
 				return elemento;
 			}
@@ -180,69 +186,6 @@ void *abb_quitar(abb_t *arbol, void *elemento)
 	}
 
 	return NULL;
-// 	nodo_abb_t *nodo_padre = NULL;
-
-// 	while(nodo_actual){
-// 		int comparador = arbol->comparador(elemento, nodo_actual->elemento);
-// 		if(comparador == 0){
-// 			if(nodo_actual->izquierda != NULL && nodo_actual->derecha != NULL){
-// 			// 	nodo_abb_t *predecesor = buscar_predecesor(arbol, nodo_actual);
-// 			// 	nodo_actual->elemento = predecesor->elemento;
-// 			// 	if (nodo_actual->izquierda == predecesor) {
-//             //         nodo_actual->izquierda = predecesor->izquierda;
-//             //     } else {
-//             //         nodo_actual->derecha = predecesor->izquierda;
-//             //     }
-//             //     nodo_actual = predecesor;
-// 				free(nodo_actual);
-// 				arbol->tamanio--;
-//             	return elemento;
-// 			}
-
-// 			//sin hijos
-// 			if(nodo_actual->derecha == NULL && nodo_actual->izquierda == NULL){
-// 				printf("SIN HIJOS\n");
-// 				printf("Nodo raiz: %p\n", (void *)arbol->nodo_raiz);
-// 				printf("Nodo actual: %p\n", (void *)nodo_actual);
-// 				printf("Nodo padre: %p\n", (void *)nodo_padre);
-// 				if(nodo_padre == NULL){
-// 					arbol->nodo_raiz = NULL;
-// 					printf("Nodo padre: NULL\n");
-// 					printf("Nodo raiz: %p\n", (void *)arbol->nodo_raiz);
-// 				} else if (nodo_padre->izquierda == nodo_actual) {
-// 					nodo_padre->izquierda = NULL;
-// 				} else {
-// 					nodo_padre->derecha = NULL;
-// 				}
-// 				free(nodo_actual);
-// 				arbol->tamanio--;
-// 				printf(arbol->nodo_raiz == NULL ? "Nodo raiz: NULL\n" : "Nodo raiz: %p\n", (void *)arbol->nodo_raiz);
-// 				return elemento;
-// 			}
-
-// 			//con un hijo
-// 			if (!nodo_actual->izquierda || !nodo_actual->derecha) {
-// 				printf("UN HIJO\n");
-//                 nodo_abb_t *nodo_hijo = nodo_actual->izquierda ? nodo_actual->izquierda : nodo_actual->derecha;
-//                 if (!nodo_padre) {
-//                     arbol->nodo_raiz = nodo_hijo;
-//                 } else if (nodo_padre->izquierda == nodo_actual) {
-//                     nodo_padre->izquierda = nodo_hijo;
-//                 } else {
-//                     nodo_padre->derecha = nodo_hijo;
-//                 }
-// 				free(nodo_actual);
-// 				arbol->tamanio--;
-// 				return elemento;
-// 			}
-// 		}
-// 		nodo_padre = nodo_actual;
-// 		if(comparador < 0)
-// 			nodo_actual = nodo_actual->izquierda;
-// 		else
-// 			nodo_actual = nodo_actual->derecha;
-// 	}
-// 	return NULL;
 }
 
 bool abb_vacio(abb_t *arbol)
