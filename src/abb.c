@@ -133,6 +133,20 @@ void *abb_quitar(abb_t *arbol, void *elemento)
 				arbol->tamanio--;
             	return elemento;
 			}
+			
+			//sin hijos
+			if(!nodo_actual->derecha && !nodo_actual->izquierda){
+				if(!nodo_padre){
+					arbol->nodo_raiz = NULL;
+				} else if (nodo_padre->izquierda == nodo_actual) {
+					nodo_padre->izquierda = NULL;
+				} else {
+					nodo_padre->derecha = NULL;
+				}
+				free(nodo_actual);
+				arbol->tamanio--;
+				return elemento;
+			}
 
 			//con un hijo
 			if (!nodo_actual->izquierda || !nodo_actual->derecha) {
@@ -144,20 +158,6 @@ void *abb_quitar(abb_t *arbol, void *elemento)
                 } else {
                     nodo_padre->derecha = nodo_hijo;
                 }
-				free(nodo_actual);
-				arbol->tamanio--;
-				return elemento;
-			}
-
-			//sin hijos
-			if(!nodo_actual->derecha && !nodo_actual->izquierda){
-				if(!nodo_padre){
-					arbol->nodo_raiz = NULL;
-				} else if (nodo_padre->izquierda == nodo_actual) {
-					nodo_padre->izquierda = NULL;
-				} else {
-					nodo_padre->derecha = NULL;
-				}
 				free(nodo_actual);
 				arbol->tamanio--;
 				return elemento;
