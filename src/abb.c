@@ -204,7 +204,7 @@ void nodo_destruir(nodo_abb_t *nodo, void (*destructor)(void *) ) {
 
     nodo_destruir(nodo->izquierda, destructor);
     nodo_destruir(nodo->derecha, destructor);
-	if (destructor) {
+	if (destructor && nodo->elemento) {
         destructor(nodo->elemento);
     }
     free(nodo);
