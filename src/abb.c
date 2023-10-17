@@ -356,13 +356,14 @@ size_t abb_con_cada_elemento(abb_t *arbol, abb_recorrido recorrido,
     }
 
 	size_t funcion_invocada = 0;
-
-	if (recorrido == INORDEN) {
-		funcion_invocada = recorrer_inorden_fun(arbol->nodo_raiz, funcion, aux, funcion_invocada);
-	} else if (recorrido == PREORDEN) {
-		funcion_invocada = recorrer_preorden_fun(arbol->nodo_raiz, funcion, aux, funcion_invocada);
-	} else if (recorrido == POSTORDEN) {
-		funcion_invocada = recorrer_postorden_fun(arbol->nodo_raiz, funcion, aux, funcion_invocada);
+	if(funcion != NULL){
+		if (recorrido == INORDEN) {
+			funcion_invocada = recorrer_inorden_fun(arbol->nodo_raiz, funcion, aux, funcion_invocada);
+		} else if (recorrido == PREORDEN) {
+			funcion_invocada = recorrer_preorden_fun(arbol->nodo_raiz, funcion, aux, funcion_invocada);
+		} else if (recorrido == POSTORDEN) {
+			funcion_invocada = recorrer_postorden_fun(arbol->nodo_raiz, funcion, aux, funcion_invocada);
+		}
 	}
 
 	return funcion_invocada;
