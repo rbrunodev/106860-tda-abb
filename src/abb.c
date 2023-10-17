@@ -310,7 +310,7 @@ size_t recorrer_preorden_fun(nodo_abb_t *actual, bool (*funcion)(void *, void *)
 
 size_t recorrer_inorden_fun(nodo_abb_t *actual, bool (*funcion)(void *, void *), void *aux, size_t contador)
 {
-	if(!actual)
+	if(actual == NULL)
 		return contador;
 	
 	if(actual->izquierda)
@@ -330,7 +330,7 @@ size_t recorrer_inorden_fun(nodo_abb_t *actual, bool (*funcion)(void *, void *),
 
 size_t recorrer_postorden_fun(nodo_abb_t *actual, bool (*funcion)(void *, void *), void *aux, size_t contador)
 {
-	if(!actual)
+	if(actual == NULL)
 		return contador;
 	
 	if(actual->izquierda)
@@ -339,12 +339,10 @@ size_t recorrer_postorden_fun(nodo_abb_t *actual, bool (*funcion)(void *, void *
 	if(actual->derecha)
 		contador = recorrer_postorden_fun(actual->izquierda, funcion, aux, contador);
 	
-
-	if (funcion(actual->elemento, aux)) {
+	if (funcion(actual->elemento, aux))
         contador++;
-    } else {
+    else
         return contador;
-    }
 
 	return contador;
 }
