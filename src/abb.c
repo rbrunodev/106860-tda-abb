@@ -299,10 +299,10 @@ size_t recorrer_preorden_fun(nodo_abb_t *actual, bool (*funcion)(void *, void *)
         return contador;
     }
 
-	if(actual->izquierda)
+	if(actual->izquierda && contador > 0)
 		contador = recorrer_preorden_fun(actual->izquierda,funcion, aux, contador);
 
-	if(actual->derecha)
+	if(actual->derecha && contador > 0)
 		contador = recorrer_preorden_fun(actual->derecha,funcion, aux, contador);
 
 	return contador;
