@@ -161,7 +161,7 @@ void *abb_quitar_recursivo(nodo_abb_t **raiz, abb_comparador cmp, void *elemento
         } else if ((*raiz)->derecha == NULL) {
             *raiz = (*raiz)->izquierda;
         } else {
-            nodo_abb_t *predecesor = encontrar_predecesor(&((*raiz)->izquierda));
+            nodo_abb_t *predecesor = buscar_predecesor(&((*raiz)));
             (*raiz)->elemento = predecesor->elemento;
             (*raiz)->izquierda = abb_quitar_recursivo(&((*raiz)->izquierda), cmp, predecesor->elemento);
 			return *raiz;
