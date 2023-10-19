@@ -118,7 +118,7 @@ void *abb_quitar(abb_t *arbol, void *elemento)
 		return nodo->elemento;
 	}
 
-	abb_t *siguiente;
+	nodo_abb_t *siguiente;
 	if(nodo->derecha != NULL){
 		siguiente = nodo->derecha;
 	}
