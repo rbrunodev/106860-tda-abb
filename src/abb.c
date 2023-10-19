@@ -87,9 +87,9 @@ nodo_abb_t *buscar_nodo(nodo_abb_t *nodo, abb_t *arbol, void *elemento)
 	return NULL;
 }
 
-void *buscar_predecesor(abb_t *arbol, nodo_abb_t *nodo_actual)
+void *buscar_predecesor(nodo_abb_t *nodo_actual)
 {
-	if (!arbol || !nodo_actual || !nodo_actual->izquierda)
+	if (!nodo_actual || !nodo_actual->izquierda)
         return NULL;
 
     nodo_abb_t *nodo_predecesor = nodo_actual->izquierda;
@@ -106,7 +106,7 @@ nodo_abb_t *nodo_quitar(nodo_abb_t *nodo_actual, void *elemento){
 		return NULL;
 
 	if(nodo_actual->derecha != NULL && nodo_actual->izquierda){
-		void *predecesor = buscar_predecesor(nodo_actual, elemento);
+		void *predecesor = buscar_predecesor(nodo_actual);
 		nodo_actual->elemento = predecesor;
 		nodo_actual->izquierda = nodo_quitar(nodo_actual, predecesor);
 		return nodo_actual->elemento;
