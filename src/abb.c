@@ -175,7 +175,7 @@ void *abb_quitar(abb_t *arbol, void *elemento) {
 
 	if (arbol->comparador(elemento, arbol->nodo_raiz->elemento) == 0) {
         void *elemento_eliminado = arbol->nodo_raiz->elemento;
-        nodo_abb_t *nuevo_raiz = abb_quitar_nodo(arbol->nodo_raiz, elemento, arbol->comparador, &(arbol->tamanio));
+        nodo_abb_t *nuevo_raiz = abb_quitar_recursivo(arbol->nodo_raiz, elemento, arbol->comparador, &(arbol->tamanio));
         free(arbol->nodo_raiz);
         arbol->nodo_raiz = nuevo_raiz;
         return elemento_eliminado;
