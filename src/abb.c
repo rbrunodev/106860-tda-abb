@@ -20,7 +20,7 @@ abb_t *abb_crear(abb_comparador comparador)
 	return arbol;
 }
 
-nodo_abb_t *crear_nodo(int elemento) {
+nodo_abb_t *crear_nodo(void *elemento) {
     nodo_abb_t *nodo = malloc(sizeof(nodo_abb_t));
 
     if (nodo == NULL) {
