@@ -33,7 +33,7 @@ nodo_abb_t *crear_nodo(void *elemento) {
     return nodo;
 }
 
-abb_t *insertar_recur(nodo_abb_t *nodo_actual, void *elemento, abb_t *arbol)
+nodo_abb_t *insertar_recur(nodo_abb_t *nodo_actual, void *elemento, abb_t *arbol)
 {
 	if(nodo_actual == NULL){
 		arbol->nodo_raiz = crear_nodo(elemento);
@@ -47,8 +47,7 @@ abb_t *insertar_recur(nodo_abb_t *nodo_actual, void *elemento, abb_t *arbol)
 		}
 	}
 	
-	arbol->tamanio++;
-	return arbol;
+	return nodo_actual;
 }
 
 abb_t *abb_insertar(abb_t *arbol, void *elemento)
@@ -56,7 +55,10 @@ abb_t *abb_insertar(abb_t *arbol, void *elemento)
 	if(arbol == NULL)
 		return NULL;
 	
-	return insertar_recur(arbol->nodo_raiz, elemento, arbol);
+	insertar_recur(arbol->nodo_raiz, elemento, arbol);
+	
+	arbol->tamanio++;
+	return arbol;
 }
 
 void *abb_quitar(abb_t *arbol, void *elemento)
