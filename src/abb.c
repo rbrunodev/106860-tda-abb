@@ -87,18 +87,12 @@ nodo_abb_t *buscar_nodo(nodo_abb_t *nodo, abb_t *arbol, void *elemento)
 	return NULL;
 }
 
-void *buscar_predecesor(nodo_abb_t **nodo_actual)
+void *buscar_predecesor(nodo_abb_t *nodo)
 {
-    if (!nodo_actual || !(*nodo_actual)->izquierda)
-        return NULL;
-
-    nodo_abb_t *nodo_predecesor = (*nodo_actual)->izquierda;
-
-    while (nodo_predecesor->derecha) {
-        nodo_predecesor = nodo_predecesor->derecha;
+    while (nodo->derecha != NULL) {
+        nodo = nodo->derecha;
     }
-
-    return nodo_predecesor->elemento;
+    return nodo;
 }
 
 
@@ -143,35 +137,35 @@ void *buscar_predecesor(nodo_abb_t **nodo_actual)
 
 // 	return NULL;
 // }
-void *abb_quitar_recursivo(nodo_abb_t **raiz, abb_comparador cmp, void *elemento) {
-    if (*raiz == NULL) {
+void *abb_quitar_recursivo(nodo_abb_t *nodo, void *elemento, abb_comparador comparador, size_t *tamanio) {
+    if (nodo == NULL) {
         return NULL;
     }
 
-    int comparador = cmp(elemento, (*raiz)->elemento);
+    int comparacion = comparador(elemento, nodo->elemento);
 
-    if (comparador < 0) {
-        (*raiz)->izquierda = abb_quitar_recursivo(&((*raiz)->izquierda), cmp, elemento);
-    } else if (comparador > 0) {
-        (*raiz)->derecha = abb_quitar_recursivo(&((*raiz)->derecha), cmp, elemento);
+    if (comparacion < 0) {
+        nodo->izquierda = abb_quitar_recursivo(nodo->izquierda, elemento, comparador, tamanio);
+    } else if (comparacion > 0) {
+        nodo->derecha = abb_quitar_recursivo(nodo->derecha, elemento, comparador, tamanio);
     } else {
-        nodo_abb_t *nodo = *raiz;
-
-        if ((*raiz)->izquierda == NULL) {
-            *raiz = (*raiz)->derecha;
-        } else if ((*raiz)->derecha == NULL) {
-            *raiz = (*raiz)->izquierda;
+        if (nodo->izquierda == NULL) {
+            struct nodo_abb *temp = nodo->derecha;
+            free(nodo);
+            (*tamanio)--;
+            return temp; 
+        } else if (nodo->derecha == NULL) {
+            struct nodo_abb *temp = nodo->izquierda;
+            free(nodo);
+            (*tamanio)--;
+            return temp; 
         } else {
-            void *predecesor = buscar_predecesor(&((*raiz)));
-            (*raiz)->elemento = predecesor;
-            (*raiz)->izquierda = abb_quitar_recursivo(&((*raiz)->izquierda), cmp, predecesor);
-			return *raiz;
+            struct nodo_abb *predecesor = encontrar_predecesor(nodo->izquierda);
+            nodo->elemento = predecesor->elemento;
+            nodo->izquierda = abb_quitar_recursivo(nodo->izquierda, predecesor->elemento, comparador, tamanio);
         }
-
-        free(*raiz);
     }
-
-    return elemento;
+    return nodo;
 }
 
 void *abb_quitar(abb_t *arbol, void *elemento) {
@@ -179,7 +173,15 @@ void *abb_quitar(abb_t *arbol, void *elemento) {
         return NULL;
     }
 
-    return abb_quitar_recursivo(&(arbol->nodo_raiz), arbol->comparador, elemento);
+    nodo_abb_t *nuevo_raiz = abb_quitar_recursivo(arbol->nodo_raiz, elemento, arbol->comparador, &(arbol->tamanio));
+	
+	if(nuevo_raiz == NULL)
+		return NULL;
+
+    if (nuevo_raiz != arbol->nodo_raiz) {
+        arbol->nodo_raiz = nuevo_raiz; 
+    }
+    return elemento;
 }
 
 
