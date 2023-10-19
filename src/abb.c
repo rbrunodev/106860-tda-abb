@@ -121,6 +121,7 @@ nodo_abb_t *nodo_quitar(nodo_abb_t *nodo_actual, void *elemento){
 	}
 
 	free(nodo_actual);
+	return siguiente;
 }
 
 void *abb_quitar(abb_t *arbol, void *elemento)
