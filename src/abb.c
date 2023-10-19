@@ -101,6 +101,28 @@ void *buscar_predecesor(abb_t *arbol, nodo_abb_t *nodo_actual)
     return nodo_predecesor->elemento;
 }
 
+nodo_abb_t *nodo_quitar(nodo_abb_t *nodo_actual, void *elemento){
+	if(nodo_actual == NULL)
+		return NULL;
+
+	if(nodo_actual->derecha != NULL && nodo_actual->izquierda){
+		void *predecesor = buscar_predecesor(nodo_actual, elemento);
+		nodo_actual->elemento = predecesor;
+		nodo_actual->izquierda = nodo_quitar(nodo_actual, predecesor);
+		return nodo_actual->elemento;
+	}
+
+	nodo_abb_t *siguiente;
+	if(nodo_actual->derecha != NULL){
+		siguiente = nodo_actual->derecha;
+	}
+	else{
+		siguiente = nodo_actual->izquierda;
+	}
+
+	free(nodo_actual);
+}
+
 void *abb_quitar(abb_t *arbol, void *elemento)
 {
 	if(arbol == NULL)
@@ -111,23 +133,13 @@ void *abb_quitar(abb_t *arbol, void *elemento)
 	if(nodo == NULL)
 		return NULL;
 	
-	if(nodo->derecha != NULL && nodo->izquierda){
-		void *predecesor = buscar_predecesor(arbol, elemento);
-		nodo->elemento = predecesor;
-		nodo->izquierda = abb_quitar(arbol, predecesor);
-		return nodo->elemento;
+	nodo_abb_t *nodo_quitado = nodo_quitar(nodo, elemento);
+	if(nodo_quitado != NULL){
+		arbol->tamanio--;
+		return nodo_quitado->elemento;
 	}
 
-	nodo_abb_t *siguiente;
-	if(nodo->derecha != NULL){
-		siguiente = nodo->derecha;
-	}
-	else{
-		siguiente = nodo->izquierda;
-	}
-
-	free(nodo);
-	return siguiente;
+	return NULL;
 }
 
 void *abb_buscar(abb_t *arbol, void *elemento)
