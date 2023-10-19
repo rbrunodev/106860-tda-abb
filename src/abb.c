@@ -213,8 +213,79 @@ size_t abb_con_cada_elemento(abb_t *arbol, abb_recorrido recorrido,
 	return 0;
 }
 
+size_t recorrer_preorden(nodo_abb_t *actual, void **array, size_t tamanio_array, size_t indice)
+{
+	if (actual == NULL || indice >= tamanio_array) {
+        return indice;
+    }
+
+	if (indice < tamanio_array) {
+        array[indice] = actual->elemento;
+        indice++;
+    }
+
+	if(actual->izquierda)
+		indice = recorrer_preorden(actual->izquierda, array, tamanio_array, indice);
+
+	if(actual->derecha)
+		indice = recorrer_preorden(actual->derecha, array, tamanio_array, indice);
+
+	return indice;
+}
+
+size_t recorrer_inorden(nodo_abb_t *actual, void **array, size_t tamanio_array, size_t indice)
+{
+	if(!actual || indice >= tamanio_array)
+		return indice;
+
+	if(actual->izquierda)
+		indice = recorrer_inorden(actual->izquierda, array, tamanio_array, indice);
+
+	if(indice < tamanio_array){
+		array[indice] = actual->elemento;
+		indice++;
+	}
+
+	if(actual->derecha)
+		indice = recorrer_inorden(actual->derecha, array, tamanio_array, indice);
+
+	return indice;
+}
+
+size_t recorrer_postorden(nodo_abb_t *actual, void **array, size_t tamanio_array, size_t indice)
+{
+	if(!actual || indice >= tamanio_array)
+		return indice;
+
+	if(actual->izquierda)
+		indice = recorrer_postorden(actual->izquierda, array, tamanio_array, indice);
+
+	if(actual->derecha)
+		indice = recorrer_postorden(actual->derecha, array, tamanio_array, indice);
+
+	if(indice < tamanio_array){
+		array[indice] = actual->elemento;
+		indice++;
+	}
+	return indice;
+}
+
 size_t abb_recorrer(abb_t *arbol, abb_recorrido recorrido, void **array,
 		    size_t tamanio_array)
 {
-	return 0;
+	if (!arbol || !arbol->nodo_raiz) {
+        return 0;
+    }
+
+    size_t indice = 0;
+
+    if (recorrido == INORDEN) {
+        indice = recorrer_inorden(arbol->nodo_raiz, array, tamanio_array, indice);
+    } else if (recorrido == PREORDEN) {
+        indice = recorrer_preorden(arbol->nodo_raiz, array, tamanio_array, indice);
+    } else if (recorrido == POSTORDEN) {
+        indice = recorrer_postorden(arbol->nodo_raiz, array, tamanio_array, indice);
+    }
+
+    return indice;
 }
