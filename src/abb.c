@@ -37,8 +37,7 @@ nodo_abb_t *insertar_recur(nodo_abb_t *nodo_actual, void *elemento, abb_t *arbol
 {
 	if(nodo_actual == NULL){
 		arbol->nodo_raiz = crear_nodo(elemento);
-		arbol->tamanio++;
-		return arbol;
+		return nodo_actual;
 	} else {
 		if(arbol->comparador(elemento, nodo_actual->elemento) <= 0){
 			nodo_actual->izquierda = insertar_recur(nodo_actual->izquierda, elemento, arbol);
@@ -56,7 +55,7 @@ abb_t *abb_insertar(abb_t *arbol, void *elemento)
 		return NULL;
 	
 	insertar_recur(arbol->nodo_raiz, elemento, arbol);
-	
+
 	arbol->tamanio++;
 	return arbol;
 }
