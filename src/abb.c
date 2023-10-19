@@ -33,7 +33,7 @@ nodo_abb_t *crear_nodo(void *elemento) {
     return nodo;
 }
 
-nodo_abb_t *insertar_recur(nodo_abb_t *nodo_actual, void *elemento, abb_t *arbol)
+abb_t *insertar_recur(nodo_abb_t *nodo_actual, void *elemento, abb_t *arbol)
 {
 	if(nodo_actual == NULL){
 		arbol->nodo_raiz = crear_nodo(elemento);
