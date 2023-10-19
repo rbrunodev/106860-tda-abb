@@ -70,25 +70,64 @@ abb_t *abb_insertar(abb_t *arbol, void *elemento)
 	return arbol;
 }
 
-void *abb_quitar(abb_t *arbol, void *elemento)
-{
-	return elemento;
-}
-
 nodo_abb_t *buscar_nodo(nodo_abb_t *nodo, abb_t *arbol, void *elemento)
 {
 	if(nodo == NULL)
 		return NULL;
 
-	if(arbol->comparador(elemento, nodo->elemento) == 0)
+	int comparador = arbol->comparador(elemento, nodo->elemento);
+	if(comparador == 0)
 		return nodo;
 
-	if(arbol->comparador(elemento, nodo->elemento) < 0)
+	if(comparador < 0)
 		return buscar_nodo(nodo->izquierda, arbol, elemento);
 	else 
 		return buscar_nodo(nodo->derecha, arbol, elemento);
 	
 	return NULL;
+}
+
+void *buscar_predecesor(abb_t *arbol, nodo_abb_t *nodo_actual)
+{
+	if (!arbol || !nodo_actual || !nodo_actual->izquierda)
+        return NULL;
+
+    nodo_abb_t *nodo_predecesor = nodo_actual->izquierda;
+
+    while (nodo_predecesor->derecha) {
+        nodo_predecesor = nodo_predecesor->derecha;
+    }
+
+    return nodo_predecesor->elemento;
+}
+
+void *abb_quitar(abb_t *arbol, void *elemento)
+{
+	if(arbol == NULL)
+		return NULL;
+	
+	nodo_abb_t *nodo = buscar_nodo(arbol->nodo_raiz, arbol, elemento);
+
+	if(nodo == NULL)
+		return NULL;
+	
+	if(nodo->derecha != NULL && nodo->izquierda){
+		void *predecesor = buscar_predecesor(arbol, elemento);
+		nodo->elemento = predecesor;
+		nodo->izquierda = abb_quitar(arbol, predecesor);
+		return nodo->elemento;
+	}
+
+	abb_t *siguiente;
+	if(nodo->derecha != NULL){
+		siguiente = nodo->derecha;
+	}
+	else{
+		siguiente = nodo->izquierda;
+	}
+
+	free(nodo);
+	return siguiente;
 }
 
 void *abb_buscar(abb_t *arbol, void *elemento)
