@@ -168,7 +168,7 @@ void *abb_quitar_recursivo(nodo_abb_t **raiz, abb_comparador cmp, void *elemento
 			return *raiz;
         }
 
-        free(nodo);
+        free(*raiz);
     }
 
     return elemento;
