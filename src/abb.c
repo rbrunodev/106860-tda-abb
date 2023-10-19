@@ -101,7 +101,7 @@ void *buscar_predecesor(nodo_abb_t *nodo_actual)
     return nodo_predecesor->elemento;
 }
 
-nodo_abb_t *nodo_quitar(nodo_abb_t *nodo_actual, void *elemento){
+void *nodo_quitar(nodo_abb_t *nodo_actual, void *elemento){
 	if(nodo_actual == NULL)
 		return NULL;
 
@@ -134,7 +134,7 @@ void *abb_quitar(abb_t *arbol, void *elemento)
 	if(nodo == NULL)
 		return NULL;
 	
-	nodo_abb_t *nodo_quitado = nodo_quitar(nodo, elemento);
+	void *nodo_quitado = nodo_quitar(nodo, elemento);
 	if(nodo_quitado != NULL){
 		arbol->tamanio--;
 		return nodo_quitado;
