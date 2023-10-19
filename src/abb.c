@@ -72,16 +72,46 @@ void *abb_buscar(abb_t *arbol, void *elemento)
 
 bool abb_vacio(abb_t *arbol)
 {
-	return true;
+	if(arbol == NULL)
+		return true;
+
+	if(arbol->nodo_raiz == NULL)
+		return true;
+
+	return false;
 }
 
 size_t abb_tamanio(abb_t *arbol)
 {
-	return 0;
+	if(!arbol)
+		return 0;
+
+	return arbol->tamanio;
+}
+
+
+void nodo_destruir(nodo_abb_t *nodo, void (*destructor)(void *) ) {
+    if (!nodo) return;
+
+    nodo_destruir(nodo->izquierda, destructor);
+    nodo_destruir(nodo->derecha, destructor);
+	if (destructor && nodo->elemento) {
+        destructor(nodo->elemento);
+    }
+    free(nodo);
 }
 
 void abb_destruir(abb_t *arbol)
 {
+	if(!arbol) return;
+
+	if(abb_tamanio(arbol) == 0){
+		free(arbol);
+		return;
+	}
+
+	nodo_destruir(arbol->nodo_raiz, NULL);
+	free(arbol);
 }
 
 void abb_destruir_todo(abb_t *arbol, void (*destructor)(void *))
