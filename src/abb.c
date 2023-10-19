@@ -94,54 +94,93 @@ void *buscar_predecesor(nodo_abb_t *nodo_actual)
 
     nodo_abb_t *nodo_predecesor = nodo_actual->izquierda;
 
-    while (nodo_predecesor->derecha) {
+    while (nodo_predecesor->derecha ) {
         nodo_predecesor = nodo_predecesor->derecha;
     }
 
     return nodo_predecesor->elemento;
 }
 
-nodo_abb_t *nodo_quitar(nodo_abb_t *nodo_actual, void *elemento){
-	if(nodo_actual == NULL)
-		return NULL;
+// nodo_abb_t *nodo_quitar(nodo_abb_t *nodo_actual, void *elemento){
+// 	if(nodo_actual == NULL)
+// 		return NULL;
 
-	if(nodo_actual->derecha != NULL && nodo_actual->izquierda != NULL){
-		void *predecesor = buscar_predecesor(nodo_actual);
-		nodo_actual->elemento = predecesor;
-		nodo_actual->izquierda = nodo_quitar(nodo_actual, predecesor);
-		return nodo_actual;
-	}
+// 	if(nodo_actual->derecha != NULL && nodo_actual->izquierda != NULL){
+// 		void *predecesor = buscar_predecesor(nodo_actual);
+// 		nodo_actual->elemento = predecesor;
+// 		nodo_actual->izquierda = nodo_quitar(nodo_actual, predecesor);
+// 		return nodo_actual;
+// 	}
 
-	nodo_abb_t *siguiente;
-	if(nodo_actual->derecha != NULL){
-		siguiente = nodo_actual->derecha;
-	}
-	else{
-		siguiente = nodo_actual->izquierda;
-	}
+// 	nodo_abb_t *siguiente;
+// 	if(nodo_actual->derecha != NULL){
+// 		siguiente = nodo_actual->derecha;
+// 	}
+// 	else{
+// 		siguiente = nodo_actual->izquierda;
+// 	}
 
-	free(nodo_actual);
-	return siguiente;
+// 	free(nodo_actual);
+// 	return siguiente;
+// }
+
+// void *abb_quitar(abb_t *arbol, void *elemento)
+// {
+// 	if(arbol == NULL)
+// 		return NULL;
+	
+// 	nodo_abb_t *nodo = buscar_nodo(arbol->nodo_raiz, arbol, elemento);
+
+// 	if(nodo == NULL)
+// 		return NULL;
+	
+// 	nodo_abb_t *nodo_quitado = nodo_quitar(nodo, elemento);
+// 	if(nodo_quitado != NULL){
+// 		arbol->tamanio--;
+// 		return nodo_quitado->elemento;
+// 	}
+
+// 	return NULL;
+// }
+void *abb_quitar_recursivo(nodo_abb_t **raiz, abb_comparador cmp, void *elemento) {
+    if (*raiz == NULL) {
+        return NULL;
+    }
+
+    int comparador = cmp(elemento, (*raiz)->elemento);
+
+    if (comparador < 0) {
+        (*raiz)->izquierda = abb_quitar_recursivo(&((*raiz)->izquierda), cmp, elemento);
+    } else if (comparador > 0) {
+        (*raiz)->derecha = abb_quitar_recursivo(&((*raiz)->derecha), cmp, elemento);
+    } else {
+        nodo_abb_t *nodo = *raiz;
+
+        if ((*raiz)->izquierda == NULL) {
+            *raiz = (*raiz)->derecha;
+        } else if ((*raiz)->derecha == NULL) {
+            *raiz = (*raiz)->izquierda;
+        } else {
+            nodo_abb_t *predecesor = encontrar_predecesor(&((*raiz)->izquierda));
+            (*raiz)->elemento = predecesor->elemento;
+            (*raiz)->izquierda = abb_quitar_recursivo(&((*raiz)->izquierda), cmp, predecesor->elemento);
+			return *raiz;
+        }
+
+        free(nodo);
+    }
+
+    return elemento;
 }
 
-void *abb_quitar(abb_t *arbol, void *elemento)
-{
-	if(arbol == NULL)
-		return NULL;
-	
-	nodo_abb_t *nodo = buscar_nodo(arbol->nodo_raiz, arbol, elemento);
+void *abb_quitar(abb_t *arbol, void *elemento) {
+    if (!arbol || !arbol->nodo_raiz) {
+        return NULL;
+    }
 
-	if(nodo == NULL)
-		return NULL;
-	
-	nodo_abb_t *nodo_quitado = nodo_quitar(nodo, elemento);
-	if(nodo_quitado != NULL){
-		arbol->tamanio--;
-		return nodo_quitado->elemento;
-	}
-
-	return NULL;
+    return abb_quitar_recursivo(&(arbol->nodo_raiz), arbol, elemento);
 }
+
 
 void *abb_buscar(abb_t *arbol, void *elemento)
 {
