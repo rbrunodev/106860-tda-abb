@@ -87,7 +87,7 @@ nodo_abb_t *buscar_nodo(nodo_abb_t *nodo, abb_t *arbol, void *elemento)
 	return NULL;
 }
 
-void *buscar_predecesor(nodo_abb_t *nodo_actual)
+void *buscar_predecesor(nodo_abb_t **nodo_actual)
 {
 	if (!nodo_actual || !nodo_actual->izquierda)
         return NULL;
