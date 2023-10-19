@@ -137,7 +137,7 @@ void *abb_quitar(abb_t *arbol, void *elemento)
 	nodo_abb_t *nodo_quitado = nodo_quitar(nodo, elemento);
 	if(nodo_quitado != NULL){
 		arbol->tamanio--;
-		return nodo_quitado->elemento;
+		return nodo_quitado;
 	}
 
 	return NULL;
