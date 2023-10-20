@@ -251,8 +251,8 @@ size_t recorrer_inorden_fun(nodo_abb_t *actual, bool (*funcion)(void *, void *),
 		contador = recorrer_inorden_fun(actual->izquierda, funcion, aux, contador);
 	}
 
-	if(!funcion(actual->elemento, aux))
-			return contador;
+	// if(!funcion(actual->elemento, aux))
+	// 		return contador;
 	
 	contador++;
 
