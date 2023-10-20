@@ -255,7 +255,7 @@ size_t recorrer_inorden_fun(nodo_abb_t *actual, bool (*funcion)(void *, void *),
 		contador++;
 
 	if(actual->derecha){
-		contador = recorrer_inorden_fun(actual->izquierda, funcion, aux, contador);
+		contador = recorrer_inorden_fun(actual->derecha, funcion, aux, contador);
 		if(!funcion(actual->elemento, aux))
 			return contador;
 	}
@@ -270,14 +270,12 @@ size_t recorrer_postorden_fun(nodo_abb_t *actual, bool (*funcion)(void *, void *
 		return contador;
 
 	contador = recorrer_postorden_fun(actual->izquierda, funcion, aux, contador);
-	if(funcion(actual->elemento, aux)){
-		contador++;
+	if(!funcion(actual->elemento, aux)){
 		return contador;
 	}
 
 	contador = recorrer_postorden_fun(actual->derecha, funcion, aux, contador);
-	if(funcion(actual->elemento, aux)){
-		contador++;
+	if(!funcion(actual->elemento, aux)){
 		return contador;
 	}
 
@@ -294,11 +292,11 @@ size_t abb_con_cada_elemento(abb_t *arbol, abb_recorrido recorrido,
 
 	size_t funcion_invocada = 0;
 	if (recorrido == INORDEN) {
-		funcion_invocada = recorrer_inorden_fun(arbol->nodo_raiz, funcion, aux, funcion_invocada);
+		funcion_invocada = recorrer_inorden_fun(arbol->nodo_raiz, funcion, aux, &funcion_invocada);
 	} else if (recorrido == PREORDEN) {
-		funcion_invocada = recorrer_preorden_fun(arbol->nodo_raiz, funcion, aux, funcion_invocada);
+		funcion_invocada = recorrer_preorden_fun(arbol->nodo_raiz, funcion, aux, &funcion_invocada);
 	} else if (recorrido == POSTORDEN) {
-		funcion_invocada = recorrer_postorden_fun(arbol->nodo_raiz, funcion, aux, funcion_invocada);
+		funcion_invocada = recorrer_postorden_fun(arbol->nodo_raiz, funcion, aux, &funcion_invocada);
 	}
 
 	return funcion_invocada;
