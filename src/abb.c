@@ -232,13 +232,62 @@ size_t recorrer_preorden_fun(nodo_abb_t *actual, bool (*funcion)(void *, void *)
     }
 
 	if(actual->izquierda){
-		if(funcion_invocada)
+		if(!funcion_invocada)
 			contador = recorrer_preorden_fun(actual->izquierda,funcion, aux, contador);
 	}
 
 	if(actual->derecha){
-		if(funcion_invocada)
+		if(!funcion_invocada)
 			contador = recorrer_preorden_fun(actual->derecha,funcion, aux, contador);
+	}
+
+	return contador;
+}
+
+size_t recorrer_inorden_fun(nodo_abb_t *actual, bool (*funcion)(void *, void *), void *aux, size_t contador)
+{
+	if(actual == NULL)
+		return contador;
+	
+	bool funcion_invocada = false;
+
+	if(actual->izquierda){
+		if(!funcion_invocada)
+			contador = recorrer_inorden_fun(actual->izquierda, funcion, aux, contador);
+	}
+
+	if (funcion(actual->elemento, aux)) {
+		funcion_invocada = true;
+        contador++;
+    } else {
+        return contador;
+    }
+
+	if(actual->derecha){
+		if(!funcion_invocada)
+			contador = recorrer_inorden_fun(actual->izquierda, funcion, aux, contador);
+	}
+
+
+	return contador;
+}
+
+
+size_t recorrer_postorden_fun(nodo_abb_t *actual, bool (*funcion)(void *, void *), void *aux, size_t contador)
+{
+	if(actual == NULL)
+		return contador;
+
+	if(actual->izquierda)
+		contador = recorrer_postorden_fun(actual->izquierda, funcion, aux, contador);
+
+	if(actual->derecha)
+		contador = recorrer_postorden_fun(actual->izquierda, funcion, aux, contador);
+
+	if (funcion(actual->elemento, aux)){
+        contador++;
+	} else {
+        return contador;
 	}
 
 	return contador;
@@ -253,12 +302,12 @@ size_t abb_con_cada_elemento(abb_t *arbol, abb_recorrido recorrido,
 
 	size_t funcion_invocada = 0;
 	if(funcion != NULL){
-		if (recorrido == PREORDEN) {
+		if (recorrido == INORDEN) {
 			funcion_invocada = recorrer_preorden_fun(arbol->nodo_raiz, funcion, aux, funcion_invocada);
-		// } else if (recorrido == PREORDEN) {
-		// 	funcion_invocada = recorrer_preorden_fun(arbol->nodo_raiz, funcion, aux, funcion_invocada);
-		// } else if (recorrido == POSTORDEN) {
-		// 	funcion_invocada = recorrer_postorden_fun(arbol->nodo_raiz, funcion, aux, funcion_invocada);
+		} else if (recorrido == PREORDEN) {
+			funcion_invocada = recorrer_preorden_fun(arbol->nodo_raiz, funcion, aux, funcion_invocada);
+		} else if (recorrido == POSTORDEN) {
+			funcion_invocada = recorrer_postorden_fun(arbol->nodo_raiz, funcion, aux, funcion_invocada);
 		}
 	}
 
