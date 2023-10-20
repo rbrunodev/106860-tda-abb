@@ -244,14 +244,11 @@ size_t recorrer_inorden_fun(nodo_abb_t *actual, bool (*funcion)(void *, void *),
 {
 	if(actual == NULL)
 		return contador;
-	
-	// if(!funcion(actual->elemento, aux))
-	// 		return contador;
 
 	if(actual->izquierda){
-		contador = recorrer_inorden_fun(actual->izquierda, funcion, aux, contador);
 		if(!funcion(actual->elemento, aux))
 			return contador;
+		contador = recorrer_inorden_fun(actual->izquierda, funcion, aux, contador);
 	}
 
 	if(!funcion(actual->elemento, aux))
@@ -260,9 +257,9 @@ size_t recorrer_inorden_fun(nodo_abb_t *actual, bool (*funcion)(void *, void *),
 	contador++;
 
 	if(actual->derecha){
-		contador = recorrer_inorden_fun(actual->derecha, funcion, aux, contador);
 		if(!funcion(actual->elemento, aux))
 			return contador;
+		contador = recorrer_inorden_fun(actual->derecha, funcion, aux, contador);
 	}
 
 	return contador;
