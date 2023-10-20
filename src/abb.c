@@ -111,7 +111,7 @@ void *abb_quitar_recursivo(nodo_abb_t *nodo, void *elemento, abb_comparador comp
             struct nodo_abb *temp = nodo->derecha;
             free(nodo);
             (*tamanio)--;
-            return temp; 
+            return tempE; 
         } else if (nodo->derecha == NULL) {
             struct nodo_abb *temp = nodo->izquierda;
             free(nodo);
@@ -123,7 +123,7 @@ void *abb_quitar_recursivo(nodo_abb_t *nodo, void *elemento, abb_comparador comp
             nodo->izquierda = abb_quitar_recursivo(nodo->izquierda, predecesor->elemento, comparador, tamanio);
         }
     }
-    return nodo;
+    return NULL;
 }
 
 void *abb_quitar(abb_t *arbol, void *elemento) {
