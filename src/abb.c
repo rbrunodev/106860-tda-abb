@@ -123,7 +123,7 @@ void *abb_quitar_recursivo(nodo_abb_t *nodo, void *elemento, abb_comparador comp
             nodo->izquierda = abb_quitar_recursivo(nodo->izquierda, predecesor->elemento, comparador, tamanio);
         }
     }
-    return NULL;
+    return nodo;
 }
 
 void *abb_quitar(abb_t *arbol, void *elemento) {
