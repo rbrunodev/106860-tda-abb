@@ -307,7 +307,7 @@ size_t abb_con_cada_elemento(abb_t *arbol, abb_recorrido recorrido,
     }
 
 	size_t funcion_invocada = 0;
-	if(funcion != NULL){
+	if(funcion != NULL && aux != NULL){
 		if (recorrido == INORDEN) {
 			funcion_invocada = recorrer_inorden_fun(arbol->nodo_raiz, funcion, aux, funcion_invocada);
 		} else if (recorrido == PREORDEN) {
