@@ -281,7 +281,7 @@ size_t recorrer_postorden_fun(nodo_abb_t *actual, bool (*funcion)(void *, void *
 		return contador;
 	}
 
-	contador++;
+	// contador++;
 	return contador;
 }
 
