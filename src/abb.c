@@ -277,44 +277,34 @@ size_t recorrer_postorden_fun(nodo_abb_t *actual, bool (*funcion)(void *, void *
 	if(actual == NULL)
 		return contador;
 
-	bool funcion_invocada = true;
+	if(!funcion(actual->elemento, aux))
+		return contador;
 
-	if(actual->izquierda){
-		if(funcion_invocada)
-			contador = recorrer_postorden_fun(actual->izquierda, funcion, aux, contador);
-	}
+	if(actual->izquierda)
+		contador = recorrer_postorden_fun(actual->izquierda, funcion, aux, contador);
 
-	if(actual->derecha){
-		if(funcion_invocada)
-			contador = recorrer_postorden_fun(actual->izquierda, funcion, aux, contador);
-	}
+	if(actual->derecha)
+		contador = recorrer_postorden_fun(actual->izquierda, funcion, aux, contador);
 
-	if (funcion(actual->elemento, aux)){
-        contador++;
-	} else {
-		funcion_invocada = false;
-        return contador;
-	}
 
+	contador++;
 	return contador;
 }
 
 size_t abb_con_cada_elemento(abb_t *arbol, abb_recorrido recorrido,
 			     bool (*funcion)(void *, void *), void *aux)
 {
-	if (!arbol || !arbol->nodo_raiz) {
+	if (!arbol || !arbol->nodo_raiz || !funcion) {
         return 0;
     }
 
 	size_t funcion_invocada = 0;
-	if(funcion != NULL && aux != NULL){
-		if (recorrido == INORDEN) {
-			funcion_invocada = recorrer_inorden_fun(arbol->nodo_raiz, funcion, aux, funcion_invocada);
-		} else if (recorrido == PREORDEN) {
-			funcion_invocada = recorrer_preorden_fun(arbol->nodo_raiz, funcion, aux, funcion_invocada);
-		} else if (recorrido == POSTORDEN) {
-			funcion_invocada = recorrer_postorden_fun(arbol->nodo_raiz, funcion, aux, funcion_invocada);
-		}
+	if (recorrido == INORDEN) {
+		funcion_invocada = recorrer_inorden_fun(arbol->nodo_raiz, funcion, aux, funcion_invocada);
+	} else if (recorrido == PREORDEN) {
+		funcion_invocada = recorrer_preorden_fun(arbol->nodo_raiz, funcion, aux, funcion_invocada);
+	} else if (recorrido == POSTORDEN) {
+		funcion_invocada = recorrer_postorden_fun(arbol->nodo_raiz, funcion, aux, funcion_invocada);
 	}
 
 	return funcion_invocada;
