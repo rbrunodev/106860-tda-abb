@@ -270,12 +270,16 @@ size_t recorrer_postorden_fun(nodo_abb_t *actual, bool (*funcion)(void *, void *
 		return contador;
 
 	contador = recorrer_postorden_fun(actual->izquierda, funcion, aux, contador);
-	if(!funcion(actual->elemento, aux))
-			return contador;
+	if(funcion(actual->elemento, aux)){
+		contador++;
+		return contador;
+	}
 
 	contador = recorrer_postorden_fun(actual->derecha, funcion, aux, contador);
-	if(!funcion(actual->elemento, aux))
-			return contador;
+	if(funcion(actual->elemento, aux)){
+		contador++;
+		return contador;
+	}
 
 	contador++;
 	return contador;
