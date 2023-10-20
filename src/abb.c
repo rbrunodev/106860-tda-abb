@@ -216,10 +216,53 @@ void abb_destruir_todo(abb_t *arbol, void (*destructor)(void *))
 	free(arbol);
 }
 
+size_t recorrer_preorden_fun(nodo_abb_t *actual, bool (*funcion)(void *, void *), void *aux, size_t contador)
+{
+	if (actual == NULL) {
+        return contador;
+    }
+
+	bool funcion_invocada = false;
+	
+	if (funcion(actual->elemento, aux)) {
+		funcion_invocada = true;
+        contador++;
+    } else {
+        return contador;
+    }
+
+	if(actual->izquierda){
+		if(funcion_invocada)
+			contador = recorrer_preorden_fun(actual->izquierda,funcion, aux, contador);
+	}
+
+	if(actual->derecha){
+		if(funcion_invocada)
+			contador = recorrer_preorden_fun(actual->derecha,funcion, aux, contador);
+	}
+
+	return contador;
+}
+
 size_t abb_con_cada_elemento(abb_t *arbol, abb_recorrido recorrido,
 			     bool (*funcion)(void *, void *), void *aux)
 {
-	return 0;
+	if (!arbol || !arbol->nodo_raiz) {
+        return 0;
+    }
+
+	size_t funcion_invocada = 0;
+	if(funcion != NULL){
+		if (recorrido == PREORDEN) {
+			funcion_invocada = recorrer_preorden_fun(arbol->nodo_raiz, funcion, aux, funcion_invocada);
+		// } else if (recorrido == PREORDEN) {
+		// 	funcion_invocada = recorrer_preorden_fun(arbol->nodo_raiz, funcion, aux, funcion_invocada);
+		// } else if (recorrido == POSTORDEN) {
+		// 	funcion_invocada = recorrer_postorden_fun(arbol->nodo_raiz, funcion, aux, funcion_invocada);
+		}
+	}
+
+	return funcion_invocada;
 }
 
 size_t recorrer_preorden(nodo_abb_t *actual, void **array, size_t tamanio_array, size_t indice)
