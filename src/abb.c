@@ -111,7 +111,7 @@ void *abb_quitar_recursivo(nodo_abb_t *nodo, void *elemento, abb_comparador comp
             struct nodo_abb *temp = nodo->derecha;
             free(nodo);
             (*tamanio)--;
-            return tempE; 
+            return temp; 
         } else if (nodo->derecha == NULL) {
             struct nodo_abb *temp = nodo->izquierda;
             free(nodo);
