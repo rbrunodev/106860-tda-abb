@@ -205,6 +205,15 @@ void abb_destruir(abb_t *arbol)
 
 void abb_destruir_todo(abb_t *arbol, void (*destructor)(void *))
 {
+	if(!arbol) return;
+
+	if(abb_tamanio(arbol) == 0){
+		free(arbol);
+		return;
+	}
+
+	nodo_destruir(arbol->nodo_raiz, destructor);
+	free(arbol);
 }
 
 size_t abb_con_cada_elemento(abb_t *arbol, abb_recorrido recorrido,
