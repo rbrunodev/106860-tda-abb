@@ -222,25 +222,20 @@ size_t recorrer_preorden_fun(nodo_abb_t *actual, bool (*funcion)(void *, void *)
         return contador;
     }
 
-	bool funcion_invocada = true;
-	
-	if (funcion(actual->elemento, aux)) {
-        contador++;
-    } else {
-		funcion_invocada = false;
-        return contador;
-    }
+	contador++;
 
 	if(actual->izquierda){
-		if(funcion_invocada)
-			contador = recorrer_preorden_fun(actual->izquierda,funcion, aux, contador);
+		contador = recorrer_preorden_fun(actual->izquierda,funcion, aux, contador);
+		if(!funcion(actual->elemento, aux))
+			return contador;
 	}
 
 	if(actual->derecha){
-		if(funcion_invocada)
-			contador = recorrer_preorden_fun(actual->derecha,funcion, aux, contador);
+		contador = recorrer_preorden_fun(actual->derecha,funcion, aux, contador);
+		if(!funcion(actual->elemento, aux))
+			return contador;
 	}
-
+	
 	return contador;
 }
 
@@ -255,13 +250,14 @@ size_t recorrer_inorden_fun(nodo_abb_t *actual, bool (*funcion)(void *, void *),
 			return contador;
 	}
 
+	contador++;
+
 	if(actual->derecha){
 		contador = recorrer_inorden_fun(actual->izquierda, funcion, aux, contador);
 		if(!funcion(actual->elemento, aux))
 			return contador;
 	}
-
-	contador++;
+	
 	return contador;
 }
 
