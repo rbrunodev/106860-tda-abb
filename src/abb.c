@@ -222,22 +222,22 @@ size_t recorrer_preorden_fun(nodo_abb_t *actual, bool (*funcion)(void *, void *)
         return contador;
     }
 
-	bool funcion_invocada = false;
+	bool funcion_invocada = true;
 	
 	if (funcion(actual->elemento, aux)) {
-		funcion_invocada = true;
         contador++;
     } else {
+		funcion_invocada = false;
         return contador;
     }
 
 	if(actual->izquierda){
-		if(!funcion_invocada)
+		if(funcion_invocada)
 			contador = recorrer_preorden_fun(actual->izquierda,funcion, aux, contador);
 	}
 
 	if(actual->derecha){
-		if(!funcion_invocada)
+		if(funcion_invocada)
 			contador = recorrer_preorden_fun(actual->derecha,funcion, aux, contador);
 	}
 
@@ -249,25 +249,24 @@ size_t recorrer_inorden_fun(nodo_abb_t *actual, bool (*funcion)(void *, void *),
 	if(actual == NULL)
 		return contador;
 	
-	bool funcion_invocada = false;
+	bool funcion_invocada = true;
 
 	if(actual->izquierda){
-		if(!funcion_invocada)
+		if(funcion_invocada)
 			contador = recorrer_inorden_fun(actual->izquierda, funcion, aux, contador);
 	}
 
 	if (funcion(actual->elemento, aux)) {
-		funcion_invocada = true;
         contador++;
     } else {
+		funcion_invocada = false;
         return contador;
     }
 
 	if(actual->derecha){
-		if(!funcion_invocada)
+		if(funcion_invocada)
 			contador = recorrer_inorden_fun(actual->izquierda, funcion, aux, contador);
 	}
-
 
 	return contador;
 }
@@ -278,15 +277,22 @@ size_t recorrer_postorden_fun(nodo_abb_t *actual, bool (*funcion)(void *, void *
 	if(actual == NULL)
 		return contador;
 
-	if(actual->izquierda)
-		contador = recorrer_postorden_fun(actual->izquierda, funcion, aux, contador);
+	bool funcion_invocada = true;
 
-	if(actual->derecha)
-		contador = recorrer_postorden_fun(actual->izquierda, funcion, aux, contador);
+	if(actual->izquierda){
+		if(funcion_invocada)
+			contador = recorrer_postorden_fun(actual->izquierda, funcion, aux, contador);
+	}
+
+	if(actual->derecha){
+		if(funcion_invocada)
+			contador = recorrer_postorden_fun(actual->izquierda, funcion, aux, contador);
+	}
 
 	if (funcion(actual->elemento, aux)){
         contador++;
 	} else {
+		funcion_invocada = false;
         return contador;
 	}
 
