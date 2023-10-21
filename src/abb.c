@@ -256,7 +256,7 @@ size_t recorrer_inorden_fun(nodo_abb_t *actual, bool (*funcion)(void *, void *),
 	}
 
     iterados++;
-	if (!funcion(actual->elemento, aux)) {
+	if (!(*detener) && !funcion(actual->elemento, aux)) {
 		*detener = true;
         return iterados;
     }
