@@ -266,17 +266,14 @@ size_t recorrer_inorden_fun(nodo_abb_t *actual, bool (*funcion)(void *, void *),
 	return iterados;
 }
 
-
-size_t recorrer_postorden_fun(nodo_abb_t *actual, bool (*funcion)(void *, void *), void *aux)
+size_t recorrer_postorden_fun(nodo_abb_t *actual, bool (*funcion)(void *, void *), void *aux, size_t iterados)
 {
 	if(!actual)
-		return 0;
+		return iterados;
 
-	size_t iterados = 0;
+	iterados += recorrer_postorden_fun(actual->izquierda, funcion, aux, iterados);
 
-	iterados += recorrer_postorden_fun(actual->izquierda, funcion, aux);
-
-	iterados += recorrer_postorden_fun(actual->derecha, funcion, aux);
+	iterados += recorrer_postorden_fun(actual->derecha, funcion, aux, iterados);
 
 	iterados++;
 	if (!funcion(actual->elemento, aux)) {
@@ -299,12 +296,11 @@ size_t abb_con_cada_elemento(abb_t *arbol, abb_recorrido recorrido,
 	} else if (recorrido == PREORDEN) {
 		funcion_invocada = recorrer_preorden_fun(arbol->nodo_raiz, funcion, aux);
 	} else if (recorrido == POSTORDEN) {
-		funcion_invocada = recorrer_postorden_fun(arbol->nodo_raiz, funcion, aux);
+		funcion_invocada = recorrer_postorden_fun(arbol->nodo_raiz, funcion, aux, 0);
 	}
 
 	return funcion_invocada;
 }
-
 
 size_t recorrer_preorden(nodo_abb_t *actual, void **array, size_t tamanio_array, size_t indice)
 {
