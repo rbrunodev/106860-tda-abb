@@ -154,7 +154,6 @@ void *abb_quitar(abb_t *arbol, void *elemento) {
     return nuevo_raiz ? elemento : NULL;
 }
 
-
 void *abb_buscar(abb_t *arbol, void *elemento)
 {
 	if(!arbol)
@@ -182,7 +181,6 @@ size_t abb_tamanio(abb_t *arbol)
 
 	return arbol->tamanio;
 }
-
 
 void nodo_destruir(nodo_abb_t *nodo, void (*destructor)(void *) ) {
     if (!nodo) return;
@@ -282,7 +280,7 @@ size_t recorrer_postorden_fun(nodo_abb_t *actual, bool (*funcion)(void *, void *
 
 	iterados++;
 	if (!funcion(actual->elemento, aux)) {
-        return iterados;
+        return;
     }
 
 	return iterados;
