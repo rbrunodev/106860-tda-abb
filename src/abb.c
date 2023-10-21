@@ -247,23 +247,23 @@ size_t recorrer_preorden_fun(nodo_abb_t *actual, bool (*funcion)(void *, void *)
 size_t recorrer_inorden_fun(nodo_abb_t *actual, bool (*funcion)(void *, void *), void *aux, bool *detener, size_t *iterados)
 {
 	if(!actual || *detener)
-		return iterados;
+		return *iterados;
 
 	if(!(*detener)){
-		iterados += recorrer_inorden_fun(actual->izquierda, funcion, aux, detener, iterados);
+		*iterados += recorrer_inorden_fun(actual->izquierda, funcion, aux, detener, iterados);
 	}
 
-	iterados++;
+	*iterados++;
 	if (!(*detener) && !funcion(actual->elemento, aux)) {
 		*detener = true;
-        return iterados;
+        return *iterados;
     }
 
 	if(!(*detener)){
-		iterados += recorrer_inorden_fun(actual->derecha, funcion, aux, detener, iterados);
+		*iterados += recorrer_inorden_fun(actual->derecha, funcion, aux, detener, iterados);
 	}
 
-	return iterados;
+	return *iterados;
 }
 
 size_t recorrer_postorden_fun(nodo_abb_t *actual, bool (*funcion)(void *, void *), void *aux, bool *detener)
