@@ -278,14 +278,12 @@ size_t recorrer_postorden_fun(nodo_abb_t *actual, bool (*funcion)(void *, void *
 	// if(actual->derecha)
 	iterados += recorrer_postorden_fun(actual->derecha, funcion, aux);
 
-	bool continuar = funcion(actual->elemento, aux);
-
-    if (continuar) {
+    if(funcion(actual->elemento, aux)){
         iterados++;
     }
 	// if (!funcion(actual->elemento, aux)) {
-	// 	printf("Devolvio false\n");
-	// 	printf("iterados: %zu\n", iterados);
+		printf("Devolvio false\n");
+		printf("iterados: %zu\n", iterados);
     //     return iterados;
     // }
 	// iterados++;
