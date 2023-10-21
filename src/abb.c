@@ -285,6 +285,7 @@ size_t recorrer_postorden_fun(nodo_abb_t *actual, bool (*funcion)(void *, void *
 		printf("iterados: %zu\n", iterados);
         return iterados;
     }
+	printf("Sumar iterados: %zu\n", iterados++);
 	iterados++;
 
 	return iterados;
