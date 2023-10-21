@@ -6,12 +6,12 @@
 
 abb_t *abb_crear(abb_comparador comparador)
 {
-	if(comparador == NULL)
+	if(!comparador)
 		return NULL;
 
 	abb_t *arbol = malloc(sizeof(abb_t));
 
-	if (arbol == NULL)
+	if (!arbol)
 		return NULL;
 
 	arbol->nodo_raiz = NULL;
@@ -23,15 +23,15 @@ abb_t *abb_crear(abb_comparador comparador)
 
 abb_t *abb_insertar(abb_t *arbol, void *elemento)
 {
-	if(arbol == NULL)
+	if(!arbol)
 		return NULL;
 
 	nodo_abb_t *nodo = malloc(sizeof(nodo_abb_t));
 
-	if (nodo == NULL)
+	if (!nodo)
 		return NULL;
 
-	if(arbol->nodo_raiz == NULL){
+	if(!arbol->nodo_raiz){
 		nodo->elemento = elemento;
 		nodo->izquierda = NULL;
 		nodo->derecha = NULL;
@@ -44,7 +44,7 @@ abb_t *abb_insertar(abb_t *arbol, void *elemento)
 
 	while (nodo_actual) {
 		if (arbol->comparador(elemento, nodo_actual->elemento) <= 0){
-			if(nodo_actual->izquierda == NULL){
+			if(!nodo_actual->izquierda){
 				nodo->elemento = elemento;
 				nodo->izquierda = NULL;
 				nodo->derecha = NULL;
@@ -55,7 +55,7 @@ abb_t *abb_insertar(abb_t *arbol, void *elemento)
             nodo_actual = nodo_actual->izquierda;
 		}
         else {
-			if(nodo_actual->derecha == NULL){
+			if(!nodo_actual->derecha){
 				nodo->elemento = elemento;
 				nodo->izquierda = NULL;
 				nodo->derecha = NULL;
@@ -73,7 +73,7 @@ abb_t *abb_insertar(abb_t *arbol, void *elemento)
 
 nodo_abb_t *buscar_nodo(nodo_abb_t *nodo, abb_t *arbol, void *elemento)
 {
-	if(nodo == NULL)
+	if(!nodo)
 		return NULL;
 
 	int comparador = arbol->comparador(elemento, nodo->elemento);
@@ -97,9 +97,8 @@ void *buscar_predecesor(nodo_abb_t *nodo)
 }
 
 void *abb_quitar_recursivo(nodo_abb_t *nodo, void *elemento, abb_comparador comparador, size_t *tamanio) {
-    if (nodo == NULL) {
+    if (!nodo)
         return NULL;
-    }
 
     int comparacion = comparador(elemento, nodo->elemento);
 
@@ -108,12 +107,12 @@ void *abb_quitar_recursivo(nodo_abb_t *nodo, void *elemento, abb_comparador comp
     } else if (comparacion > 0) {
         nodo->derecha = abb_quitar_recursivo(nodo->derecha, elemento, comparador, tamanio);
     } else {
-        if (nodo->izquierda == NULL) {
+        if (!nodo->izquierda) {
             nodo_abb_t *temp = nodo->derecha;
             free(nodo);
             (*tamanio)--;
             return temp; 
-        } else if (nodo->derecha == NULL) {
+        } else if (!nodo->derecha) {
             nodo_abb_t *temp = nodo->izquierda;
             free(nodo);
             (*tamanio)--;
@@ -135,8 +134,6 @@ void *abb_quitar(abb_t *arbol, void *elemento) {
 	if (arbol->comparador(elemento, arbol->nodo_raiz->elemento) == 0) {
         void *elemento_eliminado = arbol->nodo_raiz->elemento;
         nodo_abb_t *nuevo_raiz = abb_quitar_recursivo(arbol->nodo_raiz, elemento, arbol->comparador, &(arbol->tamanio));
-		if(!nuevo_raiz)
-			return NULL;
         arbol->nodo_raiz = nuevo_raiz;
         return elemento_eliminado;
     }
@@ -164,10 +161,10 @@ void *abb_buscar(abb_t *arbol, void *elemento)
 
 bool abb_vacio(abb_t *arbol)
 {
-	if(arbol == NULL)
+	if(!arbol)
 		return true;
 
-	if(arbol->nodo_raiz == NULL)
+	if(!arbol->nodo_raiz)
 		return true;
 
 	return false;
@@ -221,7 +218,7 @@ void abb_destruir_todo(abb_t *arbol, void (*destructor)(void *))
 
 size_t recorrer_preorden_fun(nodo_abb_t *actual, bool (*funcion)(void *, void *), void *aux)
 {
-	if (actual == NULL) {
+	if (!actual) {
         return 0;
     }
 
@@ -245,7 +242,7 @@ size_t recorrer_preorden_fun(nodo_abb_t *actual, bool (*funcion)(void *, void *)
 
 size_t recorrer_inorden_fun(nodo_abb_t *actual, bool (*funcion)(void *, void *), void *aux)
 {
-	if(actual == NULL)
+	if(!actual)
 		return 0;
 
 	size_t iterados = 0;
@@ -269,7 +266,7 @@ size_t recorrer_inorden_fun(nodo_abb_t *actual, bool (*funcion)(void *, void *),
 
 size_t recorrer_postorden_fun(nodo_abb_t *actual, bool (*funcion)(void *, void *), void *aux)
 {
-	if(actual == NULL)
+	if(!actual)
 		return 0;
 
 	size_t iterados = 0;
@@ -308,7 +305,7 @@ size_t abb_con_cada_elemento(abb_t *arbol, abb_recorrido recorrido,
 
 size_t recorrer_preorden(nodo_abb_t *actual, void **array, size_t tamanio_array, size_t indice)
 {
-	if (actual == NULL || indice >= tamanio_array) {
+	if (!actual|| indice >= tamanio_array) {
         return indice;
     }
 
