@@ -295,7 +295,7 @@ size_t abb_con_cada_elemento(abb_t *arbol, abb_recorrido recorrido,
 
 	size_t funcion_invocada = 0;
 	if (recorrido == INORDEN) {
-		return recorrer_inorden_fun(arbol->nodo_raiz, funcion, aux, funcion_invocada);
+		return recorrer_inorden_fun(arbol->nodo_raiz, funcion, aux);
 	} else if (recorrido == PREORDEN) {
 		return recorrer_preorden_fun(arbol->nodo_raiz, funcion, aux, funcion_invocada);
 	} else if (recorrido == POSTORDEN) {
