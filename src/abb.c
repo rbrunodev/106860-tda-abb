@@ -267,26 +267,29 @@ size_t recorrer_inorden_fun(nodo_abb_t *actual, bool (*funcion)(void *, void *),
 
 size_t recorrer_postorden_fun(nodo_abb_t *actual, bool (*funcion)(void *, void *), void *aux)
 {
-	if(actual == NULL)
+	if(actual == NULL )
 		return 0;
 
 	size_t iterados = 0;
 
 	// if(actual->izquierda)
-	if(funcion(actual->elemento, aux))
-		iterados += recorrer_postorden_fun(actual->izquierda, funcion, aux);
+	iterados += recorrer_postorden_fun(actual->izquierda, funcion, aux);
 
 	// if(actual->derecha)
-	if(funcion(actual->elemento, aux))
-		iterados += recorrer_postorden_fun(actual->derecha, funcion, aux);
+	iterados += recorrer_postorden_fun(actual->derecha, funcion, aux);
 
-	if (!funcion(actual->elemento, aux)) {
-		printf("Devolvio false\n");
-		printf("iterados: %zu\n", iterados);
-        return iterados;
+	bool continuar = funcion(actual->elemento, aux);
+
+    if (continuar) {
+        iterados++;
     }
-	iterados++;
-	printf("Iterado ++: %zu\n", iterados);
+	// if (!funcion(actual->elemento, aux)) {
+	// 	printf("Devolvio false\n");
+	// 	printf("iterados: %zu\n", iterados);
+    //     return iterados;
+    // }
+	// iterados++;
+	// printf("Iterado ++: %zu\n", iterados);
 
 	return iterados;
 }
