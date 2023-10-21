@@ -268,7 +268,7 @@ size_t recorrer_inorden_fun(nodo_abb_t *actual, bool (*funcion)(void *, void *),
 
 size_t recorrer_postorden_fun(nodo_abb_t *actual, bool (*funcion)(void *, void *), void *aux, bool *stop)
 {
-	if(!actual || !(*stop))
+	if(!actual || *stop)
 		return 0;
 
 	size_t iterados = 0;
