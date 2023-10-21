@@ -301,7 +301,10 @@ size_t abb_con_cada_elemento(abb_t *arbol, abb_recorrido recorrido,
 	} else if (recorrido == POSTORDEN) {
 		return recorrer_postorden_fun(arbol->nodo_raiz, funcion, aux, funcion_invocada);
 	}
+
+	return 0;
 }
+
 
 size_t recorrer_preorden(nodo_abb_t *actual, void **array, size_t tamanio_array, size_t indice)
 {
