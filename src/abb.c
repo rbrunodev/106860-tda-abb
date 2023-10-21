@@ -2,6 +2,7 @@
 #include "abb_estructura_privada.h"
 #include <stddef.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 abb_t *abb_crear(abb_comparador comparador)
 {
@@ -294,6 +295,8 @@ size_t abb_con_cada_elemento(abb_t *arbol, abb_recorrido recorrido,
         return 0;
     }
 
+	printf("tamanio arbol: %zu\n", arbol->tamanio);
+
 	size_t funcion_invocada = 0;
 	if (recorrido == INORDEN) {
 		funcion_invocada = recorrer_inorden_fun(arbol->nodo_raiz, funcion, aux);
@@ -303,6 +306,7 @@ size_t abb_con_cada_elemento(abb_t *arbol, abb_recorrido recorrido,
 		funcion_invocada = recorrer_postorden_fun(arbol->nodo_raiz, funcion, aux);
 	}
 
+	printf("funcion invocada: %zu\n", funcion_invocada);
 	return funcion_invocada;
 }
 
