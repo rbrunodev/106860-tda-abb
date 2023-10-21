@@ -273,7 +273,7 @@ size_t recorrer_postorden_fun(nodo_abb_t *actual, bool (*funcion)(void *, void *
 {
 	if(!actual || *detener)
 		return 0;
-		
+
 	size_t iterados = 0;
 
 	if(!(*detener))
@@ -284,7 +284,7 @@ size_t recorrer_postorden_fun(nodo_abb_t *actual, bool (*funcion)(void *, void *
 
 	if (!(*detener) && !funcion(actual->elemento, aux)) {
 		*detener = true;
-		return iterados;
+		return 0;
 	}
 
 	iterados++;
