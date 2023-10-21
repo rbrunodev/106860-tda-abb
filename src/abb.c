@@ -131,6 +131,10 @@ void *abb_quitar(abb_t *arbol, void *elemento) {
         return NULL;
     }
 
+	nodo_abb_t *nodo = buscar_nodo(arbol->nodo_raiz, arbol, elemento);
+	if(!nodo)
+		return NULL;
+
 	if (arbol->comparador(elemento, arbol->nodo_raiz->elemento) == 0) {
         void *elemento_eliminado = arbol->nodo_raiz->elemento;
         nodo_abb_t *nuevo_raiz = abb_quitar_recursivo(arbol->nodo_raiz, elemento, arbol->comparador, &(arbol->tamanio));
@@ -146,7 +150,7 @@ void *abb_quitar(abb_t *arbol, void *elemento) {
     if (nuevo_raiz != arbol->nodo_raiz) {
         arbol->nodo_raiz = nuevo_raiz; 
     }
-	
+
     return nuevo_raiz ? elemento : NULL;
 }
 
