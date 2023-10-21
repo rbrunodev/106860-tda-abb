@@ -109,17 +109,17 @@ void *abb_quitar_recursivo(nodo_abb_t *nodo, void *elemento, abb_comparador comp
         nodo->derecha = abb_quitar_recursivo(nodo->derecha, elemento, comparador, tamanio);
     } else {
         if (nodo->izquierda == NULL) {
-            struct nodo_abb *temp = nodo->derecha;
+            nodo_abb_t *temp = nodo->derecha;
             free(nodo);
             (*tamanio)--;
             return temp; 
         } else if (nodo->derecha == NULL) {
-            struct nodo_abb *temp = nodo->izquierda;
+            nodo_abb_t *temp = nodo->izquierda;
             free(nodo);
             (*tamanio)--;
             return temp; 
         } else {
-            struct nodo_abb *predecesor = buscar_predecesor(nodo->izquierda);
+            nodo_abb_t *predecesor = buscar_predecesor(nodo->izquierda);
             nodo->elemento = predecesor->elemento;
             nodo->izquierda = abb_quitar_recursivo(nodo->izquierda, predecesor->elemento, comparador, tamanio);
         }
