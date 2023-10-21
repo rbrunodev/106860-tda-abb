@@ -124,7 +124,7 @@ void *abb_quitar_recursivo(nodo_abb_t *nodo, void *elemento, abb_comparador comp
             nodo->izquierda = abb_quitar_recursivo(nodo->izquierda, predecesor->elemento, comparador, tamanio);
         }
     }
-    return nodo;
+    return NULL;
 }
 
 void *abb_quitar(abb_t *arbol, void *elemento) {
@@ -269,7 +269,7 @@ size_t recorrer_postorden_fun(nodo_abb_t *actual, bool (*funcion)(void *, void *
 {
 	if(actual == NULL)
 		return 0;
-		
+
 	size_t iterados = 0;
 
 	iterados += recorrer_postorden_fun(actual->izquierda, funcion, aux);
