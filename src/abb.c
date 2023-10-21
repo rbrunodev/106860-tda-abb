@@ -247,9 +247,9 @@ size_t recorrer_preorden_fun(nodo_abb_t *actual, bool (*funcion)(void *, void *)
 size_t recorrer_inorden_fun(nodo_abb_t *actual, bool (*funcion)(void *, void *), void *aux, bool *detener)
 {
 	size_t iterados = 0;
-	
+
 	if(!actual || *detener)
-		return iterados;
+		return 0;
 
 
 	if(!(*detener)){
