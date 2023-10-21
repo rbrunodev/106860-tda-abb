@@ -308,8 +308,7 @@ size_t abb_con_cada_elemento(abb_t *arbol, abb_recorrido recorrido,
 	} else if (recorrido == PREORDEN) {
 		funcion_invocada = recorrer_preorden_fun(arbol->nodo_raiz, funcion, aux);
 	} else if (recorrido == POSTORDEN) {
-		invocada = recorrer_postorden_fun(arbol->nodo_raiz, funcion, aux);
-		printf("invocada_postorden: %zu\n", invocada);
+		funcion_invocada = recorrer_postorden_fun(arbol->nodo_raiz, funcion, aux);
 	}
 
 	printf("funcion invocada: %zu\n", funcion_invocada);
