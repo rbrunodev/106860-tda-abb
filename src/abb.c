@@ -252,8 +252,9 @@ size_t recorrer_inorden_fun(nodo_abb_t *actual, bool (*funcion)(void *, void *),
 	size_t iterados = 0;
 
 	if(actual->izquierda){
+		iterados += recorrer_inorden_fun(actual->izquierda, funcion, aux, detener);
 		if(!(*detener))
-			iterados += recorrer_inorden_fun(actual->izquierda, funcion, aux, detener);
+			return iterados;
 	}
 
     iterados++;
@@ -263,8 +264,9 @@ size_t recorrer_inorden_fun(nodo_abb_t *actual, bool (*funcion)(void *, void *),
     }
 
 	if(actual->derecha){
+		iterados += recorrer_inorden_fun(actual->derecha, funcion, aux, detener);
 		if(!(*detener))
-			iterados += recorrer_inorden_fun(actual->derecha, funcion, aux, detener);
+			return iterados;
 	}
 
 	return iterados;
