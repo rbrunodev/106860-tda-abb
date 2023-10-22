@@ -303,11 +303,11 @@ bool recorrer_postorden_fun(nodo_abb_t *actual, bool (*funcion)(void *, void *),
 	if(!derecha)
 		return false;
 
+	(*iterados)++;
 	if (!funcion(actual->elemento, aux)) {
 		printf("iterados false: %zu\n", *iterados);
 		return false;
 	}
-	(*iterados)++;
 
 	return true;
 }
