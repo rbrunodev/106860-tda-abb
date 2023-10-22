@@ -269,23 +269,43 @@ size_t recorrer_inorden_fun(nodo_abb_t *actual, bool (*funcion)(void *, void *),
 	return iterados;
 }
 
-size_t recorrer_postorden_fun(nodo_abb_t *actual, bool (*funcion)(void *, void *), void *aux, bool *detener)
+// size_t recorrer_postorden_fun(nodo_abb_t *actual, bool (*funcion)(void *, void *), void *aux, bool *detener)
+// {
+// 	size_t iterados = 0;
+
+// 	if(!actual || *detener)
+// 		return 0;
+
+// 	if((*detener))
+// 		iterados += recorrer_postorden_fun(actual->izquierda, funcion, aux, detener);
+
+// 	if(*detener)
+// 		iterados += recorrer_postorden_fun(actual->derecha, funcion, aux, detener);
+
+// 	iterados++;
+// 	if (!(*detener) && !funcion(actual->elemento, aux)) {
+// 		*detener = true;
+// 		return iterados;
+// 	}
+
+// 	return iterados;
+// }
+
+bool recorrer_postorden_fun(nodo_abb_t *actual, bool (*funcion)(void *, void *), void *aux, size_t *iterados)
 {
-	size_t iterados = 0;
 
-	if(!actual || *detener)
-		return 0;
+	if(!actual)
+		return true;
 
-	if((*detener))
-		iterados += recorrer_postorden_fun(actual->izquierda, funcion, aux, detener);
+	if (!funcion(actual->elemento, aux))
+		recorrer_postorden_fun(actual->izquierda, funcion, aux, iterados);
 
-	if(*detener)
-		iterados += recorrer_postorden_fun(actual->derecha, funcion, aux, detener);
+	if (!funcion(actual->elemento, aux)) 
+		recorrer_postorden_fun(actual->derecha, funcion, aux, iterados);
 
-	iterados++;
-	if (!(*detener) && !funcion(actual->elemento, aux)) {
-		*detener = true;
-		return iterados;
+	(*iterados)++;
+	if (!funcion(actual->elemento, aux)) {
+		return false;
 	}
 
 	return iterados;
@@ -305,7 +325,7 @@ size_t abb_con_cada_elemento(abb_t *arbol, abb_recorrido recorrido,
 	} else if (recorrido == PREORDEN) {
 		funcion_invocada = recorrer_preorden_fun(arbol->nodo_raiz, funcion, aux, &detener);
 	} else if (recorrido == POSTORDEN) {
-		funcion_invocada = recorrer_postorden_fun(arbol->nodo_raiz, funcion, aux, &detener);
+		recorrer_postorden_fun(arbol->nodo_raiz, funcion, aux, &funcion_invocada);
 	}
 
 	return funcion_invocada;
