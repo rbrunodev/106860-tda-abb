@@ -249,7 +249,7 @@ bool recorrer_inorden_fun(nodo_abb_t *actual, bool (*funcion)(void *, void *), v
 	if(!actual)
 		return true;
 
-	bool izquierda = recorrer_postorden_fun(actual->izquierda, funcion, aux, iterados);
+	bool izquierda = recorrer_inorden_fun(actual->izquierda, funcion, aux, iterados);
 	if(!izquierda)
 		return false;
 
@@ -258,7 +258,7 @@ bool recorrer_inorden_fun(nodo_abb_t *actual, bool (*funcion)(void *, void *), v
 		return false;
 	}
 
-	bool derecha = recorrer_postorden_fun(actual->derecha, funcion, aux, iterados);
+	bool derecha = recorrer_inorden_fun(actual->derecha, funcion, aux, iterados);
 	if(!derecha)
 		return false;
 
