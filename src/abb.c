@@ -229,11 +229,11 @@ size_t recorrer_preorden_fun(nodo_abb_t *actual, bool (*funcion)(void *, void *)
 		return false;
 	}
 
-	bool izquierda = recorrer_inorden_fun(actual->izquierda, funcion, aux, iterados);
+	bool izquierda = recorrer_preorden_fun(actual->izquierda, funcion, aux, iterados);
 	if(!izquierda)
 		return false;
 
-	bool derecha = recorrer_inorden_fun(actual->derecha, funcion, aux, iterados);
+	bool derecha = recorrer_preorden_fun(actual->derecha, funcion, aux, iterados);
 	if(!derecha)
 		return false;
 	
