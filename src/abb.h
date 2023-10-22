@@ -76,9 +76,9 @@ size_t abb_tamanio(abb_t *arbol);
  * Recorrido especifica el tipo de recorrido a realizar.
  *
  * Devuelve la cantidad de veces que fue invocada la función.
-*/
+ */
 size_t abb_con_cada_elemento(abb_t *arbol, abb_recorrido recorrido,
-			     bool (*funcion)(void *, void *), void *aux);
+                             bool (*funcion)(void *, void *), void *aux);
 
 /**
  * Recorre el arbol según el recorrido especificado y va almacenando los
@@ -91,7 +91,7 @@ size_t abb_con_cada_elemento(abb_t *arbol, abb_recorrido recorrido,
  * array.
  */
 size_t abb_recorrer(abb_t *arbol, abb_recorrido recorrido, void **array,
-		    size_t tamanio_array);
+                    size_t tamanio_array);
 
 /**
  * Destruye el arbol liberando la memoria reservada por el mismo.
