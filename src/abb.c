@@ -297,7 +297,11 @@ bool recorrer_postorden_fun(nodo_abb_t *actual, bool (*funcion)(void *, void *),
 		return true;
 
 	bool izquierda = recorrer_postorden_fun(actual->izquierda, funcion, aux, iterados);
+	if(!izquierda)
+		return false;
 	bool derecha = recorrer_postorden_fun(actual->derecha, funcion, aux, iterados);
+	if(!derecha)
+		return false;
 
 	if (!funcion(actual->elemento, aux) || !izquierda || !derecha) {
 		printf("iterados false: %zu\n", *iterados);
