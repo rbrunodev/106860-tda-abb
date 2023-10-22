@@ -308,7 +308,7 @@ bool recorrer_postorden_fun(nodo_abb_t *actual, bool (*funcion)(void *, void *),
 		return false;
 	}
 
-	return iterados;
+	return true;
 }
 
 size_t abb_con_cada_elemento(abb_t *arbol, abb_recorrido recorrido,
