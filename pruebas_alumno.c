@@ -220,15 +220,13 @@ void destruir_todo_abb()
 	abb_t *arbol_con_multiples_elementos = abb_crear(comparar_enteros);
 	int elemento2 = 5;
 	int elemento3 = 15;
-	
+
 	abb_insertar(arbol_con_multiples_elementos, &elemento2);
 	abb_insertar(arbol_con_multiples_elementos, &elemento3);
 	abb_destruir_todo(arbol_con_multiples_elementos, destructor_entero);
 	pa2m_afirmar(
 		1,
 		"Árbol con múltiples elementos y destructor destruido completamente correctamente");
-	
-
 }
 
 int main(void)
