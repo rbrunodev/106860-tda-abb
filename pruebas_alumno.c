@@ -260,11 +260,11 @@ void recorrido_abb()
 	pa2m_afirmar(
 		comparar_enteros(&array_preorden[0], &valor1) == 0 &&
 			comparar_enteros(&array_preorden[1], &valor2) == 0 &&
-			comparar_enteros(array_preorden[2], &valor3) == 0 &&
-			comparar_enteros(array_preorden[3], &valor4) == 0 &&
-			comparar_enteros(array_preorden[4], &valor5) == 0 &&
-			comparar_enteros(array_preorden[5], &valor6) == 0 &&
-			comparar_enteros(array_preorden[6], &valor7) == 0,
+			comparar_enteros(&array_preorden[2], &valor3) == 0 &&
+			comparar_enteros(&array_preorden[3], &valor4) == 0 &&
+			comparar_enteros(&array_preorden[4], &valor5) == 0 &&
+			comparar_enteros(&array_preorden[5], &valor6) == 0 &&
+			comparar_enteros(&array_preorden[6], &valor7) == 0,
 		"Recorrido preorden en árbol no vacío devuelve los elementos en el orden correcto");
 
 	//INORDEN
