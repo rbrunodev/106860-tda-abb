@@ -366,13 +366,9 @@ int main(void)
 			 "========================");
 	destruir_todo_abb();
 
-	pa2m_nuevo_grupo("\n======================== Pruebas de recorrido"
-			 "========================");
-	recorrido_abb();
-
 	pa2m_nuevo_grupo("\n======================== Pruebas de iterador"
 			 "========================");
-	// con_cada_elemento_abb();
+	con_cada_elemento_abb();
 
 	return pa2m_mostrar_reporte();
 }
