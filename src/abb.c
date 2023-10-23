@@ -66,7 +66,6 @@ abb_t *abb_insertar(abb_t *arbol, void *elemento)
 		}
 	}
 
-	free(nodo);
 	return arbol;
 }
 
