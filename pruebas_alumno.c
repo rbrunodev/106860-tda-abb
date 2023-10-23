@@ -4,13 +4,16 @@
 #include "src/abb_estructura_privada.h"
 #include "pa2m.h"
 
-int comparar_enteros(void *a, void *b) {
-    int valor_a = *((int *)a);
-    int valor_b = *((int *)b);
+int comparar_enteros(void *a, void *b)
+{
+	int valor_a = *((int *)a);
+	int valor_b = *((int *)b);
 
-    if (valor_a < valor_b) return -1;
-    if (valor_a > valor_b) return 1;
-    return 0;
+	if (valor_a < valor_b)
+		return -1;
+	if (valor_a > valor_b)
+		return 1;
+	return 0;
 }
 
 void crear_abb(void)
