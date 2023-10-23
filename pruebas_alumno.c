@@ -104,6 +104,60 @@ void busqueda_abb()
 	abb_destruir(arbol);
 }
 
+void quitar_abb()
+{
+	abb_t *arbol = abb_crear(comparar_enteros);
+
+	int elemento1 = 10;
+	int elemento2 = 5;
+	int elemento3 = 15;
+	int elemento4 = 3;
+	int elemento5 = 18;
+
+	abb_insertar(arbol, &elemento1);
+	abb_insertar(arbol, &elemento2);
+	abb_insertar(arbol, &elemento3);
+	abb_insertar(arbol, &elemento4);
+	abb_insertar(arbol, &elemento5);
+
+	int *predecesor_inorden = buscar_predecesor(arbol->nodo_raiz);
+
+	pa2m_afirmar(abb_quitar(arbol, &elemento4) == &elemento4,
+		     "Puedo quitar un elemento del árbol (nodo sin hijos)");
+	pa2m_afirmar(abb_buscar(arbol, &elemento4) == NULL,
+		     "El elemento eliminado ya no está en el árbol");
+
+	pa2m_afirmar(abb_quitar(arbol, &elemento2) == &elemento2,
+		     "Puedo quitar un elemento del árbol (nodo con un hijo)");
+	pa2m_afirmar(abb_buscar(arbol, &elemento2) == NULL,
+		     "El elemento eliminado ya no está en el árbol");
+
+	pa2m_afirmar(abb_quitar(arbol, &elemento1) == &elemento1,
+		     "Puedo quitar un elemento del árbol (nodo con dos hijos)");
+	pa2m_afirmar(abb_buscar(arbol, &elemento1) == NULL,
+		     "El elemento eliminado ya no está en el árbol");
+
+	pa2m_afirmar(abb_quitar(arbol, &elemento5) == &elemento5,
+		     "Puedo quitar un elemento del árbol (nodo con dos hijos)");
+	pa2m_afirmar(abb_buscar(arbol, &elemento5) == NULL,
+		     "El elemento eliminado ya no está en el árbol");
+
+	pa2m_afirmar(abb_quitar(arbol, &elemento3) == &elemento3,
+		     "Puedo quitar un elemento del árbol (raíz)");
+	pa2m_afirmar(abb_buscar(arbol, &elemento3) == NULL,
+		     "El elemento eliminado ya no está en el árbol");
+
+	pa2m_afirmar(abb_quitar(arbol, &elemento4) == &elemento4,
+		     "Puedo quitar un elemento del árbol (nodo sin hijos)");
+	pa2m_afirmar(abb_buscar(arbol, &elemento4) == NULL,
+		     "El elemento eliminado ya no está en el árbol");
+	pa2m_afirmar(*(int *)arbol->nodo_raiz->izquierda->derecha->elemento ==
+			     *predecesor_inorden,
+		     "El nodo que queda en su lugar es el predecesor inorden");
+
+	abb_destruir(arbol);
+}
+
 int main(void)
 {
 	pa2m_nuevo_grupo("------------ PRUEBAS DEL TDA ABB ------------");
@@ -120,6 +174,10 @@ int main(void)
 	pa2m_nuevo_grupo("\n======================== Pruebas de busqueda "
 			 "========================");
 	busqueda_abb();
+
+	pa2m_nuevo_grupo("\n======================== Pruebas de eliminacion "
+			 "========================");
+	quitar_abb();
 
 	return pa2m_mostrar_reporte();
 }
