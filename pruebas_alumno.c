@@ -365,7 +365,7 @@ int main(void)
 
 	pa2m_nuevo_grupo("\n======================== Pruebas de recorrido"
 			 "========================");
-	// recorrido_abb();
+	recorrido_abb();
 
 	pa2m_nuevo_grupo("\n======================== Pruebas de iterador"
 			 "========================");
