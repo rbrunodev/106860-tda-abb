@@ -4,14 +4,6 @@
 #include "src/abb_estructura_privada.h"
 #include "pa2m.h"
 
-static nodo_abb_t *buscar_predecesor(nodo_abb_t *nodo)
-{
-	while (nodo->derecha != NULL) {
-		nodo = nodo->derecha;
-	}
-	return nodo;
-}
-
 int comparar_enteros(void *a, void *b)
 {
 	int valor_a = *((int *)a);
@@ -154,6 +146,20 @@ void quitar_abb()
 		     "El elemento eliminado ya no está en el árbol");
 
 	abb_destruir(arbol);
+}
+
+void destruir_abb()
+{
+	abb_t *arbol_vacio = abb_crear(comparar_enteros);
+	abb_destruir(arbol_vacio);
+	pa2m_afirmar(1, "Árbol vacío destruido correctamente");
+
+	abb_t *arbol_sin_destructor = abb_crear(comparar_enteros);
+	int elemento1 = 42;
+	abb_insertar(arbol_sin_destructor, &elemento1);
+	abb_destruir(arbol_sin_destructor);
+	pa2m_afirmar(1,
+		     "Árbol no vacío sin destructor destruido correctamente");
 }
 
 void abb_vacio_y_tamanio()
