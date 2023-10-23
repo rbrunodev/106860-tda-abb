@@ -178,10 +178,7 @@ bool abb_vacio(abb_t *arbol)
 
 size_t abb_tamanio(abb_t *arbol)
 {
-	if (!arbol)
-		return 0;
-
-	return arbol->tamanio;
+	return arbol ? arbol->tamanio : 0;
 }
 
 void nodo_destruir(nodo_abb_t *nodo, void (*destructor)(void *))
