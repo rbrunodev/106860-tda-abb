@@ -21,9 +21,55 @@ void crear_abb(void)
 	printf("\nPruebas de creacion\n");
 	abb_t *arbol = abb_crear(comparar_enteros);
 
-	pa2m_afirmar(arbol != NULL, "Puedo crear un arbol");
+	pa2m_afirmar(arbol != NULL, "Puedo crear un árbol");
+	pa2m_afirmar(arbol->nodo_raiz == NULL, "El árbol se crea vacío");
+	pa2m_afirmar(arbol->tamanio == 0, "La cantidad de elementos es cero");
+	pa2m_afirmar(arbol->nodo_raiz == NULL, "El elemento raíz es NULL");
 
 	abb_destruir(arbol);
+}
+
+void insertar_abb()
+{
+	abb_t *arbol = abb_crear(comparar_enteros);
+
+	int elemento1 = 10;
+	int elemento2 = 5;
+	int elemento3 = 15;
+	int elemento4 = 3;
+	int elemento5 = 18;
+
+	pa2m_afirmar(abb_insertar(arbol, &elemento1) != NULL,
+		     "Puedo insertar un elemento en el árbol");
+	pa2m_afirmar(*(int *)(arbol->nodo_raiz->elemento) == elemento1,
+		     "El elemento queda como valor raíz");
+	pa2m_afirmar(arbol->nodo_raiz != NULL, "El árbol ya no está vacío");
+	pa2m_afirmar(arbol->tamanio == 1, "La cantidad de elementos es 1");
+
+	pa2m_afirmar(abb_insertar(arbol, &elemento2) != NULL,
+		     "Puedo insertar un elemento menor que el primero");
+	pa2m_afirmar(arbol->nodo_raiz->izquierda != NULL,
+		     "El árbol tiene un hijo izquierdo");
+	pa2m_afirmar(arbol->nodo_raiz->derecha == NULL,
+		     "El árbol no tiene hijo derecho");
+	pa2m_afirmar(*(int *)(arbol->nodo_raiz->izquierda->elemento) ==
+			     elemento2,
+		     "El elemento queda a la izquierda de la raíz");
+	pa2m_afirmar(arbol->tamanio == 2, "La cantidad de elementos es 2");
+
+	pa2m_afirmar(abb_insertar(arbol, &elemento3) != NULL,
+		     "Puedo insertar un elemento mayor que el primero");
+	pa2m_afirmar(arbol->nodo_raiz->izquierda != NULL &&
+			     arbol->nodo_raiz->derecha != NULL,
+		     "El árbol tiene dos hijos");
+	pa2m_afirmar(arbol->tamanio == 3, "La cantidad de elementos es 3");
+
+	pa2m_afirmar(abb_insertar(arbol, &elemento4) != NULL,
+		     "Puedo insertar un elemento menor a los que estaban");
+	pa2m_afirmar(
+		arbol->nodo_raiz->izquierda->izquierda != NULL,
+		"El hijo izquierdo de la raiz ahora tiene un hijo izquierdo");
+	pa2m_afirmar(arbol->tamanio == 4, "La cantidad de elementos es 4");
 }
 
 int main(void)
@@ -34,6 +80,7 @@ int main(void)
 			 "========================");
 
 	crear_abb();
+	insertar_abb();
 
 	return pa2m_mostrar_reporte();
 }
