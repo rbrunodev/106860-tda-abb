@@ -160,6 +160,26 @@ void destruir_abb()
 	abb_destruir(arbol_sin_destructor);
 	pa2m_afirmar(1,
 		     "Árbol no vacío sin destructor destruido correctamente");
+
+	abb_t *arbol_con_destructor = abb_crear(comparar_enteros);
+	int *elemento2 = malloc(sizeof(int));
+	*elemento2 = 10;
+	abb_insertar(arbol_con_destructor, elemento2);
+	abb_destruir(arbol_con_destructor);
+	pa2m_afirmar(1,
+		     "Árbol no vacío con destructor destruido correctamente");
+
+	abb_t *arbol_con_multiples_elementos = abb_crear(comparar_enteros);
+	int *elemento3 = malloc(sizeof(int));
+	int *elemento4 = malloc(sizeof(int));
+	*elemento3 = 5;
+	*elemento4 = 15;
+	abb_insertar(arbol_con_multiples_elementos, elemento3);
+	abb_insertar(arbol_con_multiples_elementos, elemento4);
+	abb_destruir(arbol_con_multiples_elementos);
+	pa2m_afirmar(
+		1,
+		"Árbol con múltiples elementos y destructor destruido correctamente");
 }
 
 void abb_vacio_y_tamanio()
