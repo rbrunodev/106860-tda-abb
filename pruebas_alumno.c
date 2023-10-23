@@ -257,9 +257,9 @@ void recorrido_abb()
 	pa2m_afirmar(
 		cantidad_elementos_preorden == 7,
 		"Recorrido preorden en árbol no vacío devuelve la cantidad correcta de elementos");
-	printf("valor de array %d\n", array_preorden[0]);
+	printf("Valor %d\n", comparar_enteros(&array_preorden[0], &valor1));
 	pa2m_afirmar(
-		comparar_enteros(&array_preorden[0], &valor1) == 0 &&
+		arbol_preorden->comparador(&array_preorden[0], &valor1) == 0 &&
 			comparar_enteros(&array_preorden[1], &valor2) == 0 &&
 			comparar_enteros(&array_preorden[2], &valor3) == 0 &&
 			comparar_enteros(&array_preorden[3], &valor4) == 0 &&
