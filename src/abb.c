@@ -392,13 +392,13 @@ size_t abb_recorrer(abb_t *arbol, abb_recorrido recorrido, void **array,
 	size_t indice = 0;
 
 	if (recorrido == INORDEN) {
-		indice = recorrer_inorden(arbol->nodo_raiz, array,
+		indice = recorrer_inorden(arbol->nodo_raiz, &array,
 					  tamanio_array, indice);
 	} else if (recorrido == PREORDEN) {
-		indice = recorrer_preorden(arbol->nodo_raiz, array,
+		indice = recorrer_preorden(arbol->nodo_raiz, &array,
 					   tamanio_array, indice);
 	} else if (recorrido == POSTORDEN) {
-		indice = recorrer_postorden(arbol->nodo_raiz, array,
+		indice = recorrer_postorden(arbol->nodo_raiz, &array,
 					    tamanio_array, indice);
 	}
 

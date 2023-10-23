@@ -343,7 +343,6 @@ void con_cada_elemento_abb()
 		contador_postorden == 7,
 		"Función auxiliar fue llamada la cantidad correcta de veces");
 
-	// Liberar árbol
 	abb_destruir(arbol_vacio);
 	abb_destruir(arbol_inorden);
 }
@@ -381,6 +380,10 @@ int main(void)
 	pa2m_nuevo_grupo("\n======================== Pruebas de destruir todo"
 			 "========================");
 	destruir_todo_abb();
+
+	pa2m_nuevo_grupo("\n======================== Pruebas de recorrido"
+			 "========================");
+	recorrido_abb();
 
 	pa2m_nuevo_grupo("\n======================== Pruebas de iterador"
 			 "========================");
