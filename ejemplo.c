@@ -40,7 +40,7 @@ void destructor_de_cosas(void *c)
 
 bool mostrar_elemento(void *elemento, void *extra)
 {
-	extra = extra; //para que no se queje el compilador, gracias -Werror -Wall
+	extra = extra; // para que no se queje el compilador, gracias -Werror -Wall
 	if (elemento)
 		printf("%i ", ((cosa *)elemento)->clave);
 	return true;
@@ -48,7 +48,7 @@ bool mostrar_elemento(void *elemento, void *extra)
 
 bool mostrar_hasta_5(void *elemento, void *extra)
 {
-	extra = extra; //para que no se queje el compilador, gracias -Werror -Wall
+	extra = extra; // para que no se queje el compilador, gracias -Werror -Wall
 	if (elemento) {
 		printf("%i ", ((cosa *)elemento)->clave);
 		if (((cosa *)elemento)->clave == 5)
