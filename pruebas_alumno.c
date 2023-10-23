@@ -82,6 +82,7 @@ void busqueda_abb()
 	int elemento3 = 15;
 	int elemento4 = 3;
 	int elemento5 = 18;
+	int elemento_inexistente = 4;
 
 	abb_insertar(arbol, &elemento1);
 	abb_insertar(arbol, &elemento2);
@@ -95,7 +96,7 @@ void busqueda_abb()
 		     "Puedo buscar un elemento en el árbol (izquierda)");
 	pa2m_afirmar(*(int *)abb_buscar(arbol, &elemento3) == elemento3,
 		     "Puedo buscar un elemento en el árbol (derecha)");
-	pa2m_afirmar(abb_buscar(arbol, &elemento4) == NULL,
+	pa2m_afirmar(abb_buscar(arbol, &elemento_inexistente) == NULL,
 		     "Puedo buscar un elemento que no está en el árbol");
 	pa2m_afirmar(*(int *)abb_buscar(arbol, &elemento5) == elemento5,
 		     "Puedo buscar otro elemento en el árbol (derecha)");
