@@ -161,8 +161,9 @@ void quitar_abb()
 		     "Puedo quitar un elemento del árbol (nodo sin hijos)");
 	pa2m_afirmar(abb_buscar(arbol, &elemento5) == NULL,
 		     "El elemento eliminado ya no está en el árbol");
-	pa2m_afirmar(arbol->nodo_raiz->izquierda->derecha->elemento ==
-			     predecesor_inorden->elemento,
+	pa2m_afirmar(arbol->comparador(
+			     arbol->nodo_raiz->izquierda->derecha->elemento,
+			     predecesor_inorden->elemento) == 0,
 		     "El nodo que queda en su lugar es el predecesor inorden");
 
 	abb_destruir(arbol);
