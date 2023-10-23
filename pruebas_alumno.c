@@ -251,10 +251,13 @@ void recorrido_abb()
 		cantidad_elementos_preorden == 7,
 		"Recorrido preorden en árbol no vacío devuelve la cantidad correcta de elementos");
 	pa2m_afirmar(
-		array_preorden[0] == 10 && array_preorden[1] == 5 &&
-			array_preorden[2] == 3 && array_preorden[3] == 7 &&
-			array_preorden[4] == 15 && array_preorden[5] == 12 &&
-			array_preorden[6] == 18,
+		comparar_enteros(array_preorden[0], 10) == 0 &&
+			comparar_enteros(array_preorden[1], 5) == 0 &&
+			comparar_enteros(array_preorden[2], 3) == 0 &&
+			comparar_enteros(array_preorden[3], 7) == 0 &&
+			comparar_enteros(array_preorden[4], 15) == 0 &&
+			comparar_enteros(array_preorden[5], 12) == 0 &&
+			comparar_enteros(array_preorden[6], 18) == 0,
 		"Recorrido preorden en árbol no vacío devuelve los elementos en el orden correcto");
 
 	//INORDEN
