@@ -80,10 +80,8 @@ nodo_abb_t *buscar_nodo(nodo_abb_t *nodo, abb_t *arbol, void *elemento)
 
 	if (comparador < 0)
 		return buscar_nodo(nodo->izquierda, arbol, elemento);
-	else
-		return buscar_nodo(nodo->derecha, arbol, elemento);
-
-	return NULL;
+	
+	return buscar_nodo(nodo->derecha, arbol, elemento);
 }
 
 void *buscar_predecesor(nodo_abb_t *nodo)
