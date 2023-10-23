@@ -187,7 +187,7 @@ void destruir_abb()
 
 	abb_t *arbol_con_destructor = abb_crear(comparar_enteros);
 	int elemento2 = 10;
-	abb_insertar(arbol_con_destructor, elemento2);
+	abb_insertar(arbol_con_destructor, &elemento2);
 	abb_destruir(arbol_con_destructor);
 	pa2m_afirmar(1,
 		     "Árbol no vacío con destructor destruido correctamente");
@@ -195,8 +195,8 @@ void destruir_abb()
 	abb_t *arbol_con_multiples_elementos = abb_crear(comparar_enteros);
 	int elemento3 = 5;
 	int elemento4 = 15;
-	abb_insertar(arbol_con_multiples_elementos, elemento3);
-	abb_insertar(arbol_con_multiples_elementos, elemento4);
+	abb_insertar(arbol_con_multiples_elementos, &elemento3);
+	abb_insertar(arbol_con_multiples_elementos, &elemento4);
 	abb_destruir(arbol_con_multiples_elementos);
 	pa2m_afirmar(
 		1,
@@ -211,7 +211,7 @@ void destruir_todo_abb()
 
 	abb_t *arbol_con_destructor = abb_crear(comparar_enteros);
 	int elemento1 = 10;
-	abb_insertar(arbol_con_destructor, elemento1);
+	abb_insertar(arbol_con_destructor, &elemento1);
 	abb_destruir_todo(arbol_con_destructor, destructor_entero);
 	pa2m_afirmar(
 		1,
@@ -221,8 +221,8 @@ void destruir_todo_abb()
 	int elemento2 = 5;
 	int elemento3 = 15;
 	
-	abb_insertar(arbol_con_multiples_elementos, elemento2);
-	abb_insertar(arbol_con_multiples_elementos, elemento3);
+	abb_insertar(arbol_con_multiples_elementos, &elemento2);
+	abb_insertar(arbol_con_multiples_elementos, &elemento3);
 	abb_destruir_todo(arbol_con_multiples_elementos, destructor_entero);
 	pa2m_afirmar(
 		1,
