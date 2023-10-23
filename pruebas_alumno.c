@@ -239,7 +239,7 @@ void recorrido_abb()
 
 	abb_t *arbol_preorden = abb_crear(comparar_enteros);
 	int elementos[] = { 10, 5, 15, 3, 7, 12, 18 };
-	for (size_t i = 0; i < sizeof(elementos); i++) {
+	for (size_t i = 0; i < sizeof(elementos) / sizeof(int); i++) {
 		abb_insertar(arbol_preorden, &elementos[i]);
 	}
 
