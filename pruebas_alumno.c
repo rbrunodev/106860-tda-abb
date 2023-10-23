@@ -247,27 +247,27 @@ void recorrido_abb()
 
 	// //PREORDEN
 	int array_preorden[10];
-	size_t cantidad_elementos_preorden = abb_recorrer(
-		arbol, PREORDEN, (void **)array_preorden, 10);
+	size_t cantidad_elementos_preorden =
+		abb_recorrer(arbol, PREORDEN, (void **)array_preorden, 10);
 	pa2m_afirmar(
 		cantidad_elementos_preorden == 7,
 		"Recorrido preorden en árbol no vacío devuelve la cantidad correcta de elementos");
 
-	// //INORDEN
-	// int array_inorden[10];
-	// size_t cantidad_elementos_inorden = abb_recorrer(
-	// 	arbol, INORDEN, (void **)array_inorden, 10);
-	// pa2m_afirmar(
-	// 	cantidad_elementos_inorden == 7,
-	// 	"Recorrido inorden en árbol no vacío devuelve la cantidad correcta de elementos");
+	//INORDEN
+	int array_inorden[10];
+	size_t cantidad_elementos_inorden =
+		abb_recorrer(arbol, INORDEN, (void **)array_inorden, 10);
+	pa2m_afirmar(
+		cantidad_elementos_inorden == 7,
+		"Recorrido inorden en árbol no vacío devuelve la cantidad correcta de elementos");
 
-	// // POSTORDEN
-	// int array_postorden[10];
-	// size_t cantidad_elementos_postorden = abb_recorrer(
-	// 	arbol, POSTORDEN, (void **)array_postorden, 10);
-	// pa2m_afirmar(
-	// 	cantidad_elementos_postorden == 7,
-	// 	"Recorrido postorden en árbol no vacío devuelve la cantidad correcta de elementos");
+	// POSTORDEN
+	int array_postorden[10];
+	size_t cantidad_elementos_postorden =
+		abb_recorrer(arbol, POSTORDEN, (void **)array_postorden, 10);
+	pa2m_afirmar(
+		cantidad_elementos_postorden == 7,
+		"Recorrido postorden en árbol no vacío devuelve la cantidad correcta de elementos");
 
 	abb_destruir(arbol);
 }
