@@ -287,15 +287,16 @@ void con_cada_elemento_abb()
 	pa2m_afirmar(elementos_recorridos_vacio == 0,
 		     "Árbol vacío no tiene elementos para recorrer");
 
+	abb_destruir(arbol_vacio);
 	//INORDEN
-	abb_t *arbol_inorden = abb_crear(comparar_enteros);
+	abb_t *arbol = abb_crear(comparar_enteros);
 	int elementos_inorden[] = { 10, 5, 15, 3, 7, 12, 18 };
 	for (size_t i = 0; i < sizeof(elementos_inorden) / sizeof(int); i++) {
-		abb_insertar(arbol_inorden, &elementos_inorden[i]);
+		abb_insertar(arbol, &elementos_inorden[i]);
 	}
 	int contador_inorden = 0;
 	size_t elementos_recorridos_inorden = abb_con_cada_elemento(
-		arbol_inorden, INORDEN, funcion_visita, &contador_inorden);
+		arbol, INORDEN, funcion_visita, &contador_inorden);
 	pa2m_afirmar(
 		elementos_recorridos_inorden == 7,
 		"Recorrido inorden en árbol no vacío devuelve la cantidad correcta de elementos");
@@ -306,7 +307,7 @@ void con_cada_elemento_abb()
 	//PREORDEN
 	int contador_preorden = 0;
 	size_t elementos_recorridos_preorden = abb_con_cada_elemento(
-		arbol_inorden, PREORDEN, funcion_visita, &contador_preorden);
+		arbol, PREORDEN, funcion_visita, &contador_preorden);
 	pa2m_afirmar(
 		elementos_recorridos_preorden == 7,
 		"Recorrido preorden en árbol no vacío devuelve la cantidad correcta de elementos");
@@ -317,7 +318,7 @@ void con_cada_elemento_abb()
 	//POSTORDEN
 	int contador_postorden = 0;
 	size_t elementos_recorridos_postorden = abb_con_cada_elemento(
-		arbol_inorden, POSTORDEN, funcion_visita, &contador_postorden);
+		arbol, POSTORDEN, funcion_visita, &contador_postorden);
 	pa2m_afirmar(
 		elementos_recorridos_postorden == 7,
 		"Recorrido postorden en árbol no vacío devuelve la cantidad correcta de elementos");
@@ -325,8 +326,7 @@ void con_cada_elemento_abb()
 		contador_postorden == 7,
 		"Función auxiliar fue llamada la cantidad correcta de veces");
 
-	abb_destruir(arbol_vacio);
-	abb_destruir(arbol_inorden);
+	abb_destruir(arbol);
 }
 
 int main(void)
