@@ -227,5 +227,10 @@ int main(void)
 		"========================");
 	abb_vacio_y_tamanio();
 
+	pa2m_nuevo_grupo(
+		"\n======================== Pruebas de destruir arbol"
+		"========================");
+	destruir_abb();
+
 	return pa2m_mostrar_reporte();
 }
