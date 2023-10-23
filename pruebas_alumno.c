@@ -245,19 +245,26 @@ void recorrido_abb()
 
 	//PREORDEN
 	int array_preorden[10];
+	int valor1 = 10;
+	int valor2 = 5;
+	int valor3 = 3;
+	int valor4 = 7;
+	int valor5 = 15;
+	int valor6 = 12;
+	int valor7 = 18;
 	size_t cantidad_elementos_preorden = abb_recorrer(
 		arbol_preorden, PREORDEN, (void **)array_preorden, 10);
 	pa2m_afirmar(
 		cantidad_elementos_preorden == 7,
 		"Recorrido preorden en árbol no vacío devuelve la cantidad correcta de elementos");
 	pa2m_afirmar(
-		comparar_enteros(array_preorden[0], 10) == 0 &&
-			comparar_enteros(array_preorden[1], 5) == 0 &&
-			comparar_enteros(array_preorden[2], 3) == 0 &&
-			comparar_enteros(array_preorden[3], 7) == 0 &&
-			comparar_enteros(array_preorden[4], 15) == 0 &&
-			comparar_enteros(array_preorden[5], 12) == 0 &&
-			comparar_enteros(array_preorden[6], 18) == 0,
+		comparar_enteros(&array_preorden[0], &valor1) == 0 &&
+			comparar_enteros(&array_preorden[1], &valor2) == 0 &&
+			comparar_enteros(array_preorden[2], &valor3) == 0 &&
+			comparar_enteros(array_preorden[3], &valor4) == 0 &&
+			comparar_enteros(array_preorden[4], &valor5) == 0 &&
+			comparar_enteros(array_preorden[5], &valor6) == 0 &&
+			comparar_enteros(array_preorden[6], &valor7) == 0,
 		"Recorrido preorden en árbol no vacío devuelve los elementos en el orden correcto");
 
 	//INORDEN
