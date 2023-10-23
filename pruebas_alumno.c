@@ -4,6 +4,8 @@
 #include "src/abb_estructura_privada.h"
 #include "pa2m.h"
 
+static nodo_abb_t *buscar_predecesor(nodo_abb_t *nodo);
+
 int comparar_enteros(void *a, void *b)
 {
 	int valor_a = *((int *)a);
