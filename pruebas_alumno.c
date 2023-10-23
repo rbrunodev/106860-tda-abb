@@ -37,7 +37,6 @@ void insertar_abb()
 	int elemento2 = 5;
 	int elemento3 = 15;
 	int elemento4 = 3;
-	int elemento5 = 18;
 
 	pa2m_afirmar(abb_insertar(arbol, &elemento1) != NULL,
 		     "Puedo insertar un elemento en el árbol");
@@ -70,6 +69,38 @@ void insertar_abb()
 		arbol->nodo_raiz->izquierda->izquierda != NULL,
 		"El hijo izquierdo de la raiz ahora tiene un hijo izquierdo");
 	pa2m_afirmar(arbol->tamanio == 4, "La cantidad de elementos es 4");
+
+	abb_destruir(arbol);
+}
+
+void busqueda_abb()
+{
+	abb_t *arbol = abb_crear(comparar_enteros);
+
+	int elemento1 = 10;
+	int elemento2 = 5;
+	int elemento3 = 15;
+	int elemento4 = 3;
+	int elemento5 = 18;
+
+	abb_insertar(arbol, &elemento1);
+	abb_insertar(arbol, &elemento2);
+	abb_insertar(arbol, &elemento3);
+	abb_insertar(arbol, &elemento4);
+	abb_insertar(arbol, &elemento5);
+
+	pa2m_afirmar(*(int *)abb_buscar(arbol, &elemento1) == elemento1,
+		     "Puedo buscar un elemento en el árbol (raíz)");
+	pa2m_afirmar(*(int *)abb_buscar(arbol, &elemento2) == elemento2,
+		     "Puedo buscar un elemento en el árbol (izquierda)");
+	pa2m_afirmar(*(int *)abb_buscar(arbol, &elemento3) == elemento3,
+		     "Puedo buscar un elemento en el árbol (derecha)");
+	pa2m_afirmar(abb_buscar(arbol, &elemento4) == NULL,
+		     "Puedo buscar un elemento que no está en el árbol");
+	pa2m_afirmar(*(int *)abb_buscar(arbol, &elemento5) == elemento5,
+		     "Puedo buscar otro elemento en el árbol (derecha)");
+
+	abb_destruir(arbol);
 }
 
 int main(void)
@@ -80,7 +111,14 @@ int main(void)
 			 "========================");
 
 	crear_abb();
+
+	pa2m_nuevo_grupo("\n======================== Pruebas de insercion "
+			 "========================");
 	insertar_abb();
+
+	pa2m_nuevo_grupo("\n======================== Pruebas de busqueda "
+			 "========================");
+	busqueda_abb();
 
 	return pa2m_mostrar_reporte();
 }
