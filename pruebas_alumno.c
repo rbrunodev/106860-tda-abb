@@ -16,6 +16,11 @@ int comparar_enteros(void *a, void *b)
 	return 0;
 }
 
+void destructor_entero(void *elemento)
+{
+	free(elemento);
+}
+
 void crear_abb(void)
 {
 	printf("\nPruebas de creacion\n");
@@ -148,40 +153,6 @@ void quitar_abb()
 	abb_destruir(arbol);
 }
 
-void destruir_abb()
-{
-	abb_t *arbol_vacio = abb_crear(comparar_enteros);
-	abb_destruir(arbol_vacio);
-	pa2m_afirmar(1, "Árbol vacío destruido correctamente");
-
-	abb_t *arbol_sin_destructor = abb_crear(comparar_enteros);
-	int elemento1 = 42;
-	abb_insertar(arbol_sin_destructor, &elemento1);
-	abb_destruir(arbol_sin_destructor);
-	pa2m_afirmar(1,
-		     "Árbol no vacío sin destructor destruido correctamente");
-
-	abb_t *arbol_con_destructor = abb_crear(comparar_enteros);
-	int *elemento2 = malloc(sizeof(int));
-	*elemento2 = 10;
-	abb_insertar(arbol_con_destructor, elemento2);
-	abb_destruir(arbol_con_destructor);
-	pa2m_afirmar(1,
-		     "Árbol no vacío con destructor destruido correctamente");
-
-	abb_t *arbol_con_multiples_elementos = abb_crear(comparar_enteros);
-	int *elemento3 = malloc(sizeof(int));
-	int *elemento4 = malloc(sizeof(int));
-	*elemento3 = 5;
-	*elemento4 = 15;
-	abb_insertar(arbol_con_multiples_elementos, elemento3);
-	abb_insertar(arbol_con_multiples_elementos, elemento4);
-	abb_destruir(arbol_con_multiples_elementos);
-	pa2m_afirmar(
-		1,
-		"Árbol con múltiples elementos y destructor destruido correctamente");
-}
-
 void abb_vacio_y_tamanio()
 {
 	abb_t *arbol = abb_crear(comparar_enteros);
@@ -199,6 +170,65 @@ void abb_vacio_y_tamanio()
 		"El tamaño del árbol es 1 después de insertar un elemento");
 
 	abb_destruir(arbol);
+}
+
+void destruir_abb()
+{
+	abb_t *arbol_vacio = abb_crear(comparar_enteros);
+	abb_destruir(arbol_vacio);
+	pa2m_afirmar(1, "Árbol vacío destruido correctamente");
+
+	abb_t *arbol_sin_destructor = abb_crear(comparar_enteros);
+	int elemento1 = 42;
+	abb_insertar(arbol_sin_destructor, &elemento1);
+	abb_destruir(arbol_sin_destructor);
+	pa2m_afirmar(1,
+		     "Árbol no vacío sin destructor destruido correctamente");
+
+	abb_t *arbol_con_destructor = abb_crear(comparar_enteros);
+	int elemento2 = 10;
+	abb_insertar(arbol_con_destructor, elemento2);
+	abb_destruir(arbol_con_destructor);
+	pa2m_afirmar(1,
+		     "Árbol no vacío con destructor destruido correctamente");
+
+	abb_t *arbol_con_multiples_elementos = abb_crear(comparar_enteros);
+	int elemento3 = 5;
+	int elemento4 = 15;
+	abb_insertar(arbol_con_multiples_elementos, elemento3);
+	abb_insertar(arbol_con_multiples_elementos, elemento4);
+	abb_destruir(arbol_con_multiples_elementos);
+	pa2m_afirmar(
+		1,
+		"Árbol con múltiples elementos y destructor destruido correctamente");
+}
+
+void destruir_todo_abb()
+{
+	abb_t *arbol_vacio = abb_crear(comparar_enteros);
+	abb_destruir_todo(arbol_vacio, destructor_entero);
+	pa2m_afirmar(1, "Árbol vacío destruido completamente correctamente");
+
+	abb_t *arbol_con_destructor = abb_crear(comparar_enteros);
+	int elemento1 = 10;
+	abb_insertar(arbol_con_destructor, elemento1);
+	abb_destruir_todo(arbol_con_destructor, destructor_entero);
+	pa2m_afirmar(
+		1,
+		"Árbol no vacío con destructor destruido completamente correctamente");
+
+	abb_t *arbol_con_multiples_elementos = abb_crear(comparar_enteros);
+	int elemento2 = 5;
+	int elemento3 = 15;
+	
+	abb_insertar(arbol_con_multiples_elementos, elemento2);
+	abb_insertar(arbol_con_multiples_elementos, elemento3);
+	abb_destruir_todo(arbol_con_multiples_elementos, destructor_entero);
+	pa2m_afirmar(
+		1,
+		"Árbol con múltiples elementos y destructor destruido completamente correctamente");
+	
+
 }
 
 int main(void)
@@ -227,10 +257,13 @@ int main(void)
 		"========================");
 	abb_vacio_y_tamanio();
 
-	pa2m_nuevo_grupo(
-		"\n======================== Pruebas de destruir arbol"
-		"========================");
+	pa2m_nuevo_grupo("\n======================== Pruebas de destruir arbol"
+			 "========================");
 	destruir_abb();
+
+	pa2m_nuevo_grupo("\n======================== Pruebas de destruir todo"
+			 "========================");
+	destruir_todo_abb();
 
 	return pa2m_mostrar_reporte();
 }
