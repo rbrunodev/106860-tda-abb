@@ -128,9 +128,13 @@ void *abb_quitar_recursivo(nodo_abb_t *nodo, void *elemento,
 	return nodo;
 }
 
+void *validador_arbol(abb_t *arbol){
+	return !arbol || !arbol->nodo_raiz;
+}
+
 void *abb_quitar(abb_t *arbol, void *elemento)
 {
-	if (!arbol || !arbol->nodo_raiz) {
+	if (validador_arbol(arbol)) {
 		return NULL;
 	}
 
@@ -172,7 +176,7 @@ void *abb_buscar(abb_t *arbol, void *elemento)
 
 bool abb_vacio(abb_t *arbol)
 {
-	return !arbol || !arbol->nodo_raiz;
+	return validador_arbol(arbol);
 }
 
 size_t abb_tamanio(abb_t *arbol)
@@ -296,7 +300,7 @@ bool recorrer_postorden_fun(nodo_abb_t *actual, bool (*funcion)(void *, void *),
 size_t abb_con_cada_elemento(abb_t *arbol, abb_recorrido recorrido,
 			     bool (*funcion)(void *, void *), void *aux)
 {
-	if (!arbol || !arbol->nodo_raiz || !funcion) {
+	if (validador_arbol(arbol) || !funcion) {
 		return 0;
 	}
 
@@ -384,7 +388,7 @@ size_t recorrer_postorden(nodo_abb_t *actual, void **array,
 size_t abb_recorrer(abb_t *arbol, abb_recorrido recorrido, void **array,
 		    size_t tamanio_array)
 {
-	if (!arbol || !arbol->nodo_raiz) {
+	if (validador_arbol(arbol)) {
 		return 0;
 	}
 
