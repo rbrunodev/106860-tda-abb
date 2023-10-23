@@ -239,19 +239,19 @@ void recorrido_abb()
 
 	abb_destruir(arbol_vacio);
 
-	// abb_t *arbol = abb_crear(comparar_enteros);
-	// int elementos[] = { 10, 5, 15, 3, 7, 12, 18 };
-	// for (size_t i = 0; i < sizeof(elementos) / sizeof(int); i++) {
-	// 	abb_insertar(arbol, &elementos[i]);
-	// }
+	abb_t *arbol = abb_crear(comparar_enteros);
+	int elementos[] = { 10, 5, 15, 3, 7, 12, 18 };
+	for (size_t i = 0; i < sizeof(elementos) / sizeof(int); i++) {
+		abb_insertar(arbol, &elementos[i]);
+	}
 
 	// //PREORDEN
-	// int array_preorden[10];
-	// size_t cantidad_elementos_preorden = abb_recorrer(
-	// 	arbol, PREORDEN, (void **)array_preorden, 10);
-	// pa2m_afirmar(
-	// 	cantidad_elementos_preorden == 7,
-	// 	"Recorrido preorden en árbol no vacío devuelve la cantidad correcta de elementos");
+	int array_preorden[10];
+	size_t cantidad_elementos_preorden = abb_recorrer(
+		arbol, PREORDEN, (void **)array_preorden, 10);
+	pa2m_afirmar(
+		cantidad_elementos_preorden == 7,
+		"Recorrido preorden en árbol no vacío devuelve la cantidad correcta de elementos");
 
 	// //INORDEN
 	// int array_inorden[10];
@@ -269,7 +269,7 @@ void recorrido_abb()
 	// 	cantidad_elementos_postorden == 7,
 	// 	"Recorrido postorden en árbol no vacío devuelve la cantidad correcta de elementos");
 
-	// abb_destruir(arbol);
+	abb_destruir(arbol);
 }
 
 bool funcion_visita(void *elemento, void *aux)
