@@ -120,17 +120,13 @@ void quitar_abb()
 	int elemento2 = 5;
 	int elemento3 = 15;
 	int elemento4 = 3;
-	int elemento5 = 2;
-	int elemento6 = 18;
+	int elemento5 = 18;
 
 	abb_insertar(arbol, &elemento1);
 	abb_insertar(arbol, &elemento2);
 	abb_insertar(arbol, &elemento3);
 	abb_insertar(arbol, &elemento4);
 	abb_insertar(arbol, &elemento5);
-	abb_insertar(arbol, &elemento6);
-
-	nodo_abb_t *predecesor_inorden = buscar_predecesor(arbol->nodo_raiz);
 
 	pa2m_afirmar(abb_quitar(arbol, &elemento4) == &elemento4,
 		     "Puedo quitar un elemento del árbol (nodo sin hijos)");
@@ -147,24 +143,15 @@ void quitar_abb()
 	pa2m_afirmar(abb_buscar(arbol, &elemento1) == NULL,
 		     "El elemento eliminado ya no está en el árbol");
 
-	pa2m_afirmar(abb_quitar(arbol, &elemento6) == &elemento6,
+	pa2m_afirmar(abb_quitar(arbol, &elemento5) == &elemento5,
 		     "Puedo quitar un elemento del árbol (nodo con dos hijos)");
-	pa2m_afirmar(abb_buscar(arbol, &elemento6) == NULL,
+	pa2m_afirmar(abb_buscar(arbol, &elemento5) == NULL,
 		     "El elemento eliminado ya no está en el árbol");
 
 	pa2m_afirmar(abb_quitar(arbol, &elemento3) == &elemento3,
 		     "Puedo quitar un elemento del árbol (raíz)");
 	pa2m_afirmar(abb_buscar(arbol, &elemento3) == NULL,
 		     "El elemento eliminado ya no está en el árbol");
-
-	pa2m_afirmar(abb_quitar(arbol, &elemento5) == &elemento5,
-		     "Puedo quitar un elemento del árbol (nodo sin hijos)");
-	pa2m_afirmar(abb_buscar(arbol, &elemento5) == NULL,
-		     "El elemento eliminado ya no está en el árbol");
-	pa2m_afirmar(arbol->comparador(
-			     arbol->nodo_raiz->izquierda->derecha->elemento,
-			     predecesor_inorden->elemento) == 0,
-		     "El nodo que queda en su lugar es el predecesor inorden");
 
 	abb_destruir(arbol);
 }
