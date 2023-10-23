@@ -24,9 +24,17 @@ valgrind ./pruebas_alumno
 La funcion **abb_insertar**:
 Recibe un arbol y un elemento. Si el arbol no existe, devuelve NULL. Si el arbol esta vacio, crea un nodo con el elemento y lo inserta en el arbol. Si el arbol no esta vacio, se procede a recorrer el árbol para encontrar la ubicación adecuada para insertar el nuevo elemento. Comienza desde el nodo raíz y sigue avanzando hacia la izquierda o la derecha según el valor del elemento y el comparador proporcionado (arbol->comparador) para determinar la ubicación correcta. Una vez que se encuentra la ubicación adecuada, el nuevo nodo se configura con el elemento dado y sus punteros izquierdo y derecho se establecen en nulo. Luego, se actualiza el puntero izquierdo o derecho del nodo actual para que apunte al nuevo nodo, y se incrementa el tamaño del árbol. La función retorna el puntero al árbol modificado.
 
+<div align="center">
+<img width="70%" src="img/crear-inserta.svg">
+</div>
+
 La función **abb_buscar**: 
 Se utiliza para buscar un elemento específico y devuelve un puntero al elemento si se encuentra o nulo si no se encuentra. 
 Recibe un arbol y un elemento. Si el arbol no existe, devuelve NULL. Se llama a la función buscar_nodo para realizar la búsqueda del elemento en el árbol, la cual es una función recursiva, donde si el nodo es nulo significa que se llego a un nodo hoja y el elemento no se ha encontrado, por lo que retorna NULL. Luego, se calcula la comparación entre el elemento deseado y el elemento en el nodo actual utilizando el comparador proporcionado (arbol->comparador). Si el comparador es cero significa que se encontro el elemento, y devuelve el nodo. Si el comparador es menor que cero, se llama a la función nuevamente con el nodo izquierdo del nodo actual. Si el comparador es mayor que cero, se llama a la función, pero con el nodo derecho del nodo actual. Si esa funcion retorna distinto de NULL, retorno el elemento del nodo, sino retorno NULL.
+
+<div align="center">
+<img width="70%" src="img/buscar.svg">
+</div>
 
 La función **abb_quitar**: 
 Se utiliza para eliminar un elemento específico y devuelve el elemento eliminado o nulo si no se encuentra.
@@ -37,6 +45,9 @@ La funcion **abb_quitar_recursivo** compara el elemento deseado con el elemento 
 2) Si el nodo no tiene un hijo derecho, se libera la memoria del nodo actual y se disminuye el tamaño del árbol. Luego se retorna el hijo izquierdo como el nuevo nodo en su lugar.
 3) Si el nodo tiene dos hijos (izq y der), se encuentra el predecesor del nodo, se copia su valor al nodo actual y se elimina el predecesor del subárbol izquierdo llamando recursivamente abb_quitar_recursivo en el subárbol izquierdo.
 
+<div align="center">
+<img width="70%" src="img/quitar.svg">
+</div>
 ---
 
 ## Respuestas a las preguntas teóricas
