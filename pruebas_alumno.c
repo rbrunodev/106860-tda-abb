@@ -161,10 +161,10 @@ void quitar_abb()
 		     "Puedo quitar un elemento del árbol (nodo sin hijos)");
 	pa2m_afirmar(abb_buscar(arbol, &elemento5) == NULL,
 		     "El elemento eliminado ya no está en el árbol");
-	pa2m_afirmar(comparar_enteros(
-			     arbol->nodo_raiz->izquierda->derecha->elemento,
-			     predecesor_inorden->elemento) == 0,
-		     "El nodo que queda en su lugar es el predecesor inorden");
+	pa2m_afirmar(
+		comparar_enteros(arbol->nodo_raiz->izquierda->derecha->elemento,
+				 predecesor_inorden->elemento) == 0,
+		"El nodo que queda en su lugar es el predecesor inorden");
 
 	abb_destruir(arbol);
 }
@@ -209,8 +209,9 @@ int main(void)
 			 "========================");
 	quitar_abb();
 
-	pa2m_nuevo_grupo("\n======================== Pruebas de arbol vacio y tamaño "
-			 "========================");
+	pa2m_nuevo_grupo(
+		"\n======================== Pruebas de arbol vacio y tamaño "
+		"========================");
 	abb_vacio_y_tamanio();
 
 	return pa2m_mostrar_reporte();
