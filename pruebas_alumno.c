@@ -290,6 +290,67 @@ void recorrido_abb()
 	abb_destruir(arbol_preorden);
 }
 
+bool funcion_visita(void *elemento, void *aux)
+{
+	int *contador = (int *)aux;
+	(*contador)++;
+	printf("Elemento: %d\n", *((int *)elemento));
+	return true;
+}
+
+void con_cada_elemento_abb()
+{
+	abb_t *arbol_vacio = abb_crear(comparar_enteros);
+	int contador_vacio = 0;
+	size_t elementos_recorridos_vacio = abb_con_cada_elemento(
+		arbol_vacio, INORDEN, funcion_visita, &contador_vacio);
+	pa2m_afirmar(elementos_recorridos_vacio == 0,
+		     "Árbol vacío no tiene elementos para recorrer");
+
+	//INORDEN
+	abb_t *arbol_inorden = abb_crear(comparar_enteros);
+	int elementos_inorden[] = { 10, 5, 15, 3, 7, 12, 18 };
+	for (size_t i = 0; i < sizeof(elementos_inorden) / sizeof(int); i++) {
+		abb_insertar(arbol_inorden, &elementos_inorden[i]);
+	}
+	int contador_inorden = 0;
+	size_t elementos_recorridos_inorden = abb_con_cada_elemento(
+		arbol_inorden, INORDEN, funcion_visita, &contador_inorden);
+	pa2m_afirmar(
+		elementos_recorridos_inorden == 7,
+		"Recorrido inorden en árbol no vacío devuelve la cantidad correcta de elementos");
+	pa2m_afirmar(
+		contador_inorden == 7,
+		"Función auxiliar fue llamada la cantidad correcta de veces");
+
+	//PREORDEN
+	int contador_preorden = 0;
+	size_t elementos_recorridos_preorden = abb_con_cada_elemento(
+		arbol_inorden, PREORDEN, funcion_visita, &contador_preorden);
+	pa2m_afirmar(
+		elementos_recorridos_preorden == 7,
+		"Recorrido preorden en árbol no vacío devuelve la cantidad correcta de elementos");
+	pa2m_afirmar(
+		contador_preorden == 7,
+		"Función auxiliar fue llamada la cantidad correcta de veces");
+
+	//POSTORDEN
+	int contador_postorden = 0;
+	size_t elementos_recorridos_postorden =
+		abb_con_cada_elemento(arbol_inorden, POSTORDEN,
+				      funcion_visita, &contador_postorden);
+	pa2m_afirmar(
+		elementos_recorridos_postorden == 7,
+		"Recorrido postorden en árbol no vacío devuelve la cantidad correcta de elementos");
+	pa2m_afirmar(
+		contador_postorden == 7,
+		"Función auxiliar fue llamada la cantidad correcta de veces");
+
+	// Liberar árbol
+	abb_destruir(arbol_vacio);
+	abb_destruir(arbol_inorden);
+}
+
 int main(void)
 {
 	pa2m_nuevo_grupo("------------ PRUEBAS DEL TDA ABB ------------");
@@ -324,9 +385,9 @@ int main(void)
 			 "========================");
 	destruir_todo_abb();
 
-	pa2m_nuevo_grupo("\n======================== Pruebas de recorrer"
+	pa2m_nuevo_grupo("\n======================== Pruebas de iterador"
 			 "========================");
-	recorrido_abb();
+	con_cada_elemento_abb();
 
 	return pa2m_mostrar_reporte();
 }
