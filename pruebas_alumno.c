@@ -361,7 +361,7 @@ int main(void)
 
 	pa2m_nuevo_grupo("\n======================== Pruebas de destruir todo"
 			 "========================");
-	// destruir_todo_abb();
+	destruir_todo_abb();
 
 	pa2m_nuevo_grupo("\n======================== Pruebas de recorrido"
 			 "========================");
