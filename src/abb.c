@@ -21,6 +21,15 @@ abb_t *abb_crear(abb_comparador comparador)
 	return arbol;
 }
 
+nodo_abb_t *nodo_crear(abb_t *arbol, void *elemento, nodo_abb_t *nodo)
+{
+	nodo->elemento = elemento;
+	nodo->izquierda = NULL;
+	nodo->derecha = NULL;
+	arbol->tamanio++;
+	return nodo;
+}
+
 abb_t *abb_insertar(abb_t *arbol, void *elemento)
 {
 	if (!arbol)
@@ -32,11 +41,7 @@ abb_t *abb_insertar(abb_t *arbol, void *elemento)
 		return NULL;
 
 	if (!arbol->nodo_raiz) {
-		nodo->elemento = elemento;
-		nodo->izquierda = NULL;
-		nodo->derecha = NULL;
-		arbol->nodo_raiz = nodo;
-		arbol->tamanio++;
+		arbol->nodo_raiz = nodo_crear(arbol, elemento, nodo);
 		return arbol;
 	}
 
@@ -45,21 +50,15 @@ abb_t *abb_insertar(abb_t *arbol, void *elemento)
 	while (nodo_actual) {
 		if (arbol->comparador(elemento, nodo_actual->elemento) <= 0) {
 			if (!nodo_actual->izquierda) {
-				nodo->elemento = elemento;
-				nodo->izquierda = NULL;
-				nodo->derecha = NULL;
-				nodo_actual->izquierda = nodo;
-				arbol->tamanio++;
+				nodo_actual->izquierda =
+					nodo_crear(arbol, elemento, nodo);
 				return arbol;
 			}
 			nodo_actual = nodo_actual->izquierda;
 		} else {
 			if (!nodo_actual->derecha) {
-				nodo->elemento = elemento;
-				nodo->izquierda = NULL;
-				nodo->derecha = NULL;
-				nodo_actual->derecha = nodo;
-				arbol->tamanio++;
+				nodo_actual->derecha =
+					nodo_crear(arbol, elemento, nodo);
 				return arbol;
 			}
 			nodo_actual = nodo_actual->derecha;
@@ -129,9 +128,14 @@ void *abb_quitar_recursivo(nodo_abb_t *nodo, void *elemento,
 	return nodo;
 }
 
+bool abb_vacio(abb_t *arbol)
+{
+	return !arbol || !arbol->nodo_raiz;
+}
+
 void *abb_quitar(abb_t *arbol, void *elemento)
 {
-	if (!arbol || !arbol->nodo_raiz) {
+	if (abb_vacio(arbol)) {
 		return NULL;
 	}
 
@@ -169,11 +173,6 @@ void *abb_buscar(abb_t *arbol, void *elemento)
 
 	nodo_abb_t *nodo = buscar_nodo(arbol->nodo_raiz, arbol, elemento);
 	return nodo ? nodo->elemento : NULL;
-}
-
-bool abb_vacio(abb_t *arbol)
-{
-	return !arbol || !arbol->nodo_raiz;
 }
 
 size_t abb_tamanio(abb_t *arbol)
@@ -297,7 +296,7 @@ bool recorrer_postorden_fun(nodo_abb_t *actual, bool (*funcion)(void *, void *),
 size_t abb_con_cada_elemento(abb_t *arbol, abb_recorrido recorrido,
 			     bool (*funcion)(void *, void *), void *aux)
 {
-	if (!arbol || !arbol->nodo_raiz || !funcion) {
+	if (abb_vacio(arbol) || !funcion) {
 		return 0;
 	}
 
@@ -385,7 +384,7 @@ size_t recorrer_postorden(nodo_abb_t *actual, void **array,
 size_t abb_recorrer(abb_t *arbol, abb_recorrido recorrido, void **array,
 		    size_t tamanio_array)
 {
-	if (!arbol || !arbol->nodo_raiz) {
+	if (abb_vacio(arbol)) {
 		return 0;
 	}
 
