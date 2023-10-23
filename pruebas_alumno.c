@@ -252,8 +252,6 @@ void recorrido_abb()
 	pa2m_afirmar(
 		cantidad_elementos_preorden == 7,
 		"Recorrido preorden en árbol no vacío devuelve la cantidad correcta de elementos");
-	
-	free(array_preorden);
 
 	// //INORDEN
 	// int array_inorden[10];
