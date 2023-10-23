@@ -18,7 +18,6 @@ int comparar_enteros(void *a, void *b)
 
 void destructor_entero(void *elemento)
 {
-	free(elemento);
 }
 
 void crear_abb(void)
@@ -294,7 +293,6 @@ bool funcion_visita(void *elemento, void *aux)
 {
 	int *contador = (int *)aux;
 	(*contador)++;
-	printf("Elemento: %d\n", *((int *)elemento));
 	return true;
 }
 
@@ -336,9 +334,8 @@ void con_cada_elemento_abb()
 
 	//POSTORDEN
 	int contador_postorden = 0;
-	size_t elementos_recorridos_postorden =
-		abb_con_cada_elemento(arbol_inorden, POSTORDEN,
-				      funcion_visita, &contador_postorden);
+	size_t elementos_recorridos_postorden = abb_con_cada_elemento(
+		arbol_inorden, POSTORDEN, funcion_visita, &contador_postorden);
 	pa2m_afirmar(
 		elementos_recorridos_postorden == 7,
 		"Recorrido postorden en árbol no vacío devuelve la cantidad correcta de elementos");
