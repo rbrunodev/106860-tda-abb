@@ -25,7 +25,7 @@ La funcion **abb_insertar**:
 Recibe un arbol y un elemento. Si el arbol no existe, devuelve NULL. Si el arbol esta vacio, crea un nodo con el elemento y lo inserta en el arbol. Si el arbol no esta vacio, se procede a recorrer el árbol para encontrar la ubicación adecuada para insertar el nuevo elemento. Comienza desde el nodo raíz y sigue avanzando hacia la izquierda o la derecha según el valor del elemento y el comparador proporcionado (arbol->comparador) para determinar la ubicación correcta. Una vez que se encuentra la ubicación adecuada, el nuevo nodo se configura con el elemento dado y sus punteros izquierdo y derecho se establecen en nulo. Luego, se actualiza el puntero izquierdo o derecho del nodo actual para que apunte al nuevo nodo, y se incrementa el tamaño del árbol. La función retorna el puntero al árbol modificado.
 
 <div align="center">
-<img width="70%" src="img/inserta.png">
+<img width="70%" src="img/insertar.png">
 </div>
 
 La función **abb_buscar**: 
