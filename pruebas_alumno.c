@@ -128,7 +128,7 @@ void quitar_abb()
 	abb_insertar(arbol, &elemento4);
 	abb_insertar(arbol, &elemento5);
 
-	int *predecesor_inorden = buscar_predecesor(arbol->nodo_raiz);
+	nodo_abb_t *predecesor_inorden = buscar_predecesor(arbol->nodo_raiz);
 
 	pa2m_afirmar(abb_quitar(arbol, &elemento4) == &elemento4,
 		     "Puedo quitar un elemento del árbol (nodo sin hijos)");
@@ -159,8 +159,8 @@ void quitar_abb()
 		     "Puedo quitar un elemento del árbol (nodo sin hijos)");
 	pa2m_afirmar(abb_buscar(arbol, &elemento4) == NULL,
 		     "El elemento eliminado ya no está en el árbol");
-	pa2m_afirmar(*(int *)arbol->nodo_raiz->izquierda->derecha->elemento ==
-			     *predecesor_inorden,
+	pa2m_afirmar(arbol->nodo_raiz->izquierda->derecha->elemento ==
+			     predecesor_inorden->elemento,
 		     "El nodo que queda en su lugar es el predecesor inorden");
 
 	abb_destruir(arbol);
