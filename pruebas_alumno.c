@@ -16,14 +16,6 @@ int comparar_enteros(void *a, void *b)
 	return 0;
 }
 
-void *buscar_predecesor(nodo_abb_t *nodo)
-{
-	while (nodo->derecha != NULL) {
-		nodo = nodo->derecha;
-	}
-	return nodo;
-}
-
 void crear_abb(void)
 {
 	printf("\nPruebas de creacion\n");
