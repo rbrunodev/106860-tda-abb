@@ -21,7 +21,8 @@ abb_t *abb_crear(abb_comparador comparador)
 	return arbol;
 }
 
-nodo_abb_t *nodo_crear(abb_t *arbol, void *elemento, nodo_abb_t *nodo){
+nodo_abb_t *nodo_crear(abb_t *arbol, void *elemento, nodo_abb_t *nodo)
+{
 	nodo->elemento = elemento;
 	nodo->izquierda = NULL;
 	nodo->derecha = NULL;
@@ -49,13 +50,15 @@ abb_t *abb_insertar(abb_t *arbol, void *elemento)
 	while (nodo_actual) {
 		if (arbol->comparador(elemento, nodo_actual->elemento) <= 0) {
 			if (!nodo_actual->izquierda) {
-				nodo_actual->izquierda = nodo_crear(arbol, elemento, nodo);
+				nodo_actual->izquierda =
+					nodo_crear(arbol, elemento, nodo);
 				return arbol;
 			}
 			nodo_actual = nodo_actual->izquierda;
 		} else {
 			if (!nodo_actual->derecha) {
-				nodo_actual->derecha = nodo_crear(arbol, elemento, nodo);
+				nodo_actual->derecha =
+					nodo_crear(arbol, elemento, nodo);
 				return arbol;
 			}
 			nodo_actual = nodo_actual->derecha;
